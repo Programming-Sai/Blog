@@ -1,0 +1,39 @@
+.container{
+    width:60px;
+    height: 26px;
+    border: 2px solid;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.ball{
+    width:20px;
+    height:20px;
+    border-radius: 100%;
+    background-color: green;
+    position: absolute;
+    transition: 0.5s ease left;
+}
+
+
+@media screen and (max-width:580px) {  
+    .ball{
+        display: none;
+    }
+    .img{
+        display: none;
+    }
+    .container{
+        width: 26px;
+        border-radius: 50%;
+        background-image: var(--mobile-toggle-image);
+        background-size: contain;
+        padding: 13px;
+        margin-right: 10px;
+    }
+}

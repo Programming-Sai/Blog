@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 10%;
+    width: 70%;
+}
+
+.button{
+    background-color: var(--back-color);
+    width: min(30%, 10rem);
+    padding: 0.5rem 1rem;
+}
+
+.button:hover{
+    background-color: var(--text-color);
+    color: var(--bg);
+    transform: scale(1.1);
+}
+
+@media screen and (max-width:580px) {
+    .container{
+        width: 100%;
+    }
+}

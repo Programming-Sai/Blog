@@ -1,0 +1,26 @@
+.lower{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+
+.itemOne{
+    width: 70%;
+}
+
+.itemTwo{
+    width: 30%;
+}
+
+@media screen and (max-width:880px) {
+    .lower{
+        flex-direction: column-reverse;
+    }
+    .itemOne{
+        width: 100%;
+    }
+    
+    .itemTwo{
+        width: 100%;
+    }
+}

@@ -1,0 +1,512 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/content/content.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
+.content_container__Js_uB {
+    margin-block: 5%;
+    position: relative;
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/featuredsection/featuredsection.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+.featuredsection_container___tSFW{
+    margin-block: 3%;
+}
+
+.featuredsection_title__3OEmy{
+    font-weight: 300;
+}
+
+.featuredsection_section___Jl4m{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6%;
+    flex-direction: row-reverse;
+    margin-block: 5%;
+    height: auto; 
+}
+
+.featuredsection_sectionItem__RnNGu{
+    width: 100%;
+    flex: 1 1;
+    position: relative;
+    min-height: 300px; 
+}
+
+.featuredsection_sectionItem__RnNGu:last-child{
+    height: 400px;
+    position: relative;
+}
+
+.featuredsection_sectionItem__RnNGu .featuredsection_img__4jAb0 {
+    object-fit: cover;
+    position: relative;
+    z-index: 1; 
+}
+
+.featuredsection_sectionItem__RnNGu:last-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 105%;
+    height: 105%;
+    filter: blur(50px) brightness(var(--brightness));
+    background-image: var(--featured-bg);
+    background-size: cover;
+    background-position: center;
+    z-index: -1; 
+}
+
+
+
+.featuredsection_sectionItem__RnNGu:first-child{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.featuredsection_desc__pMPCU{
+    font-weight: 200;
+}
+
+.featuredsection_readMore__B_5p4{
+    border: none;
+    outline: none;
+    background-color: var(--soft-text-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    width: max-content;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.featuredsection_readMore__B_5p4:hover{
+    transform: scale(1.05);
+}
+
+
+
+@media screen and (max-width:580px) {
+    .featuredsection_section___Jl4m{
+        flex-direction: column;
+    }
+    .featuredsection_sectionItem__RnNGu .featuredsection_img__4jAb0 {
+        margin-block: 5%;
+    }
+    .featuredsection_sectionItem__RnNGu:last-child::before {
+        filter: blur(100px);
+    }
+
+}
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/glow/glow.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+.glow_container__8rw0o {
+    position: absolute;
+    width: 100px; /* Set a default width */
+    height: 100px; /* Set a default height */
+    background-color: var(--glow-color); /* Use a variable for color */
+    filter: blur(25px); /* Default blur */
+    border-radius: 50%; /* Circular shape */
+    z-index: -200;
+    opacity: 0.6;
+    top: var(--top);
+    left: var(--left);
+}
+
+/* Media Query for Smaller Screens */
+@media screen and (max-width: 580px) {
+    .glow_container__8rw0o {
+        top: var(--mtop); /* Override top with custom property */
+        left: var(--mleft); /* Override left with custom property */
+    }
+}
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/editorpick/editorpick.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+.editorpick_container__LuN5t{
+    margin-block: 10%;
+    position: relative;
+}
+
+.editorpick_editorsPickContainer__aIiP3, .editorpick_item__Z4EOf, .editorpick_postTagTime__RGxyw, .editorpick_dateRead__btx6H, .editorpick_time__ddlpZ, .editorpick_rowTwo__ENySE{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editorpick_editorsPickContainer__aIiP3{
+    gap: 20px;
+    flex-direction: column;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.editorpick_item__Z4EOf{
+    gap: 20px;
+    border: 2px solid var(--border-color);
+    background-color: var(--footer-bg);
+    border-radius: 20px;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.editorpick_rowTwo__ENySE{
+    gap: 2%;
+}
+
+.editorpick_innerContainer__RyBC5 {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+
+.editorpick_innerContainer__RyBC5:last-child{
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+
+.editorpick_innerContainer__RyBC5 .editorpick_img__5pftC {
+    object-fit: cover;
+    width: 100%;
+    height: 100%; 
+    border-radius: 20px;
+}
+
+.editorpick_postTagTime__RGxyw, .editorpick_dateRead__btx6H, .editorpick_time__ddlpZ{
+    justify-content: space-between;
+    gap: 10%;
+}
+.editorpick_time__ddlpZ{
+    width:-moz-fit-content;
+    width:fit-content;
+    padding-right: 10px;
+}
+
+.editorpick_time__ddlpZ p{
+    white-space: nowrap;
+
+}
+
+.editorpick_read__jDAYn{
+    background-color: var(--soft-text-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    width: max-content;
+    border-radius: 20px;
+}
+
+.editorpick_read__jDAYn:hover{
+    transform: scale(1.05);
+}
+
+.editorpick_innerContainer__RyBC5 h2, .editorpick_desc__1oHPr{
+    margin-block: 10px;
+}
+
+.editorpick_tag__QQ3H8, .editorpick_date__WHADC, .editorpick_time__ddlpZ{
+    opacity: 0.5;
+}
+
+
+
+@media screen and (max-width:580px) {
+    .editorpick_container__LuN5t{
+        margin-block: 30%;
+    }
+    .editorpick_rowTwo__ENySE{
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/populartags/populartags.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+.populartags_container__a4Tu9{
+    margin-block: 5%;
+    position: relative;
+}
+
+
+
+.populartags_sports__BrbGN{
+    border: 2px solid green;
+}
+.populartags_news__E0Ifi{
+    border: 2px solid red;
+}
+.populartags_lifeStyle__Th04B{
+    border: 2px solid yellow;
+}
+.populartags_music__Usx_p{
+    border: 2px solid #CC00FF;
+}
+.populartags_movie__Ebao_{
+    border: 2px solid lightblue;
+}
+
+.populartags_tagContainer__K8CcD {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 2%;
+    justify-content: space-around; 
+}
+
+.populartags_tagContainer__K8CcD, .populartags_tagItem__UWsf_{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5%;
+}
+
+.populartags_tagItem__UWsf_{
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    width: 170px;
+    margin-block: 5%;
+    background-color: var(--soft-text-color);
+}
+
+.populartags_tagItem__UWsf_ p{
+    width: 100%;
+    text-align: center;
+}
+
+.populartags_tagItem__UWsf_ .populartags_img__sGMsV{
+    object-fit: cover;
+    border-radius: 100px;
+    width: 85px;
+}
+
+@media screen and (max-width:580px) {
+    .populartags_tagContainer__K8CcD{
+        justify-content: center;
+    }
+}
+
+
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/recentposts/recentposts.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+.recentposts_container__TxcfV{
+    margin-block: 10%;
+    position: relative;
+}
+
+.recentposts_item__Bt62x{
+    margin-block: 3%;
+}
+
+.recentposts_item__Bt62x, .recentposts_dateRead__4qynO, .recentposts_post__kVVHG{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3%;
+}
+
+.recentposts_imgContainer__8hqcA{
+    position: relative;
+    width: 70%;
+    height:15rem;
+    border-radius: 20px;
+    overflow: hidden; 
+}
+
+.recentposts_imgContainer__8hqcA .recentposts_img__YhfhV{
+    object-fit: cover; 
+    width: 100%;
+    height: 100%;
+    border-radius: 20px; 
+}
+
+
+.recentposts_post__kVVHG{
+    width: 100%;
+    flex-direction: column;
+    gap: 5%;
+}
+
+.recentposts_post__kVVHG h3, .recentposts_post__kVVHG .recentposts_desc__0X62C{
+    margin-block: 1%;
+}
+
+.recentposts_post__kVVHG .recentposts_desc__0X62C{
+    font-weight: lighter;
+}
+
+.recentposts_dateRead__4qynO{
+    width: 100%;
+    margin-top: 3%;
+}
+
+.recentposts_timeTag__AXmyG{
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+
+.recentposts_time__jmSRn, .recentposts_date__i83P3{
+    opacity: 0.5;
+}
+
+.recentposts_readingTime__TY33K{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+    width: -moz-fit-content;
+    width: fit-content;
+    white-space: nowrap;
+    margin-right: 10%;
+}
+
+.recentposts_read__A19vj{
+    color: var(--text-color);
+    padding: 10px 20px;
+    background-color: var(--back-color);
+    /* background-color: red; */
+    border-radius: 20px;
+}
+
+.recentposts_read__A19vj:hover{
+    transform: scale(1.1);
+}
+
+
+
+@media screen and (max-width:580px) {
+    .recentposts_item__Bt62x{
+        flex-direction: column;
+    }
+    .recentposts_imgContainer__8hqcA{
+        width: 100%;
+        border-radius: 20px; 
+        margin-block: 5%;
+    }
+    .recentposts_readingTime__TY33K{
+        margin-right: 0;
+    }    
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/popularposts/popularposts.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+.popularposts_container__V_KMr{
+    margin-block: 5%;
+    border: 2px solid var(--border-color);
+    background-color: var(--footer-bg);
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.popularposts_item__YO_ZA, .popularposts_timeDate__wC1X6, .popularposts_readingTime__xPxwS{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+}
+
+.popularposts_item__YO_ZA{
+    margin-block: 6%;
+}
+
+.popularposts_readingTime__xPxwS{
+    white-space: nowrap;
+}
+
+.popularposts_timeDate__wC1X6{
+    opacity: 0.5;
+}
+
+.popularposts_imgContainer__4Yp1I{
+    position: relative;
+    min-width: 4.5rem; 
+    min-height: 4.5rem;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.popularposts_img__SqFR3{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.popularposts_post__Q2Swz h4{
+    margin-block: 5%;
+}
+
+.popularposts_timeDate__wC1X6 p{
+    white-space: nowrap;
+}
+
+
+.popularposts_timeDate__wC1X6{
+    font-size: 0.75rem;
+}
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/Home/home.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+.home_lower__pooVj{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+
+.home_itemOne__4ItpJ{
+    width: 70%;
+}
+
+.home_itemTwo__1kTb9{
+    width: 30%;
+}
+
+@media screen and (max-width:880px) {
+    .home_lower__pooVj{
+        flex-direction: column-reverse;
+    }
+    .home_itemOne__4ItpJ{
+        width: 100%;
+    }
+    
+    .home_itemTwo__1kTb9{
+        width: 100%;
+    }
+}
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/pagination/pagination.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+.pagination_container__MjtB3{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 10%;
+    width: 70%;
+}
+
+.pagination_button__EHYZp{
+    background-color: var(--back-color);
+    width: min(30%, 10rem);
+    padding: 0.5rem 1rem;
+}
+
+.pagination_button__EHYZp:hover{
+    background-color: var(--text-color);
+    color: var(--bg);
+    transform: scale(1.1);
+}
+
+@media screen and (max-width:580px) {
+    .pagination_container__MjtB3{
+        width: 100%;
+    }
+}

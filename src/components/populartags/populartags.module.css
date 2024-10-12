@@ -1,0 +1,63 @@
+.container{
+    margin-block: 5%;
+    position: relative;
+}
+
+
+
+.sports{
+    border: 2px solid green;
+}
+.news{
+    border: 2px solid red;
+}
+.lifeStyle{
+    border: 2px solid yellow;
+}
+.music{
+    border: 2px solid #CC00FF;
+}
+.movie{
+    border: 2px solid lightblue;
+}
+
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 2%;
+    justify-content: space-around; 
+}
+
+.tagContainer, .tagItem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5%;
+}
+
+.tagItem{
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    width: 170px;
+    margin-block: 5%;
+    background-color: var(--soft-text-color);
+}
+
+.tagItem p{
+    width: 100%;
+    text-align: center;
+}
+
+.tagItem .img{
+    object-fit: cover;
+    border-radius: 100px;
+    width: 85px;
+}
+
+@media screen and (max-width:580px) {
+    .tagContainer{
+        justify-content: center;
+    }
+}
+

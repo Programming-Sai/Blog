@@ -1,0 +1,54 @@
+.container{
+    margin-block: 5%;
+    border: 2px solid var(--border-color);
+    background-color: var(--footer-bg);
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    height: fit-content;
+}
+
+.item, .timeDate, .readingTime{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+}
+
+.item{
+    margin-block: 6%;
+}
+
+.readingTime{
+    white-space: nowrap;
+}
+
+.timeDate{
+    opacity: 0.5;
+}
+
+.imgContainer{
+    position: relative;
+    min-width: 4.5rem; 
+    min-height: 4.5rem;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.post h4{
+    margin-block: 5%;
+}
+
+.timeDate p{
+    white-space: nowrap;
+}
+
+
+.timeDate{
+    font-size: 0.75rem;
+}

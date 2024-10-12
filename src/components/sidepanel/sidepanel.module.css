@@ -1,0 +1,107 @@
+
+.mobile{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 110;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+    display: none;
+    backdrop-filter: blur(10px);
+}
+
+
+.mobileClose{
+    animation: slideOut 1s ease-in-out 1 forwards;
+}
+
+.mobileOpen{
+    animation: slideIn 1s ease-in-out 1 forwards;
+}
+
+@keyframes slideIn {
+    from{
+        left: 100%;
+    }
+    to{
+        left: 0;
+    }
+}
+
+@keyframes slideOut {
+    from{
+        left: 0;
+    }
+    to{
+        left: 100%;
+    }
+}
+
+.mobileLayer{
+    width: 85%;
+    background-color: rgba(0,0,255, 0.3);
+    height:100vh;
+    padding-inline: 20px;
+}       
+
+
+.mobileLogo{
+    text-align: center;
+    font-size: 30px;
+    margin: 10px 0 20px 0;
+}
+
+.mobileLayer ul li a{
+    padding-block: 20px;
+    display: block;
+    transition: 0.5s ease;
+}
+
+.mobileLayer ul li a:hover{
+    background-color: rgba(255,255,255,0.2);
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+}
+.mobileLayer ul li a{
+    padding-left: 20px;
+    font-weight:250;
+}
+
+
+.mobileHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.subHeader{
+    padding: 10px 0;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.copyright{
+    font-size: 12px;
+    padding-block: 20px;
+    margin-bottom: 200px;
+}
+
+.button{
+    font-size: 30px;
+    cursor: pointer;        
+    display: none;
+    z-index: 100; 
+}
+
+
+@media screen and (max-width:580px) {  
+    .mobile, .button{
+        display: flex;
+    }
+    .logo{
+        font-size: 30px;
+    }
+}

@@ -1,0 +1,20 @@
+.container {
+    position: absolute;
+    width: 100px; /* Set a default width */
+    height: 100px; /* Set a default height */
+    background-color: var(--glow-color); /* Use a variable for color */
+    filter: blur(25px); /* Default blur */
+    border-radius: 50%; /* Circular shape */
+    z-index: -200;
+    opacity: 0.6;
+    top: var(--top);
+    left: var(--left);
+}
+
+/* Media Query for Smaller Screens */
+@media screen and (max-width: 580px) {
+    .container {
+        top: var(--mtop); /* Override top with custom property */
+        left: var(--mleft); /* Override left with custom property */
+    }
+}
