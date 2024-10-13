@@ -1,0 +1,44 @@
+.container{
+    position: relative;
+    margin-block: 5%;
+}
+
+
+.comment, .send{
+    border: 2px solid var(--text-color);   
+    background-color: var(--footer-bg);
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment{
+    margin-block: 5%;
+}
+
+.input{
+    background-color: transparent;
+    padding: 20px;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.send{
+    color: var(--text-color);
+    padding: 20px;
+    font-size: 1.5rem;
+    background-color: #09FF5D80;  
+    transition: background-color 1s ease;
+}
+
+.input::placeholder{
+    color: var(--text-color);
+}
+
+.send:hover{
+    background-color: #09FF5D;
+}

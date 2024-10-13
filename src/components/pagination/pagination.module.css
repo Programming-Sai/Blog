@@ -3,7 +3,8 @@
     justify-content: space-between;
     align-items: center;
     margin-block: 10%;
-    width: 70%;
+    width: var(--width);
+    position: relative;
 }
 
 .button{

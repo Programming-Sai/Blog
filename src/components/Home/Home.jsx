@@ -9,9 +9,9 @@ import Pagination from '../pagination/Pagination';
 
 
 export default function Home({ theme }) {
-
+  let width = '70%';
   return(
-    <div>
+    <div className={styles.container}>
       <FeaturedSection theme={ theme }/>
       <EditorPick />
       <PopularTags />
@@ -19,7 +19,7 @@ export default function Home({ theme }) {
           <RecentPosts  className={styles.itemOne}/>
           <PopularPosts  className={styles.itemTwo}/>
       </div>
-      <Pagination />
+      <Pagination theme={ theme } width={ width }/>
     </div>
     );
 }

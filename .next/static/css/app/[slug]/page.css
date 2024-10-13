@@ -1,0 +1,337 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/app/[slug]/singleblogpage.module.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+.singleblogpage_container__8qoN7{
+    position: relative;
+    margin-block: 10%;
+    z-index: 1;
+}
+.singleblogpage_infoContainer__k638H, .singleblogpage_postDetails__KVKcV, .singleblogpage_time__B3n8p, .singleblogpage_content__JyvK6{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.singleblogpage_item__pr_Fx{
+    height: 350px;
+    flex: 1 1;
+}
+
+.singleblogpage_item__pr_Fx:first-child{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.singleblogpage_item__pr_Fx h1{
+    font-size: 3.5rem;
+}
+
+.singleblogpage_item__pr_Fx:last-child{
+    position: relative;
+    width: 100%;
+}
+
+.singleblogpage_item__pr_Fx:last-child::before{
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(50px);
+    background-image: var(--img);
+    background-position: center;
+    background-size: cover;
+}
+
+
+.singleblogpage_img__H74mz{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.singleblogpage_postDetails__KVKcV{
+    justify-content: flex-start;
+    width: 100%;
+    text-align: left;
+
+}
+
+.singleblogpage_date__mnmTm, .singleblogpage_time__B3n8p, .singleblogpage_tag__Yq30c{
+    opacity: 0.5;
+}
+
+.singleblogpage_date__mnmTm, .singleblogpage_time__B3n8p{
+    white-space: nowrap;
+}
+
+.singleblogpage_content__JyvK6{
+    margin-block: 10%;
+    align-items: flex-start;
+}
+.singleblogpage_post__AeLjs{
+    width: 70%;
+}
+
+.singleblogpage_blogPost__rWdDy{
+    text-align: justify;
+}
+
+.singleblogpage_popularPosts__Yn9py{
+    width: 30%;
+}
+
+
+
+@media screen and (max-width:580px) {
+    .singleblogpage_infoContainer__k638H, .singleblogpage_content__JyvK6{
+        flex-direction: column;
+    }
+    .singleblogpage_infoContainer__k638H{
+        height: 45rem;
+    }
+    .singleblogpage_post__AeLjs{
+        width: 100%;
+    }
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/popularposts/popularposts.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+.popularposts_container__V_KMr{
+    margin-block: 5%;
+    border: 2px solid var(--border-color);
+    background-color: var(--footer-bg);
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.popularposts_item__YO_ZA, .popularposts_timeDate__wC1X6, .popularposts_readingTime__xPxwS{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+}
+
+.popularposts_item__YO_ZA{
+    margin-block: 6%;
+}
+
+.popularposts_readingTime__xPxwS{
+    white-space: nowrap;
+}
+
+.popularposts_timeDate__wC1X6{
+    opacity: 0.5;
+}
+
+.popularposts_imgContainer__4Yp1I{
+    position: relative;
+    min-width: 4.5rem; 
+    min-height: 4.5rem;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.popularposts_img__SqFR3{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.popularposts_post__Q2Swz h4{
+    margin-block: 5%;
+}
+
+.popularposts_timeDate__wC1X6 p{
+    white-space: nowrap;
+}
+
+
+.popularposts_timeDate__wC1X6{
+    font-size: 0.75rem;
+}
+
+
+@media screen and (max-width:580px) {
+    .popularposts_container__V_KMr{
+        width: 100%;
+    }
+}
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/glow/glow.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+.glow_container__8rw0o {
+    position: absolute;
+    width: 100px; /* Set a default width */
+    height: 100px; /* Set a default height */
+    background-color: var(--glow-color); /* Use a variable for color */
+    filter: blur(25px); /* Default blur */
+    border-radius: 50%; /* Circular shape */
+    z-index: -200;
+    opacity: 0.6;
+    top: var(--top);
+    left: var(--left);
+}
+
+/* Media Query for Smaller Screens */
+@media screen and (max-width: 580px) {
+    .glow_container__8rw0o {
+        top: var(--mtop); /* Override top with custom property */
+        left: var(--mleft); /* Override left with custom property */
+    }
+}
+
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/writecomment/writecomment.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+.writecomment_container__qAeP7{
+    position: relative;
+    margin-block: 5%;
+}
+
+
+.writecomment_comment__C0O_e, .writecomment_send__C5oCB{
+    border: 2px solid var(--text-color);   
+    background-color: var(--footer-bg);
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.writecomment_comment__C0O_e{
+    margin-block: 5%;
+}
+
+.writecomment_input__hGPCG{
+    background-color: transparent;
+    padding: 20px;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.writecomment_send__C5oCB{
+    color: var(--text-color);
+    padding: 20px;
+    font-size: 1.5rem;
+    background-color: #09FF5D80;  
+    transition: background-color 1s ease;
+}
+
+.writecomment_input__hGPCG::placeholder{
+    color: var(--text-color);
+}
+
+.writecomment_send__C5oCB:hover{
+    background-color: #09FF5D;
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/commentsection/commentsection.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+.commentsection_container__HweFz{
+    margin-block: 5%;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.commentsection_item__NkNKK, .commentsection_timeDate__wwuBM, .commentsection_readingTime__1freW{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5%;
+}
+
+.commentsection_item__NkNKK{
+    margin-block: 6%;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.commentsection_readingTime__1freW{
+    white-space: nowrap;
+}
+
+.commentsection_timeDate__wwuBM{
+    opacity: 0.5;
+}
+
+.commentsection_imgContainer__swsSm{
+    position: relative;
+    min-width: 4.5rem; 
+    min-height: 4.5rem;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.commentsection_img__BzXWC{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.commentsection_post__pCM9C{
+    width: 100%;
+}
+
+.commentsection_post__pCM9C h4{
+    margin-block: 5%;
+}
+
+.commentsection_timeDate__wwuBM p{
+    white-space: nowrap;
+}
+
+
+.commentsection_timeDate__wwuBM{
+    font-size: 1rem;
+}
+
+
+@media screen and (max-width:580px) {
+    .commentsection_container__HweFz{
+        width: 100%;
+    }
+}
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/pagination/pagination.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+.pagination_container__MjtB3{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 10%;
+    width: var(--width);
+    position: relative;
+}
+
+.pagination_button__EHYZp{
+    background-color: var(--back-color);
+    width: min(30%, 10rem);
+    padding: 0.5rem 1rem;
+}
+
+.pagination_button__EHYZp:hover{
+    background-color: var(--text-color);
+    color: var(--bg);
+    transform: scale(1.1);
+}
+
+@media screen and (max-width:580px) {
+    .pagination_container__MjtB3{
+        width: 100%;
+    }
+}
