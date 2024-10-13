@@ -1,0 +1,25 @@
+.container{
+    background-color: var(--soft-text-color);
+    border: 5px solid var(--border-color);
+    border-radius: 100%;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 101;
+    cursor: pointer;
+}
+
+.button{
+    font-weight: bolder;
+    font-size: 3rem;
+    color: var(--border-color);
+}
+
+.container:hover{
+    transform: scale(1.1);
+}

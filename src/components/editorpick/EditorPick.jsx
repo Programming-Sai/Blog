@@ -148,15 +148,15 @@ const EditorPick = () => {
             mleft='50%'
           />
 
-        {/* <Glow 
-            top='50%' 
-            left='50%' 
+          <Glow 
+            top='70%' 
+            left='80%' 
             width={500} 
             height={500} 
-            color='#890A8C'
+            color='#11F027'
             mtop='90%'
             mleft='50%'
-          /> */}
+          />
       </div>
     </div>
   )

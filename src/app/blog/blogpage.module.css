@@ -1,0 +1,49 @@
+.container{
+    margin-block: 10%;
+    position: relative;
+}
+
+.content, .blog{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5%;
+}
+
+.container .title{
+    text-align: center;
+    background-color: rgba(255,255,0,0.7);
+    padding: 1rem;
+    border-radius: 200px;
+}
+
+
+.itemOne{
+    width: 70%;
+}
+
+.blog{
+    flex-direction: column;
+}
+
+.button{
+    width: 150%;
+}
+
+.itemTwo{
+    width: 30%;
+}
+
+
+@media screen and (max-width:880px) {
+    .content{
+        flex-direction: column;
+    }
+    .itemOne{
+        width: 100%;
+    }
+    
+    .itemTwo{
+        width: 100%;
+    }
+}

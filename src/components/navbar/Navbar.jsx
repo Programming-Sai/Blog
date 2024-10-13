@@ -6,10 +6,10 @@ import ThemeToggle from '../themetoggle/ThemeToggle'
 import Searchbar from '../searchbar/Searchbar'
 import SidePanel from '../sidepanel/SidePanel'
 
-const Navbar = () => {
+const Navbar = ({ id }) => {
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="top">
     <div className={styles.back} />
     <div className={styles.logo}>Logo</div>
     <div className={styles.header}>
