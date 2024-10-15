@@ -42,7 +42,8 @@
 
 .mobileLayer{
     width: 85%;
-    background-color: rgba(0,0,255, 0.3);
+    /* background-color: rgba(0,0,255, 0.3); */
+    background-color: var(--back-color);
     height:100vh;
     padding-inline: 20px;
 }       

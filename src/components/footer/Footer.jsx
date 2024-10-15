@@ -4,9 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 
-const Footer = () => {
+const Footer = ({ disabled }) => {
+  if (disabled) return null;
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={ disabled && {display:'none'}} >
     <div className={styles.back} />
 
       <div className={styles.item}>

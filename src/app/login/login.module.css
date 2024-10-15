@@ -1,0 +1,67 @@
+.container{
+    position: relative;
+    z-index: 1;
+    margin-block: 5%;
+}
+
+.back{
+    margin-block: 7.5%;
+}
+
+
+.overlay, .loginContainer, .links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--bg);
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    z-index: 100 !important;
+    pointer-events: auto; 
+}
+
+.loginContainer{
+    background-color: var(--soft-bg);
+    border: 5px solid var(--border-color);
+    width: 50%;
+    height: 70%;
+    border-radius: 20px;
+    padding: 1rem;
+    flex-direction: column;
+}
+
+.links{
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 5%;
+    margin-block: 10%;
+}
+
+.img{
+    object-fit: contain;
+    width: 100%;
+    background-color: var(--soft-bg);
+    border-radius: 100px;
+    padding: 10px;
+    margin-block: 5%;
+}
+
+.links, .img{
+    transition: 0.5s ease;
+}
+
+.links:hover .img:not(:hover){
+    filter: grayscale(1);
+}
+
+.img:hover{
+    transform: scale(1.2);
+}

@@ -7,7 +7,7 @@ const AuthLinks = () => {
   const status = 'unauthenticated';
   return (
     <li className={styles.authlink}>
-      <Link href='/'>{status == 'authenticated' ? "Logout" : "Login"}</Link>
+      <Link href='/login'>{status == 'authenticated' ? "Logout" : "Login"}</Link>
     </li>
   )
 }

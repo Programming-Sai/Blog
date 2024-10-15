@@ -1,10 +1,9 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Navbar from "@/components/navbar/Navbar";
-import Footer from "@/components/footer/Footer";
 import { ThemeContextProvider } from '@/context/ThemeContext';
 import ThemeProvider from '@/providers/ThemeProvider';
 import ScrollToTop from '../components/scrolltotop/ScrollToTop';
+
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,11 +19,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ThemeContextProvider>
           <ThemeProvider>
-            <div className="container">
+            <div className="container" id='top'>
               <div className="wrapper">
-                <Navbar />
                 {children}
-                <Footer />
                 <ScrollToTop />
               </div>
             </div>
@@ -39,3 +36,9 @@ export default function RootLayout({ children }) {
 // ToDO 1. Add a robots.txt
 //      2. Add alt text to all images 
 //      3. Fix Side Panel to look nicer
+//      4. What are the techniques for good SEO
+//      5. Clicking on the category name in a blog takes you to the categories page
+//      6. Add Sitemap
+//      7. Calculate the reading time for each blog.
+//      8. What should be on the dashboard.
+//      9. 
