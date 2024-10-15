@@ -13,7 +13,7 @@ const PopularPosts = ({ width }) => {
         
         <div className={styles.item}>
           <div className={styles.imgContainer}>
-            <Image src='/fashion.png' fill className={styles.img} alt='fashion' objectFit='cover' />
+            <Image src='/culture.png' fill className={styles.img} alt='fashion' objectFit='cover' />
           </div>
           <div className={styles.post}>
             <h4>Lorem ipsum dolor sit amet consectetur amet .</h4>
@@ -105,3 +105,5 @@ const PopularPosts = ({ width }) => {
 }
 
 export default PopularPosts
+
+

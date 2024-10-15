@@ -1,15 +1,19 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { usePathname } from 'next/navigation'; // Import usePathname for route change detection
 import styles from '../sidepanel/sidepanel.module.css'
 import Link from 'next/link'
 import AuthLinks from '../authlinks/AuthLinks'
 import { ThemeContext } from '@/context/ThemeContext';
 
-
-
-
 const SidePanel = () => {
   const { toggleSidePane, setToggleSidePane } = useContext(ThemeContext);
+  const pathname = usePathname(); // Get current path
+
+  // Close side panel on route change
+  useEffect(() => {
+    setToggleSidePane(false); // Close the side panel when the route changes
+  }, [pathname, setToggleSidePane]); // Dependency array includes pathname to track route changes
 
   return (
     <div>
@@ -39,10 +43,10 @@ const SidePanel = () => {
                     <Link href='/'>Home</Link>
                 </li>
                 <li>
-                    <Link href='/'>About</Link>
+                    <Link href='/about'>About</Link>
                 </li>
                 <li>
-                    <Link href='/'>Contact</Link>
+                    <Link href='/contact'>Contact</Link>
                 </li>
                     <AuthLinks />
             </ul>

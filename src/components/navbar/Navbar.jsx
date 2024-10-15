@@ -6,10 +6,13 @@ import ThemeToggle from '../themetoggle/ThemeToggle'
 import Searchbar from '../searchbar/Searchbar'
 import SidePanel from '../sidepanel/SidePanel'
 
-const Navbar = ({ id }) => {
+
+const Navbar = ({ disabled }) => {
+
+   if (disabled) return null;
 
   return (
-    <div className={styles.container} id="top">
+    <div className={styles.container} >
     <div className={styles.back} />
     <div className={styles.logo}>Logo</div>
     <div className={styles.header}>
@@ -20,10 +23,10 @@ const Navbar = ({ id }) => {
                     <Link href='/'>Home</Link>
                 </li>
                 <li>
-                    <Link href='/'>About</Link>
+                    <Link href='/about'>About</Link>
                 </li>
                 <li>
-                    <Link href='/'>Contact</Link>
+                    <Link href='/contact'>Contact</Link>
                 </li>
                     <AuthLinks />
             </ul>

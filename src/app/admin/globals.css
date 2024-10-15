@@ -1,0 +1,16 @@
+
+.container{
+    background-color: var(--bg);
+    color: var(--text-color);
+    ;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.wrapper{
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
