@@ -34,6 +34,7 @@
         background-image: var(--mobile-toggle-image);
         background-size: contain;
         padding: 13px;
-        margin-right: 10px;
+        margin: 0;
+        margin-left: 20px;
     }
 }

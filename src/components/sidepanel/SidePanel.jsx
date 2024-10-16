@@ -8,17 +8,16 @@ import { ThemeContext } from '@/context/ThemeContext';
 
 const SidePanel = () => {
   const { toggleSidePane, setToggleSidePane } = useContext(ThemeContext);
-  const pathname = usePathname(); // Get current path
+  const pathname = usePathname(); 
 
-  // Close side panel on route change
   useEffect(() => {
-    setToggleSidePane(false); // Close the side panel when the route changes
-  }, [pathname, setToggleSidePane]); // Dependency array includes pathname to track route changes
+    setToggleSidePane(false); 
+  }, [pathname, setToggleSidePane]); 
 
   return (
     <div>
       
-      <p className={styles.button} onClick={(event) => {
+      <p className={`${styles.button} ${styles.open}`} onClick={(event) => {
         event.stopPropagation(); // Prevent event propagation issues
         setToggleSidePane(!toggleSidePane);
       }}>☰</p>
@@ -26,7 +25,6 @@ const SidePanel = () => {
 
       <div 
         className={`${styles.mobile} ${toggleSidePane ? styles.mobileOpen : styles.mobileClose }`} 
-        // onFocus={()=>{setToggleSidePane(!toggleSidePane)}} 
         tabIndex={2}
       >
         <div className={styles.mobileLayer}>
@@ -36,8 +34,6 @@ const SidePanel = () => {
                     setToggleSidePane(!toggleSidePane)
                 }}>✕</p>
             </div>
-            <hr/>
-            <p className={styles.subHeader}>Main Menu</p>
             <ul>
                 <li>
                     <Link href='/'>Home</Link>
@@ -48,20 +44,7 @@ const SidePanel = () => {
                 <li>
                     <Link href='/contact'>Contact</Link>
                 </li>
-                    <AuthLinks />
-            </ul>
-            <hr />
-            <p className={styles.subHeader}>Poplular Categories</p>
-            <ul>
-                <li>
-                    <Link href='/'>Topic 1</Link>
-                </li>
-                <li>
-                    <Link href='/'>Topic 2</Link>
-                </li>
-                <li>
-                    <Link href='/'>Topic 3</Link>
-                </li>
+                    <AuthLinks currentRoute={pathname }/>
             </ul>
         </div>
       </div>

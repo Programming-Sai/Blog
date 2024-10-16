@@ -20,7 +20,7 @@ const PopularTags = () => {
       <h1>Popular Tags</h1>
       <div className={styles.tagContainer}>
 
-       <Link href='/' className={`${styles.tagItem} ${styles.sports}`}>
+       <Link href='/blog/sports' className={`${styles.tagItem} ${styles.sports}`}>
           <Image width={50} height={50} src='/style.png' className={styles.img}/>
           <p>Sports</p>
         </Link>

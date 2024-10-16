@@ -42,10 +42,9 @@
 
 .mobileLayer{
     width: 85%;
-    /* background-color: rgba(0,0,255, 0.3); */
     background-color: var(--back-color);
     height:100vh;
-    padding-inline: 20px;
+    /* padding-inline: 20px; */
 }       
 
 
@@ -53,11 +52,15 @@
     text-align: center;
     font-size: 30px;
     margin: 10px 0 20px 0;
+    padding-inline: 20px;
 }
 
 .mobileLayer ul li a{
     padding-block: 20px;
     display: block;
+    font-weight:200;
+    font-size: 1.5rem;
+    padding-left: 40px;
     transition: 0.5s ease;
 }
 
@@ -65,10 +68,7 @@
     background-color: rgba(255,255,255,0.2);
     border-top-left-radius: 100px;
     border-bottom-left-radius: 100px;
-}
-.mobileLayer ul li a{
-    padding-left: 20px;
-    font-weight:250;
+    padding-left: 10px;
 }
 
 
@@ -78,23 +78,17 @@
     justify-content: space-between;
 }
 
-.subHeader{
-    padding: 10px 0;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.copyright{
-    font-size: 12px;
-    padding-block: 20px;
-    margin-bottom: 200px;
-}
-
 .button{
     font-size: 30px;
     cursor: pointer;        
     display: none;
     z-index: 100; 
+    padding-inline: 20px;
+}
+
+.open{
+    padding: 0;
+    margin: 0;
 }
 
 

@@ -1,13 +1,29 @@
 'use client'
 import styles from './sidenavbar.module.css'
-import React from 'react'
+import React, { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle, faClock, faEdit, faGear, faPencil, faPencilAlt, faSignOutAlt, faTachometerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faEdit, faGear, faPencilAlt, faSignOutAlt, faTachometerAlt } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import Image from 'next/image'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const SideNavbar = () => {
+    const { toggleSidePane } = useContext(ThemeContext);
+
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px'} : {'--left': '300px'}}>
+     
+      
+
+
+      <div className={styles.profileContainer}>
+        <div className={styles.imgContainer} style={{'--img': 'url("/p1.jpeg")'}}>
+            <Image className={styles.img} src='/fashion.png' fill/>
+        </div>
+        <h1>Name</h1>
+        <p>email@gmail.com</p>
+      </div>
+
       <ul>
         <li>
             <Link className={styles.a} href='/admin/dashboard'>
