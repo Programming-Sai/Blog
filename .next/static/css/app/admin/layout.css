@@ -118,12 +118,11 @@ button{
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/sidenavbar/sidenavbar.module.css ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************/
 .sidenavbar_container__BgTD2{
-    width: 300px;
-    height: 100%;
+    width: var(--left);
+    height: 100vh;
     position: fixed;
     background-color: var(--back-color);
     border-left: 20px solid transparent;
-    /* transition: none; */
 }
 
 .sidenavbar_container__BgTD2 ul{
@@ -131,6 +130,10 @@ button{
     top: 0;
     left: 0;
     width: 100%;
+    margin-top: 100%;
+}
+.sidenavbar_container__BgTD2.sidenavbar_active__HHgLR ul{
+    margin-top: 200%;
 }
 
 .sidenavbar_container__BgTD2 ul li{
@@ -139,9 +142,6 @@ button{
     transition: 0.1s ease;
 }
 
-.sidenavbar_container__BgTD2 ul li:first-child{
-    margin-top: 60px;
-}
 
 .sidenavbar_container__BgTD2 ul li:hover{
     background-color: var(--bg);
@@ -160,7 +160,12 @@ button{
 
 .sidenavbar_container__BgTD2 ul li:last-child{
     position: fixed;
-    bottom: 50px;
+    bottom: 30px;
+    width: 280px;
+}
+
+.sidenavbar_container__BgTD2.sidenavbar_active__HHgLR ul li:last-child{
+    width: 60px;
 }
 
 
@@ -171,6 +176,10 @@ button{
     height: 25px;
     line-height: 40px;
     text-align: center;
+}
+
+.sidenavbar_container__BgTD2.sidenavbar_active__HHgLR ul li .sidenavbar_a__TXf1u span{
+    display: none;
 }
 
 .sidenavbar_container__BgTD2 ul li .sidenavbar_a__TXf1u span{
@@ -215,6 +224,67 @@ button{
     background-color: transparent;
     border-radius: 50%;
     box-shadow: 35px -35px 0 12px var(--bg);
+}
+
+
+.sidenavbar_profileContainer__JdeLi{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.sidenavbar_container__BgTD2.sidenavbar_active__HHgLR .sidenavbar_profileContainer__JdeLi{
+    justify-content: flex-start;
+    margin-left: -10px;
+}
+
+
+.sidenavbar_imgContainer___QPlT{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.sidenavbar_imgContainer___QPlT::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--img);
+    background-position: center;
+    background-size: cover;
+    filter: blur(30px) brightness(var(--brightness));
+}
+
+.sidenavbar_container__BgTD2.sidenavbar_active__HHgLR .sidenavbar_imgContainer___QPlT{
+    width: 50px;
+    height: 50px;
+}
+
+.sidenavbar_container__BgTD2.sidenavbar_active__HHgLR h1, .sidenavbar_container__BgTD2.sidenavbar_active__HHgLR p{
+    display: none;
+}
+
+
+.sidenavbar_img__4QJ5C{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.sidenavbar_profileContainer__JdeLi .sidenavbar_aTag__u7TVm, .sidenavbar_profileContainer__JdeLi h1{
+    text-align: center;
+}
+
+.sidenavbar_profileContainer__JdeLi .sidenavbar_aTag__u7TVm{
+    opacity: 0.6;
 }
 
 

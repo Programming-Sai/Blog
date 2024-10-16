@@ -11,13 +11,22 @@
     align-items: center;
 }
 
+
+.e:first-child{
+    width: 55%;
+}
+
 .nav{
-    width: 60%;
+    width: 100%;
     padding: 10px;
 }
 
+.end{
+    display: none;
+}
+
 .nav ul{
-    gap:10%;
+    gap:5%;
 }
 
 .nav ul li a{
@@ -63,18 +72,19 @@
         font-size: 0.9rem;
     }
     .nav ul{
-        gap: 15%;
+        gap: 10%;
     }
     .logo{
         font-size: 1.5rem;
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:868px) {
     .nav ul{
         width: 100%;
         padding: 5px;
         gap: 5%;
+        margin-left: -10px;
     }
     .nav ul li a{
         font-size: 0.9rem;
@@ -84,11 +94,25 @@
 
 
 @media screen and (max-width:580px) {  
-    .nav ul li a{
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        width: 0;
-        height: 0;
+    .container{
+        width: 100%;
+        gap: 10%;
+    }
+    .nav, .e {
+        display: none;
+    }
+    .e{
+        background-color: red;
+    }
+    .header{
+        width: 50%;
+    }
+    .end{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        min-height: 100%;
+        height: auto;
     }
 }
