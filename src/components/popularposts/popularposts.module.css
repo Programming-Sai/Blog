@@ -1,12 +1,13 @@
 .container{
-    margin-block: 5%;
-    border: 2px solid var(--border-color);
+    margin-block: var(--marginBlock);
+    border: var(--outline) solid var(--border-color);
     background-color: var(--footer-bg);
     padding: 20px;
-    border-radius: 20px;
+    border-radius: var(--borderRad);
     position: relative;
     height: fit-content;
 }
+
 
 .item, .timeDate, .readingTime{
     display: flex;

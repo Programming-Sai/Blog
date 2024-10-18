@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from './dashboard.module.css';
 import ThemeToggle from '@/components/themetoggle/ThemeToggle';
 import Searchbar from '@/components/searchbar/Searchbar';
@@ -7,11 +7,37 @@ import { ThemeContext } from '@/context/ThemeContext'
 import Card from '@/components/card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCab } from '@fortawesome/free-solid-svg-icons';
+import RecentPosts from '@/components/recentposts/RecentPosts';
+import PopularPosts from '@/components/popularposts/PopularPosts';
+
+import { PostPerformanceChart, GrowthRateChart, FeedbackChart,  EngagementMetricsChart, ContentEngagementChart, TrafficOverviewChart  } from '@/components/charts/Charts';
+import AdminCommentsSection from '@/components/admincommentssection/AdminCommentsSection';
+import CommentSection from '@/components/commentsection/CommentSection';
+import AdminRecentPosts from '@/components/adminrecentpost/AdminRecentPosts';
+
 
 
 const DashBoard = () => {
   const { setToggleSidePane, toggleSidePane } = useContext(ThemeContext);
+  
+  const circumference = 2 * Math.PI * 36;
 
+  const handleKeyCombination = (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
+      event.preventDefault(); 
+      setToggleSidePane((prev) => !prev);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyCombination);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyCombination);
+    };
+  }, []);
+ 
   return (
     <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px', zIndex:10} : {'--left': '300px', zIndex:10}}>
       
@@ -25,8 +51,9 @@ const DashBoard = () => {
         }}>
           { '☰' }
       </p>        
-      <h1>Dashboard</h1>
+      <h2>Dashboard</h2>
       <ThemeToggle />
+      {/* <Searchbar /> */}
       </div>
 {/* 
       <p>
@@ -35,63 +62,63 @@ const DashBoard = () => {
       </p> */}
 
       <div className={styles.topContainer}>
-          <Card justify={'space-between'}>
+          <Card className={styles.cardTop} justify={'space-between'}>
               <div className={styles.left}>
                 <FontAwesomeIcon icon={ faCab }/>
                 <p className={styles.title}>12,222.00</p>
-                <p className={styles.subTitle}>Emails Sent</p>
+                <p className={styles.subTitle}>Real Time Number of Visits </p> {/*today and percentage heigher that yesterday*/}
               </div>
-              <div className={styles.right} style={{'--value':200, '--color': 'red'}}>
+              <div className={styles.right} style={{'--circumference':circumference, '--percentage': 20, '--color': 'red'}}>
                   <svg>
                     <circle cx={45} cy={45} r={36}/>
                   </svg>
                   <div className={styles.percentage}>
-                    90
+                    20%
                   </div>
               </div>
           </Card>
-          <Card justify={'space-between'}>
+          <Card className={styles.cardTop} justify={'space-between'}>
               <div className={styles.left}>
                 <FontAwesomeIcon icon={ faCab }/>
                 <p className={styles.title}>12,222.00</p>
-                <p className={styles.subTitle}>Emails Sent</p>
+                <p className={styles.subTitle}>Unique visitors</p>
               </div>
-              <div className={styles.right} style={{'--value':180, '--color': 'green'}}>
+              <div className={styles.right} style={{'--circumference':circumference, '--percentage': 35.5, '--color': 'green'}}>
                   <svg>
                     <circle cx={45} cy={45} r={36}/>
                   </svg>
                   <div className={styles.percentage}>
-                    90
+                    35.5%
                   </div>
               </div>
           </Card>
-          <Card justify={'space-between'}>
+          <Card className={styles.cardTop} justify={'space-between'}>
               <div className={styles.left}>
                 <FontAwesomeIcon icon={ faCab }/>
                 <p className={styles.title}>12,222.00</p>
-                <p className={styles.subTitle}>Emails Sent</p>
+                <p className={styles.subTitle}>Bounce Rate</p>
               </div>
-              <div className={styles.right} style={{'--value':100, '--color': 'gold'}}>
+              <div className={styles.right} style={{'--circumference':circumference, '--percentage': 51.1, '--color': 'gold'}}>
                   <svg>
                     <circle cx={45} cy={45} r={36}/>
                   </svg>
                   <div className={styles.percentage}>
-                    90
+                    51.1%
                   </div>
               </div>
           </Card>
-          <Card justify={'space-between'}>
+          <Card className={styles.cardTop} justify={'space-between'}>
               <div className={styles.left}>
                 <FontAwesomeIcon icon={ faCab }/>
                 <p className={styles.title}>12,222.00</p>
-                <p className={styles.subTitle}>Emails Sent</p>
+                <p className={styles.subTitle}>total Posts/Like/Comments</p>
               </div>
-              <div className={styles.right} style={{'--value':150, '--color': 'lightblue'}}>
+              <div className={styles.right} style={{'--circumference':circumference, '--percentage': 10, '--color': 'lightblue'}}>
                   <svg>
                     <circle cx={45} cy={45} r={36}/>
                   </svg>
                   <div className={styles.percentage}>
-                    90
+                    10%
                   </div>
               </div>
           </Card>
@@ -102,17 +129,45 @@ const DashBoard = () => {
 
 
       <div className={styles.secondRow}>
-          <Card>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, voluptatum repellendus! Praesentium distinctio blanditiis accusamus, architecto, molestiae fuga earum aliquid repudiandae vitae magnam obcaecati! Pariatur alias, amet nisi dicta, saepe tenetur sequi magnam earum quisquam, consequatur veritatis? Itaque voluptate ratione repellendus voluptatum nam tempore culpa accusamus! Sequi tempore quas obcaecati.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, voluptatum repellendus! Praesentium distinctio blanditiis accusamus, architecto, molestiae fuga earum aliquid repudiandae vitae magnam obcaecati! Pariatur alias, amet nisi dicta, saepe tenetur sequi magnam earum quisquam, consequatur veritatis? Itaque voluptate ratione repellendus voluptatum nam tempore culpa accusamus! Sequi tempore quas obcaecati.
+          <Card className={`${styles.card} ${styles.card1}`}>
+              <PostPerformanceChart />
           </Card>
 
-          <Card>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, voluptatum repellendus! Praesentium distinctio blanditiis accusamus, architecto, molestiae fuga earum aliquid repudiandae vitae magnam obcaecati! Pariatur alias, amet nisi dicta, saepe tenetur sequi magnam earum quisquam, consequatur veritatis? Itaque voluptate ratione repellendus voluptatum nam tempore culpa accusamus! Sequi tempore quas obcaecati.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, voluptatum repellendus! Praesentium distinctio blanditiis accusamus, architecto, molestiae fuga earum aliquid repudiandae vitae magnam obcaecati! Pariatur alias, amet nisi dicta, saepe tenetur sequi magnam earum quisquam, consequatur veritatis? Itaque voluptate ratione repellendus voluptatum nam tempore culpa accusamus! Sequi tempore quas obcaecati.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, voluptatum repellendus! Praesentium distinctio blanditiis accusamus, architecto, molestiae fuga earum aliquid repudiandae vitae magnam obcaecati! Pariatur alias, amet nisi dicta, saepe tenetur sequi magnam earum quisquam, consequatur veritatis? Itaque voluptate ratione repellendus voluptatum nam tempore culpa accusamus! Sequi tempore quas obcaecati.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, voluptatum repellendus! Praesentium distinctio blanditiis accusamus, architecto, molestiae fuga earum aliquid repudiandae vitae magnam obcaecati! Pariatur alias, amet nisi dicta, saepe tenetur sequi magnam earum quisquam, consequatur veritatis? Itaque voluptate ratione repellendus voluptatum nam tempore culpa accusamus! Sequi tempore quas obcaecati.
+          <PopularPosts className={`${styles.card} ${styles.card2}`} borderRad='10px' marginBlock='0' isOutline='0' />
+
+
+          <Card className={`${styles.card} ${styles.card3}`}>
+              {/* Pie Chart, Content Engagement */}
+              {/* <FeedbackChart /> */}
           </Card>
+
+          <Card className={`${styles.card} ${styles.card4}`}>
+              <ContentEngagementChart />
+          </Card>
+
+          <Card className={`${styles.card} ${styles.card5}`}>
+             <AdminRecentPosts />
+          </Card>
+
+          <Card className={`${styles.card} ${styles.card6}`}>
+              <GrowthRateChart />
+          </Card>
+
+          <Card className={`${styles.card} ${styles.card7}`}>
+             Recent Comments, timestamps, posts
+             {/* <CommentSection /> */}
+          </Card>
+
+          <Card className={`${styles.card} ${styles.card8}`}>
+              Number of Drafts, Published and Scheduled OR Popular Posts
+          </Card>
+
+          <Card className={`${styles.card} ${styles.card9}`}>
+              <AdminCommentsSection />
+          </Card>
+
+
+          
       </div>
    
     </div>

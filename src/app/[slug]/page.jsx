@@ -61,7 +61,7 @@ const SingleBlogPage = () => {
                     <CommentSection />
                     <Pagination />
                 </div>
-                <PopularPosts className={styles.popularPosts}/>
+                <PopularPosts className={styles.popularPosts}  borderRad='20px' marginBlock='5%' isOutline='2px'/>
             </div>
             </div>
         </Wrapper>

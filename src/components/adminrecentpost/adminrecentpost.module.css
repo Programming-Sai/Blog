@@ -1,0 +1,96 @@
+.container{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+    align-items: stretch; 
+    justify-items: stretch; 
+    padding: 20px;
+    background-image: linear-gradient(rgba(0,0,0,var(--alpha)), rgba(0,0,0,var(--alpha))), var(--img);
+    background-position: center;
+    background-size: cover;
+    color: white;
+    border-radius: 10px;
+}
+
+
+.sliderItem{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.top, .itemsContainer, .textContainer, .stats,.stat{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.top{
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.itemsContainer{
+    flex-direction: row;
+    gap: 5px;
+    opacity: 0.5;
+}
+.button{
+    cursor: pointer;
+    padding: 5px;
+}
+
+.textContainer{
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+
+.textContainer p:first-child{
+    text-transform: capitalize;
+    opacity: 0.5;
+    width: 100%;
+    text-align: left;
+}
+
+.textContainer h4{
+    margin-block: 10px 30px;
+}
+
+.textContainer .stats{
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.stat{
+    white-space: nowrap;
+    font-size: 0.8rem;
+    padding: 5px;
+    background-color: var(--footer-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.icon{
+    font-size: 1.2rem;
+}
+
+.dash{
+    width: 20px;
+    height: 5px;
+    background-color: transparent;
+    border: 1px solid white;
+    transition: 0.5s ease;
+    border-radius: 10px;
+}
+
+.dash.active{
+    background-color: white;
+}

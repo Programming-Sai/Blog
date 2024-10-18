@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import Glow from '../glow/Glow';
 
-const PopularPosts = ({ width }) => {
+const PopularPosts = ({ width , className, borderRad, marginBlock, isOutline}) => {
   return (
-    <div className={styles.container} style={ {width: width } }>
+    <div className={`${styles.container} ${className}`} style={ {width: width, '--borderRad': borderRad, '--marginBlock': marginBlock, '--outline': isOutline} }>
       <h2>Popular Posts</h2>
       <div className={styles.postsContainer}>
         
