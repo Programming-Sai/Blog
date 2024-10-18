@@ -13,6 +13,7 @@
     --back-color: rgba(6,120,11,0.6);
     --footer-bg: rgba(217, 217, 217, 0.43);
     --brightness: 0.2;
+    --alpha: 0.1;
 }
 
 .dark{
@@ -24,10 +25,13 @@
     --soft-text-color: rgba(255, 255, 255, 0.32);
     --mobile-toggle-image: url(/_next/static/media/sun.3f563bb0.png);
     --border-color: rgba(255, 255, 255, 0.28);
-    --back-color: rgba(6,120,11,0.2);
+    --back-color: rgba(6,120,11,0.6);
     --footer-bg: rgba(217, 217, 217, 0.1);
     --brightness: 1;
+    --alpha: 0.5;
 }
+
+
 
 * {
     margin: 0;

@@ -5,6 +5,7 @@
     min-height: 100vh;
     padding: 20px;
     top: 100%;
+    margin-bottom: 5%;
 }   
 
 
@@ -27,13 +28,29 @@
     margin-block: 2%;
 }
 
-
-.topContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2%;
+.top h2{
+    width: 100%;
+    text-align: center;
 }
+
+
+.topContainer {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;            
+    flex-wrap: wrap;          
+}
+
+
+.cardTop{
+    width: min(260px, 100%);
+}
+
+.container.active .cardTop{
+    width: min(313px, 100%);
+}
+
+
 
 .left{
     display: flex;
@@ -57,9 +74,10 @@
     stroke-linecap: round;
     stroke: var(--color);
     transform: translate(50% 50%);
-    stroke-dashoffset: -30px;
-    stroke-dasharray: var(--value);
+    stroke-dashoffset: calc(var(--circumference) - (var(--percentage) / 100) * var(--circumference));
+    stroke-dasharray: var(--circumference);
 }
+
 
 .right .percentage{
     position: absolute;
@@ -79,9 +97,77 @@
     }
 }
 
-.secondRow{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2%;
+.secondRow {
+    display: grid;
+    width: 100%;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+      "a a b"
+      "c d b"
+      "e f f"
+      "h h g"
+      "i i g"
+; 
+    grid-auto-rows: 200px auto fit-content;
+    margin-top: 20px;
+  }
+
+
+.card1{
+    grid-area: a;
+    height: 450px;
 }
+
+
+.card2{
+    grid-area: b;
+}
+
+.card3{
+    grid-area: c;
+    height: 500px;
+
+}
+
+
+.card4{
+    grid-area: d;
+    height: 400px;
+    width: 500px;
+}
+
+
+.card5{
+    grid-area: e;
+    height: 400px;
+    padding: 0 !important;
+   
+}
+
+
+.card6{
+    grid-area: f;
+    height: 400px;
+}
+
+.card7{
+    grid-area: g;
+    height: 600px;
+    position: relative;
+}
+
+
+.card8{
+    grid-area: h;
+}
+
+
+.card9{
+    grid-area: i;
+    height: 500px;
+}
+
+/* .card10{
+    grid-area: j;
+} */

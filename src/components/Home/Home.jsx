@@ -17,7 +17,7 @@ export default function Home({ theme }) {
       <PopularTags />
       <div className={styles.lower}>
           <RecentPosts  className={styles.itemOne}/>
-          <PopularPosts  className={styles.itemTwo}/>
+          <PopularPosts  className={styles.itemTwo} borderRad='20px' marginBlock='5%' isOutline='2px'/>
       </div>
       <Pagination theme={ theme } width={ width }/>
     </div>

@@ -32,7 +32,7 @@
 
 .grow {
     transform: scale(1.2) translateX(15%);
-    width: 100%;
+    width: 200%;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); 
 }
 
@@ -119,6 +119,14 @@
     .container{
         margin-left: -40px;
     }
+    .grow {
+        position: absolute;
+        background-color: rgb(230, 239, 218);
+        width: 95%; 
+        height: auto; 
+        margin: 0; 
+        transform: translateX(-18%);
+    }
 }
 
 
@@ -135,6 +143,9 @@
     .resultContainer:last-child{
         margin-bottom: 20%;
     }
+    .grow {
+        transform: translateX(-20%);
+    }
 }
 
 
@@ -142,6 +153,9 @@
 @media screen and (max-width:668px) {
     .container{
         margin-left: -20px;
+    }
+    .grow {
+        transform: translateX(-15%);
     }
 }
 
@@ -178,7 +192,7 @@
         width: 95%; 
         height: auto; 
         margin: 0; 
-        transform: translateX(-17%);
+        transform: translateX(-50%);
     }
 
     .grow > .searchbar {

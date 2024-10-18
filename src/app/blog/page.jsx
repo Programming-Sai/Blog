@@ -20,7 +20,7 @@ const BlogCategory = ({ slug }) => {
                         <RecentPosts className={styles.itemOne} />
                         <Pagination width={'100%'} className={styles.button}/>
                     </div>
-                    <PopularPosts className={styles.itemTwo} />
+                    <PopularPosts className={styles.itemTwo}   borderRad='20px' marginBlock='5%' isOutline='2px'/>
                 </div>
             </div>
         </Wrapper>
