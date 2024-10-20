@@ -5,11 +5,11 @@
     justify-content: var(--justify);
     align-items: center;
     border-radius: 5px;
-    /* margin-block: 10px; */
     transition: all 0.9s ease;
 }
 
 
 .container:hover{
     border: 1px solid var(--border-color);
+    transform: scale(1.03);
 }
