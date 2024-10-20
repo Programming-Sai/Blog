@@ -11,7 +11,7 @@ const SideNavbar = () => {
     const { toggleSidePane } = useContext(ThemeContext);
 
   return (
-    <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px'} : {'--left': '300px'}}>
+    <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px'} : {'--left': '250px'}}>
      
       
 

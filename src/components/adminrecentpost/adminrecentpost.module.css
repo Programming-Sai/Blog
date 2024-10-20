@@ -1,16 +1,27 @@
+.container, .top, .sliderItems, .itemsContainer, .textContainer, .stats,.stat, .dashes{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .container{
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    display: grid;
-    align-items: stretch; 
-    justify-items: stretch; 
-    padding: 20px;
-    background-image: linear-gradient(rgba(0,0,0,var(--alpha)), rgba(0,0,0,var(--alpha))), var(--img);
-    background-position: center;
-    background-size: cover;
+    justify-content: space-between;
+    flex-direction: column;
     color: white;
-    border-radius: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+
+.sliderItems{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    justify-content: flex-start;
+    transition: transform 1s ease-in-out; /* Smooth sliding */
+
 }
 
 
@@ -21,13 +32,12 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    background-image: linear-gradient(rgba(0,0,0,var(--alpha)), rgba(0,0,0,var(--alpha))), var(--img);
+    background-position: center;
+    background-size: cover;
+    padding: 20px;
 }
 
-.top, .itemsContainer, .textContainer, .stats,.stat{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .top{
     justify-content: flex-end;
     width: 100%;
@@ -43,6 +53,10 @@
     padding: 5px;
 }
 
+.button:hover{
+    transform: scale(1.05);
+}
+
 .textContainer{
     flex-direction: column;
     justify-content: space-between;
@@ -53,12 +67,14 @@
 .textContainer p:first-child{
     text-transform: capitalize;
     opacity: 0.5;
-    width: 100%;
+    width: 95%;
     text-align: left;
 }
 
 .textContainer h4{
     margin-block: 10px 30px;
+    text-align: left;
+    width: 95%;
 }
 
 .textContainer .stats{
@@ -82,15 +98,43 @@
     font-size: 1.2rem;
 }
 
+.dashes{
+    gap: 10px;
+    height: fit-content;
+    margin-top: 20px;
+    position: absolute;
+
+}
+
 .dash{
-    width: 20px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
+    padding: 5px;
     background-color: transparent;
     border: 1px solid white;
     transition: 0.5s ease;
-    border-radius: 10px;
+    border-radius: 100px;
+    cursor: pointer;
 }
 
 .dash.active{
     background-color: white;
+    animation: pulse 1.5s infinite;
 }
+
+.noTransition{
+    transition: none !important; /* Disable transition */
+}
+
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  

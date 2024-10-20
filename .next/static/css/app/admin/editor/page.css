@@ -1,0 +1,330 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/app/admin/editor/editor.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+.editor_container__fCyqN{
+    position: relative;
+    width: calc(100% - var(--left));
+    left: var(--left);
+    min-height: 100vh;
+    padding: 20px;
+    top: 100%;
+    margin-bottom: 5%;
+    /* background-color: red; */
+} 
+
+
+.editor_buton__Sv7MY {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: left 0.3s ease; 
+}
+
+.editor_container__fCyqN.editor_active__KGPNn ~ .editor_buton__Sv7MY {
+    left: 80px; 
+}
+
+.editor_top__Jh5nW{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-block: 2%;
+}
+
+.editor_top__Jh5nW h2{
+    width: 100%;
+    text-align: center;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/themetoggle/themetoggle.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+.themetoggle_container__SfpgS{
+    width:60px;
+    height: 26px;
+    border: 2px solid;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.themetoggle_ball__IiYbw{
+    width:20px;
+    height:20px;
+    border-radius: 100%;
+    background-color: green;
+    position: absolute;
+    transition: 0.5s ease left;
+}
+
+
+@media screen and (max-width:580px) {  
+    .themetoggle_ball__IiYbw{
+        display: none;
+    }
+    .themetoggle_img__MRGts{
+        display: none;
+    }
+    .themetoggle_container__SfpgS{
+        width: 26px;
+        border-radius: 50%;
+        background-image: var(--mobile-toggle-image);
+        background-size: contain;
+        padding: 13px;
+        margin: 0;
+        margin-left: 20px;
+    }
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/searchbar/searchbar.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+
+.searchbar_container__fqGdD {
+    background-color: rgb(230, 239, 218);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: 0.5s ease;
+    z-index: 101;
+    position: relative;
+    margin-left: -60px;
+}
+
+.searchbar_searchbar__XjMIS {
+    width: 100%;
+    height: 100%;
+    padding: 15px 25px;
+    padding-left: 5px;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.searchbar_searchIcon__vzYFT {
+    margin-left: 10px;
+    color: black;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.searchbar_grow__F7VY2 {
+    transform: scale(1.2) translateX(15%);
+    width: 200%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.searchbar_overlay__dDZpq {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100vw;
+    height: 100vh;
+    -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+    z-index: 100 !important;
+    pointer-events: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.searchbar_result__erD66 {
+    width: 100%;
+    height: 90%;
+    overflow: auto;
+    padding: 10px;
+    margin-top:10%;
+    padding-bottom: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 5%;
+}
+
+
+.searchbar_counter___oNkL{
+    counter-reset: count;
+}
+
+.searchbar_resultContainer__Ad5UC{
+    width: 30%;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    position: relative;
+    background: linear-gradient(transparent 5%, var(--gradient)), var(--back);
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    transition: 0.5s ease;
+    cursor: pointer;
+    counter-increment: count;
+}
+
+.searchbar_resultContainer__Ad5UC:hover{
+    transform: scale(1.05);
+}
+
+
+
+.searchbar_resultContainer__Ad5UC::before{
+    content: counter(count, decimal-leading-zero);
+    position: absolute;
+    z-index: 10;
+    left: 60%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    font-size: 7rem;
+    font-weight:900;
+    color: var(--index-color);
+}
+
+
+
+
+.searchbar_noResult__scn2e{
+    font-size: 70px;
+    margin-top: 10%;
+    font-weight: bold;
+}
+
+
+
+@media screen and (max-width:  1100px) {
+    .searchbar_container__fqGdD{
+        margin-left: -40px;
+    }
+    .searchbar_grow__F7VY2 {
+        position: absolute;
+        background-color: rgb(230, 239, 218);
+        width: 95%; 
+        height: auto; 
+        margin: 0; 
+        transform: translateX(-18%);
+    }
+}
+
+
+@media screen and (max-width: 868px) {
+    .searchbar_grow__F7VY2, .searchbar_container__fqGdD{
+        width: 100%;
+    }
+    .searchbar_resultContainer__Ad5UC{
+        width: 80%;
+    }
+    .searchbar_result__erD66{
+        margin-top: 20%;
+    }
+    .searchbar_resultContainer__Ad5UC:last-child{
+        margin-bottom: 20%;
+    }
+    .searchbar_grow__F7VY2 {
+        transform: translateX(-20%);
+    }
+}
+
+
+
+@media screen and (max-width:668px) {
+    .searchbar_container__fqGdD{
+        margin-left: -20px;
+    }
+    .searchbar_grow__F7VY2 {
+        transform: translateX(-15%);
+    }
+}
+
+
+@media screen and (max-width: 580px) {
+    .searchbar_searchIcon__vzYFT {
+        padding: 7px;
+        width: 17px;
+        height: 17px;
+        background-color: var(--text-color);
+        border-radius: 50%; 
+        color: var(--bg);
+        transition: 0.5s ease-in-out;
+        position: static;
+        margin: 0;
+        display: block;
+    }
+
+    .searchbar_searchbar__XjMIS {
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .searchbar_container__fqGdD {
+        width: 0;
+        height: 0;
+    }
+
+    .searchbar_grow__F7VY2 {
+        position: absolute;
+        background-color: rgb(230, 239, 218);
+        width: 95%; 
+        height: auto; 
+        margin: 0; 
+        transform: translateX(-50%);
+    }
+
+    .searchbar_grow__F7VY2 > .searchbar_searchbar__XjMIS {
+        opacity: 1;
+        width: 100%;
+        visibility: visible;
+        pointer-events: all;
+    }
+    
+    .searchbar_grow__F7VY2 > .searchbar_searchIcon__vzYFT {
+        background-color: transparent;
+        color: black;
+        position: static;
+    }
+    .searchbar_result__erD66{
+        margin-top: 20%;
+        padding-bottom: 10rem;
+        overflow-x: hidden;
+    }
+    .searchbar_resultContainer__Ad5UC{
+        width: 85%;
+    }
+    .searchbar_resultContainer__Ad5UC::before{
+        left: 45%;
+    }
+    .searchbar_noResult__scn2e{
+        font-size: 2.5rem;
+    }
+}
+
+
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/components/card/card.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+.card_container__xBy9R{
+    padding: 10px;
+    background-color: var(--footer-bg);
+    display: flex;
+    justify-content: var(--justify);
+    align-items: center;
+    border-radius: 5px;
+    transition: all 0.9s ease;
+}
+
+
+.card_container__xBy9R:hover{
+    border: 1px solid var(--border-color);
+    transform: scale(1.03);
+}
