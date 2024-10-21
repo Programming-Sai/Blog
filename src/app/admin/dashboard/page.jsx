@@ -1,61 +1,29 @@
 'use client'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import styles from './dashboard.module.css';
-import ThemeToggle from '@/components/themetoggle/ThemeToggle';
-import Searchbar from '@/components/searchbar/Searchbar';
 import { ThemeContext } from '@/context/ThemeContext'
 import Card from '@/components/card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCab, faClock, faComputer, faEarth, faFileAlt, faNewspaper, faStopwatch, faTv } from '@fortawesome/free-solid-svg-icons';
-import RecentPosts from '@/components/recentposts/RecentPosts';
+import { faEarth, faNewspaper, faStopwatch, faTv } from '@fortawesome/free-solid-svg-icons';
 import PopularPosts from '@/components/popularposts/PopularPosts';
-
-import { PostPerformanceChart, GrowthRateChart, FeedbackChart,  EngagementMetricsChart, ContentEngagementChart, TrafficOverviewChart  } from '@/components/charts/Charts';
+import { PostPerformanceChart, GrowthRateChart, ContentEngagementChart, TrafficSourcesChart  } from '@/components/charts/Charts';
 import AdminCommentsSection from '@/components/admincommentssection/AdminCommentsSection';
-import CommentSection from '@/components/commentsection/CommentSection';
 import AdminRecentPosts from '@/components/adminrecentpost/AdminRecentPosts';
 import ServerStatus from '@/components/serverstatus/ServerStatus';
 
 
 
 const DashBoard = () => {
-  const { setToggleSidePane, toggleSidePane } = useContext(ThemeContext);
+  const { toggleSidePane } = useContext(ThemeContext);
   
   const circumference = 2 * Math.PI * 36;
 
-  const handleKeyCombination = (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
-      event.preventDefault(); 
-      setToggleSidePane((prev) => !prev);
-    }
-  }
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyCombination);
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('keydown', handleKeyCombination);
-    };
-  }, []);
- 
+  
   return (
     <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px', zIndex:10} : {'--left': '250px', zIndex:10}}>
       
-      
-      
-      
-      <div className={styles.top}>
-      <p className={`${styles.buton} ${styles.open}`} style={{zIndex:100}} onClick={(event) => {
-          event.stopPropagation(); 
-          setToggleSidePane(!toggleSidePane);
-        }}>
-          { '☰' }
-      </p>        
-      <h2>Dashboard</h2>
-      <ThemeToggle />
-      {/* <Searchbar /> */}
-      </div>
 
 
       <div className={styles.topContainer}>
@@ -121,8 +89,7 @@ const DashBoard = () => {
 
 
           <Card className={`${styles.card} ${styles.card3}`}>
-              {/* Pie Chart, Content Engagement */}
-              {/* <FeedbackChart /> */}
+              <TrafficSourcesChart />
           </Card>
 
           <Card className={`${styles.card} ${styles.card4}`}>
@@ -158,3 +125,8 @@ const DashBoard = () => {
 }
 
 export default DashBoard
+
+
+
+// TODO When the page reaches a tablet screen, in the css medai query change the --left progerty so it stays, 80px.
+// TODO Add a subtitle to each blog (Optionally)
