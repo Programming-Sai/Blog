@@ -12,16 +12,16 @@
     color: white;
     border-radius: 5px;
     overflow: hidden;
-
+    position: relative;
 }
 
 .sliderItems{
-    width: 100%;
+    width: 400px;
     height: 100%;
     position: relative;
     justify-content: flex-start;
-    transition: transform 1s ease-in-out; /* Smooth sliding */
-
+    transition: transform 1s ease-in-out;
+    display: flex;
 }
 
 
@@ -35,7 +35,7 @@
     background-image: linear-gradient(rgba(0,0,0,var(--alpha)), rgba(0,0,0,var(--alpha))), var(--img);
     background-position: center;
     background-size: cover;
-    padding: 20px;
+    padding: 30px;
 }
 
 .top{

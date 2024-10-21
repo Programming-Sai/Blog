@@ -123,9 +123,9 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 
       "a a b"
-      "c d b"
-      "e f f"
-      "h h g"
+      "e d b"
+      "c f f"
+      "c h g"
       "i i g"
 ; 
     grid-auto-rows: 200px auto fit-content;
@@ -145,12 +145,13 @@
 
 .card2:hover{
     border: 1px solid var(--border-color);
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .card3{
     grid-area: c;
-    height: 500px;
+    height: 425px;
+    width: 425px;
 }
 
 
@@ -184,6 +185,7 @@
 
 .card8{
     grid-area: h;
+    display: none !important;
 }
 
 

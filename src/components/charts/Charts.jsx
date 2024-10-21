@@ -7,8 +7,100 @@ import { ThemeContext } from '@/context/ThemeContext';
 
 
 
+const TrafficSourcesChart = () => {
+  // Sample data for traffic sources including social media
+  const trafficData = [
+    { name: 'Organic Search', value: 55 },
+    { name: 'Direct', value: 25 },
+    { name: 'Referral', value: 10 },
+    { name: 'Social Media', value: 5 }, // Aggregate for social media
+    { name: 'Email', value: 5 },
+  ];
 
-// Post Performance Chart (Line/Bar Chart)
+  // Sample data for social media breakdown
+  const socialMediaData = [
+    { name: 'Facebook', value: 3, color: '#4CAF50' },  // Green
+    { name: 'Twitter', value: 1, color: '#81C784' },   // Light Green
+    { name: 'Instagram', value: 1, color: '#A5D6A7' }, // Light Greenish
+    { name: 'LinkedIn', value: 2, color: '#4A8C2A' },  // Darker Green
+    { name: 'YouTube', value: 2, color: '#66BB6A' },   // Medium Green
+    { name: 'Snapchat', value: 1, color: '#DCE775' },   // Light Yellowish Green
+    { name: 'TikTok', value: 1, color: '#C6FF00' },     // Bright Green
+  ];
+
+  const COLORS = [
+    '#4CAF50',  // Green (Facebook)
+    '#81C784',  // Light Green (Twitter)
+    '#A5D6A7',  // Light Greenish (Instagram)
+    '#4A8C2A',  // Darker Green (LinkedIn)
+    '#66BB6A',  // Medium Green (YouTube)
+    '#DCE775',  // Light Yellowish Green (Snapchat)
+    '#C6FF00',  // Bright Green (TikTok)
+  ];
+
+  // Custom Tooltip
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const { name, value } = payload[0];
+      let detail = `${name}: ${value}%`;
+
+      // If the "Social Media" segment is hovered, show breakdown
+      if (name === 'Social Media') {
+        return (
+          <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}>
+            <p>{detail}</p>
+            {socialMediaData.map((source, index) => (
+              <p key={index} style={{ color: source.color }}>
+                {source.name}: {source.value}%
+              </p>
+            ))}
+          </div>
+        );
+      }else{
+        return (
+          <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}>
+            <p>{detail}</p>
+          </div>
+        ); 
+      }
+      
+         
+      
+      }
+    return null;
+  };
+
+  return (
+      <ResponsiveContainer width="100%" height={300} className={styles.container}>
+      <h4>Traffic Sources</h4>
+      <h5>With a High Focus On Social Media Sources.</h5> 
+        <PieChart>
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Pie
+            data={trafficData}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            labelLine={true}
+            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+            outerRadius={80}
+            paddingAngle={5}
+            dataKey="value"
+          >
+            {trafficData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+  );
+};
+
+
+
+
+
 
 const PostPerformanceChart = () => {
   const { theme } = useContext(ThemeContext);
@@ -251,7 +343,16 @@ const ContentEngagementChart = () => {
     { name: 'Saves', value: 100 },
   ];
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = [
+    '#4CAF50',  // Green (Facebook)
+    '#81C784',  // Light Green (Twitter)
+    '#A5D6A7',  // Light Greenish (Instagram)
+    '#4A8C2A',  // Darker Green (LinkedIn)
+    '#66BB6A',  // Medium Green (YouTube)
+    '#DCE775',  // Light Yellowish Green (Snapchat)
+    '#C6FF00',  // Bright Green (TikTok)
+  ];
+
 
   return (
     <ResponsiveContainer width="100%" height={300} className={styles.container}>
@@ -273,6 +374,7 @@ const ContentEngagementChart = () => {
           ))}
         </Pie>
         <Tooltip />
+        <Legend />
       </PieChart>
     </ResponsiveContainer>
   );
@@ -288,5 +390,6 @@ export {
   FeedbackChart, 
   EngagementMetricsChart, 
   TrafficOverviewChart ,
-  ContentEngagementChart
+  ContentEngagementChart,
+  TrafficSourcesChart
 };

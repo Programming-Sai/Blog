@@ -14,42 +14,9 @@ const Editor = () => {
   const { setToggleSidePane, toggleSidePane } = useContext(ThemeContext);
 
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyCombination);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('keydown', handleKeyCombination);
-    };
-  }, []);
-
-
-  const handleKeyCombination = (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
-      event.preventDefault(); 
-      setToggleSidePane((prev) => !prev);
-    }
-  }
-
-
-
-
   return (
     <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px', zIndex:10} : {'--left': '250px', zIndex:10}}>
-      
-      
-      <div className={styles.top}>
-      <p className={`${styles.buton} ${styles.open}`} style={{zIndex:100}} onClick={(event) => {
-          event.stopPropagation(); 
-          setToggleSidePane(!toggleSidePane);
-        }}>
-          { '☰' }
-      </p>        
-      <h2>Editor</h2>
-      <ThemeToggle />
-      {/* <Searchbar /> */}
-      </div>
-
+    
     </div>
   )
 }

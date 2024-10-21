@@ -2,10 +2,8 @@
     position: relative;
     width: calc(100% - var(--left));
     left: var(--left);
-    min-height: 100vh;
     padding: 20px;
     top: 100%;
-    margin-bottom: 5%;
 } 
 
 
