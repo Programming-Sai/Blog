@@ -26,7 +26,6 @@
 }
 
 .tableContainer{
-    padding: 10px;
     min-width: 100%;
     margin-block: 5%;
 }
@@ -52,7 +51,7 @@
     transform: scale(1.05);
 }
 
-.containerTable h4{
+.containerTable h3{
     margin-block: 3%;
     padding: 20px;
 }
