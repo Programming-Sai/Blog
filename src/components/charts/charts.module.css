@@ -16,3 +16,53 @@
     margin-top: -5%;
 }
 
+
+.containerTable{
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    overflow: scroll;
+    margin-block: 20px;
+}
+
+.tableContainer{
+    padding: 10px;
+    min-width: 100%;
+    margin-block: 5%;
+}
+
+.tableContainer th, .tableContainer td{
+    padding: 8px;
+    text-align: left;
+}
+
+.tableContainer th {
+    font-weight: bold;
+}
+
+.tableContainer thead{
+    background-color: var(--back-color);
+}
+
+.tableContainer tr:nth-child(even){
+    background-color: var(--index-color);
+}
+
+.tableContainer tr:hover{
+    transform: scale(1.05);
+}
+
+.containerTable h4{
+    margin-block: 3%;
+    padding: 20px;
+}
+
+.tableContainer tbody tr td ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-direction: column;
+}
+  
+  

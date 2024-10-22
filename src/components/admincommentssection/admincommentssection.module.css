@@ -17,6 +17,9 @@
     padding: 8px;
     text-align: left;
   }
+  .commentsTable thead{
+    background-color: var(--back-color);
+}
   
   .commentsTable th {
     font-weight: bold;

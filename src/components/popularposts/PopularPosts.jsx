@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import Glow from '../glow/Glow';
 
-const PopularPosts = ({ width , className, borderRad, marginBlock, isOutline}) => {
+const PopularPosts = ({ glow, width , className, borderRad, marginBlock, isOutline}) => {
   return (
     <div className={`${styles.container} ${className}`} style={ {width: width, '--borderRad': borderRad, '--marginBlock': marginBlock, '--outline': isOutline} }>
       <h2>Popular Posts</h2>
@@ -90,15 +90,17 @@ const PopularPosts = ({ width , className, borderRad, marginBlock, isOutline}) =
             </div>
           </div>
         </div>
-        <Glow 
-            top='150%' 
-            left='50%' 
-            width={500} 
-            height={500} 
-            color='#09D5B0'
-            mtop='90%'
-            mleft='50%'
-          />
+        {
+          glow && <Glow 
+                    top='150%' 
+                    left='50%' 
+                    width={500} 
+                    height={500} 
+                    color='#09D5B0'
+                    mtop='90%'
+                    mleft='50%'
+                  />
+        }
       </div>
     </div>
   )

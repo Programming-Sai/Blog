@@ -8,6 +8,10 @@
     transition: all 0.9s ease;
 }
 
+.container::-webkit-scrollbar{
+    width: 10px;
+}
+
 
 .container:hover{
     border: 1px solid var(--border-color);

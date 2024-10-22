@@ -6,6 +6,10 @@
     border-left: 20px solid transparent;
 }
 
+.buton{
+    display: none;
+}
+
 .container ul{
     position: absolute;
     top: 0;
@@ -168,3 +172,60 @@
     opacity: 0.6;
 }
 
+
+@media screen and (max-width:640px) {
+    .container{
+        position: absolute;
+        width: 60%;
+        height: 100vh;
+        top: 0;
+        left: var(--mleft);
+        z-index: 100;
+        background-color: green;
+    } 
+    .container.active ul{
+        margin-top: 100%;
+    }  
+    .imgContainer{
+        width: 100px;
+        height: 100px;
+    }
+    .container ul li:hover .a::before,
+    .container ul li:hover .a::after{
+        box-shadow: none;
+    }
+    .container ul li:last-child{
+        position: static;
+        bottom: auto;
+        width: auto;
+    }
+    .container.active ul li .a span{
+        display: block;
+    }
+    .container.active .imgContainer{
+        width: 100px;
+        height: 100px;
+    }
+    
+    .container.active h1, .container.active p{
+        display: block;
+    }
+
+    .buton{
+        font-size: 2rem;
+        transform: translateY( 50% );
+        cursor: pointer;
+        width: fit-content;
+    }
+    
+
+}
+
+@media screen and (max-width:480px) {
+    .container.active ul{
+        margin-top: 110%;
+    }  
+    .profileContainer{
+        margin-top: -30px;
+    }
+}
