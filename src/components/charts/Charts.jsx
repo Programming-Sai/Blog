@@ -440,7 +440,7 @@ const SEOMetrics = () => {
   
   return (
     <div className={styles.containerTable}>
-      <h4> SEO Performance Metrics </h4>
+      <h3> SEO Performance Metrics </h3>
       <table className={styles.tableContainer}>
         <thead>
           <tr>
