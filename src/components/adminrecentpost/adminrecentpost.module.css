@@ -16,7 +16,7 @@
 }
 
 .sliderItems{
-    width: 400px;
+    width: 380px;
     height: 100%;
     position: relative;
     justify-content: flex-start;
@@ -138,3 +138,32 @@
     }
   }
   
+
+@media screen and (max-width:640px) {
+    .sliderItems{
+        width: 400px;
+    }
+}
+
+@media screen and (max-width:480px) {
+    .sliderItems{
+        width: 340px;
+    }
+    .textContainer h4, .textContainer p:first-child, .textContainer{
+        width: 105%;
+    }
+    .stats {
+        display: grid;  
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 10px;  
+        width: 10%;  
+    }
+
+    .stat {
+        width: 90px; 
+    }
+    .stat:last-child {
+        grid-column: span 5;
+        width: 93.5%;
+    }
+}

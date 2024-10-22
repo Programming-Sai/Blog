@@ -30,8 +30,8 @@
 
 .imgContainer{
     position: relative;
-    min-width: 4.5rem; 
-    min-height: 4.5rem;
+    min-width: 3.6rem; 
+    min-height: 3.6rem;
     overflow: hidden;
     border-radius: 100px;
 }

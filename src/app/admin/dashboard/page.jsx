@@ -6,26 +6,21 @@ import Card from '@/components/card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEarth, faNewspaper, faStopwatch, faTv } from '@fortawesome/free-solid-svg-icons';
 import PopularPosts from '@/components/popularposts/PopularPosts';
-import { PostPerformanceChart, GrowthRateChart, ContentEngagementChart, TrafficSourcesChart  } from '@/components/charts/Charts';
+import { PostPerformanceChart, GrowthRateChart, ContentEngagementChart, TrafficSourcesChart, SEOMetrics  } from '@/components/charts/Charts';
 import AdminCommentsSection from '@/components/admincommentssection/AdminCommentsSection';
 import AdminRecentPosts from '@/components/adminrecentpost/AdminRecentPosts';
 import ServerStatus from '@/components/serverstatus/ServerStatus';
+import Glow from '@/components/glow/Glow';
 
 
 
 const DashBoard = () => {
   const { toggleSidePane } = useContext(ThemeContext);
   
-  const circumference = 2 * Math.PI * 36;
 
-
-
-  
   return (
-    <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px', zIndex:10} : {'--left': '250px', zIndex:10}}>
+    <div className={`${styles.container} ${toggleSidePane ? styles.active : ''}`} style={toggleSidePane ? {'--left': '80px', zIndex:10} : {'--left': '240px', zIndex:10}}>
       
-
-
       <div className={styles.topContainer}>
           <Card className={styles.cardTop} justify={'space-between'}>
             <div className={styles.text}>
@@ -76,16 +71,13 @@ const DashBoard = () => {
           </Card>
       </div>
 
-
-
-
-
       <div className={styles.secondRow}>
           <Card className={`${styles.card} ${styles.card1}`}>
               <PostPerformanceChart />
           </Card>
+          
 
-          <PopularPosts className={`${styles.card} ${styles.card2}`} borderRad='5px' marginBlock='0' isOutline='0' />
+          <PopularPosts glow={false} imageWidth={10} className={`${styles.card} ${styles.card2}`} borderRad='5px' marginBlock='0' isOutline='0' />
 
 
           <Card className={`${styles.card} ${styles.card3}`}>
@@ -109,7 +101,7 @@ const DashBoard = () => {
           </Card>
 
           <Card className={`${styles.card} ${styles.card8}`}>
-              Number of Drafts, Published and Scheduled OR Popular Posts
+             <SEOMetrics />
           </Card>
 
           <Card className={`${styles.card} ${styles.card9}`}>

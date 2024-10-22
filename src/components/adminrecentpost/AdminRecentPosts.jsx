@@ -65,6 +65,9 @@ const AdminRecentPosts = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+      if (currentSlide === totalSlides-1){
+        sliderData.push(sliderData.shift())
+      }
     }, 5000); 
 
     return () => clearInterval(interval); 

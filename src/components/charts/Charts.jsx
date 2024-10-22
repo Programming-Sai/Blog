@@ -99,9 +99,6 @@ const TrafficSourcesChart = () => {
 
 
 
-
-
-
 const PostPerformanceChart = () => {
   const { theme } = useContext(ThemeContext);
 
@@ -184,10 +181,6 @@ const PostPerformanceChart = () => {
 
 
 
-
-
-
-// Growth Rate Chart (Line Chart)
 const GrowthRateChart = () => {
   const { theme } = useContext(ThemeContext);
 
@@ -232,106 +225,6 @@ const GrowthRateChart = () => {
 };
 
 
-
-
-
-
-
-// Likes, Shares, and Other Feedback Chart (Bar Chart)
-
-const FeedbackChart = () => {
-  const { theme } = useContext(ThemeContext);
-
-  // Sample data with more feedback metrics
-  const data = [
-    { name: 'Post 1', Likes: 240, Shares: 130, Comments: 80, Views: 400, EngagementRate: 0.75, ViralityRate: 0.6 },
-    { name: 'Post 2', Likes: 150, Shares: 90, Comments: 50, Views: 300, EngagementRate: 0.65, ViralityRate: 0.5 },
-    { name: 'Post 3', Likes: 100, Shares: 70, Comments: 30, Views: 200, EngagementRate: 0.55, ViralityRate: 0.4 },
-    { name: 'Post 4', Likes: 90, Shares: 50, Comments: 20, Views: 150, EngagementRate: 0.5, ViralityRate: 0.35 },
-  ];
-
-  // Define colors based on theme
-  const barColors = {
-    Likes: theme === 'dark' ? '#FFAB00' : '#FFC107',
-    Shares: theme === 'dark' ? '#4CAF50' : '#8BC34A',
-    Comments: theme === 'dark' ? '#F44336' : '#FF5252',
-    Views: theme === 'dark' ? '#2196F3' : '#3F51B5',
-    'Engagement Rate': theme === 'dark' ? '#9C27B0' : '#E91E63',
-    'Virality Rate': theme === 'dark' ? '#FF9800' : '#FF5722',
-  };
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="Likes" fill={barColors.Likes} />
-        <Bar dataKey="Shares" fill={barColors.Shares} />
-        <Bar dataKey="Comments" fill={barColors.Comments} />
-        <Bar dataKey="Views" fill={barColors.Views} />
-        <Bar dataKey="EngagementRate" fill={barColors.EngagementRate} />
-        <Bar dataKey="ViralityRate" fill={barColors.ViralityRate} />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-};
-
-
-// Engagement Metrics (Bar Chart)
-const EngagementMetricsChart = () => {
-  const data = [
-    { name: 'Post 1', engagement: 400 },
-    { name: 'Post 2', engagement: 300 },
-    { name: 'Post 3', engagement: 200 },
-    { name: 'Post 4', engagement: 278 },
-    { name: 'Post 5', engagement: 189 },
-    { name: 'Post 6', engagement: 239 },
-    { name: 'Post 7', engagement: 349 },
-  ];
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="engagement" fill="#82ca9d" />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-};
-
-// Traffic Overview (Line Chart)
-const TrafficOverviewChart = () => {
-  const data = [
-    { date: 'Oct 1', Views: 4000, engagement: 2400 },
-    { date: 'Oct 2', Views: 3000, engagement: 2210 },
-    { date: 'Oct 3', Views: 2000, engagement: 2290 },
-    { date: 'Oct 4', Views: 2780, engagement: 2000 },
-    { date: 'Oct 5', Views: 1890, engagement: 2181 },
-    { date: 'Oct 6', Views: 2390, engagement: 2500 },
-    { date: 'Oct 7', Views: 3490, engagement: 2100 },
-  ];
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="Views" stroke="#8884d8" />
-        <Line type="monotone" dataKey="engagement" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
-  );
-};
 
 
 
@@ -380,16 +273,222 @@ const ContentEngagementChart = () => {
   );
 };
 
-// Export the pie chart component
+
+
+
+
+
+const SEOMetrics = () => {
+  const seoData = [
+    {
+      "keyword": "Best Travel Tips",
+      "clicks": 2300,
+      "impressions": 45000,
+      "ctr": 5.11,
+      "avg_position": 3.5,
+      "pages": [
+        "/blog/best-travel-tips-2024",
+        "/category/travel",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "Programming Tips",
+      "clicks": 1800,
+      "impressions": 30000,
+      "ctr": 6.0,
+      "avg_position": 4.2,
+      "pages": [
+        "/blog/top-programming-tips",
+        "/category/programming",
+        "/contact"
+      ]
+    },
+    {
+      "keyword": "Home-Cooked Meals",
+      "clicks": 1500,
+      "impressions": 25000,
+      "ctr": 6.0,
+      "avg_position": 4.8,
+      "pages": [
+        "/blog/best-home-cooked-meals-2024",
+        "/category/food",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "Fashion Trends",
+      "clicks": 2100,
+      "impressions": 35000,
+      "ctr": 6.0,
+      "avg_position": 2.1,
+      "pages": [
+        "/blog/fashion-trends-2024",
+        "/category/fashion",
+        "/contact"
+      ]
+    },
+    {
+      "keyword": "Hidden Travel Gems",
+      "clicks": 2800,
+      "impressions": 50000,
+      "ctr": 5.6,
+      "avg_position": 1.9,
+      "pages": [
+        "/blog/hidden-travel-gems",
+        "/category/travel",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "SEO Best Practices",
+      "clicks": 1600,
+      "impressions": 20000,
+      "ctr": 8.0,
+      "avg_position": 3.8,
+      "pages": [
+        "/blog/seo-best-practices",
+        "/category/seo",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "Fitness Tips",
+      "clicks": 1900,
+      "impressions": 40000,
+      "ctr": 4.75,
+      "avg_position": 5.0,
+      "pages": [
+        "/blog/top-fitness-tips",
+        "/category/fitness",
+        "/contact"
+      ]
+    },
+    {
+      "keyword": "Digital Marketing Strategies",
+      "clicks": 1400,
+      "impressions": 18000,
+      "ctr": 7.78,
+      "avg_position": 3.1,
+      "pages": [
+        "/blog/digital-marketing-strategies",
+        "/category/marketing",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "Healthy Eating Habits",
+      "clicks": 1700,
+      "impressions": 28000,
+      "ctr": 6.07,
+      "avg_position": 4.5,
+      "pages": [
+        "/blog/healthy-eating-habits",
+        "/category/health",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "Tech News",
+      "clicks": 2400,
+      "impressions": 52000,
+      "ctr": 4.62,
+      "avg_position": 3.3,
+      "pages": [
+        "/blog/latest-tech-news",
+        "/category/tech",
+        "/contact"
+      ]
+    },
+    {
+      "keyword": "JavaScript Basics",
+      "clicks": 1300,
+      "impressions": 22000,
+      "ctr": 5.91,
+      "avg_position": 4.0,
+      "pages": [
+        "/blog/javascript-basics",
+        "/category/programming",
+        "/about"
+      ]
+    },
+    {
+      "keyword": "Travel Packing Tips",
+      "clicks": 2100,
+      "impressions": 38000,
+      "ctr": 5.52,
+      "avg_position": 2.9,
+      "pages": [
+        "/blog/travel-packing-tips",
+        "/category/travel",
+        "/contact"
+      ]
+    },
+    {
+      "keyword": "Personal Finance Management",
+      "clicks": 1200,
+      "impressions": 20000,
+      "ctr": 6.0,
+      "avg_position": 4.7,
+      "pages": [
+        "/blog/personal-finance-tips",
+        "/category/finance",
+        "/about"
+      ]
+    }
+  ];
+  
+  return (
+    <div className={styles.containerTable}>
+      <h4> SEO Performance Metrics </h4>
+      <table className={styles.tableContainer}>
+        <thead>
+          <tr>
+            <th>Keywords</th>
+            <th>Clicks</th>
+            <th>Impressions</th>
+            <th>Click Through Rate (%)</th>
+            <th>Average Posiiton</th>
+            <th>Visited Pages</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            seoData.map((data, i)=>(
+              <tr key={i}>
+                <td>{ data.keyword }</td>
+                <td>{ data.clicks }</td>
+                <td>{ data.impressions }</td>
+                <td>{ data.ctr }</td>
+                <td>{ data.avg_position }</td>
+                <td>
+                  <ul>
+                    { data.pages.map((item, i)=>(
+                        // <li key={i}><a href={item} title={item}>Page {i + 1}</a></li>
+                        <li key={i}><a href={item} title={item}>{ item }</a></li>
+                    )) }
+                  </ul>
+                
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+export default SEOMetrics
 
 
 // Export all charts together
+
+
 export { 
   PostPerformanceChart, 
   GrowthRateChart, 
-  FeedbackChart, 
-  EngagementMetricsChart, 
-  TrafficOverviewChart ,
-  ContentEngagementChart,
-  TrafficSourcesChart
+  ContentEngagementChart, 
+  TrafficSourcesChart, 
+  SEOMetrics  
 };
