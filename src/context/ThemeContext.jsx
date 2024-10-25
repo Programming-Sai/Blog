@@ -17,7 +17,7 @@ export const ThemeContextProvider = ({ children }) => {
     const [theme, setTheme] = useState(getThemeFromLocalStorage());
     const [overlay, setOverlay] = useState(false);
     const [toggleSidePane, setToggleSidePane] = useState(false);
-
+    const [autoSaveDuration, setAutoSaveDuration] = useState(120000); 
 
 
     const toggleTheme = () => {
@@ -29,7 +29,7 @@ export const ThemeContextProvider = ({ children }) => {
     }, [theme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, overlay, setOverlay, toggleSidePane, setToggleSidePane }}> {/* Add value prop */}
+        <ThemeContext.Provider value={{ theme, toggleTheme, overlay, setOverlay, toggleSidePane, setToggleSidePane, autoSaveDuration, setAutoSaveDuration }}> {/* Add value prop */}
             {children}
         </ThemeContext.Provider>
     );

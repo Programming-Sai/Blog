@@ -5,29 +5,237 @@
     min-height: 100vh;
     padding: 20px;
     top: 100%;
-    margin-bottom: 5%;
 } 
 
-
-.buton {
-    font-size: 2rem;
-    cursor: pointer;
-    transition: left 0.3s ease; 
-}
-
-.container.active ~ .buton {
-    left: 80px; 
-}
-
-.top{
+.topContainer{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    margin-block: 2%;
+    gap: 2%;
+    height: 350px;
 }
 
-.top h2{
-    width: 100%;
-    text-align: center;
+.imgContainer, .titleContainer{
+    flex: 1;
+    position: relative;
+    height: 100%;
 }
+
+.imgContainer{
+    width: 100%;
+    position: relative;
+    border: 2px solid var(--index-color);
+    border-radius: 20px;
+    overflow: hidden;
+    display: grid;
+    align-items: stretch;
+    justify-content: stretch;
+    cursor: pointer;
+
+}
+
+.titleContainer{
+    width: 100%;
+    height: 350px;
+}
+
+.titleContainer textarea{
+    all: unset;
+    word-wrap: break-word; 
+    white-space: normal; 
+    padding: 10px;
+    width: 95%;
+    height: 100%;
+    font-size: 3.5em;
+    font-weight: bold;
+}
+
+
+.blogContent{
+    width: 100%;
+    height: 100%;
+}
+
+
+.close{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+    background-color: rgba(255,0,0,0.5);
+    z-index: 1000;
+    display: none;
+    place-content: center;
+    border-radius: 100%;
+  }
+
+.imgContainer:hover .close{
+    display: grid;
+}
+
+.blogContent{
+    color: var(--text-color);
+}
+
+.content{
+    margin-block: 5%;
+}
+
+
+
+.topContent{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+.toggleThemeButton{
+    background-color: var(--index-color);
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.keywordsContainer{
+    width: 100%;
+    height: auto;
+    margin-block: 5%;
+}
+
+.keywordsContainer input{
+    all: unset;
+    padding: 20px  10px;
+    width: 50%;
+    background-color: var(--footer-bg-two);
+    border-radius: 10px;
+}
+
+.keywordsContainer input::placeholder{
+    color: var(--text-color);
+    font-style: italic;
+    font-weight: lighter;
+}
+
+
+.buttons, .endButton, .firstIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttons{
+    margin-block: 10%;
+}
+
+.endButton{
+    border: 1px solid var(--index-color);
+    padding: 10px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+
+.endButton:hover{
+    transform: scale(1.1);
+}
+
+.endButton:nth-child(1){
+    background-color: var(--back-color);
+}
+
+.endButton:nth-child(2){
+    background-color: #228B22;
+}
+
+.endButton:nth-child(3){
+    background-color: #32CD32;
+}
+
+.endButton:nth-child(4){
+    background-color: #66CDAA;
+}
+
+.indicator{
+    position: fixed;
+    bottom: 10%;
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Offset to center */
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    animation: blinker 1s infinite;
+}
+
+
+
+  
+
+
+@keyframes blinker {
+    0%{
+        opacity: 0;
+        background-color: rgba(0,255,0,0.9);
+    }
+    50%{
+        opacity: 1;
+        background-color: rgba(0,255,0,0.1);
+    }
+    100%{
+        opacity: 0;
+        background-color: rgba(0,255,0,0.5);
+    }
+}
+
+
+@media screen and (max-width:1424px){
+    .container{
+        width: calc(100% - 80px);
+        left: 80px;
+    }
+}
+
+@media screen and (max-width:868px){
+    .container{
+        width: 100%;
+        left: 0;
+    }
+    .keywordsContainer input{
+        width: 95%;
+    }
+}
+
+@media screen and (max-width:640px) {
+    .topContainer{
+        height: fit-content;
+        margin-block: 5%;
+    }
+    .titleContainer, .imgContainer{
+        width: 100%;
+    }
+    .titleContainer textarea{
+        height: 350px;
+    }
+    .topContainer, .topContent, .buttons{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .endButton, .toggleThemeButton{
+        width: 100%;
+        justify-content: center;
+    }
+    .blogContent{
+        min-height: 350px;
+        background-color: var(--footer-bg);
+        margin-block: 5%;
+        border-radius: 10px;
+    }
+}
+
