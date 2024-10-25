@@ -464,7 +464,6 @@ const SEOMetrics = () => {
                 <td>
                   <ul>
                     { data.pages.map((item, i)=>(
-                        // <li key={i}><a href={item} title={item}>Page {i + 1}</a></li>
                         <li key={i}><a href={item} title={item}>{ item }</a></li>
                     )) }
                   </ul>

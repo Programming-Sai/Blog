@@ -1,0 +1,38 @@
+.blogContent{
+    color: var(--text-color);
+}
+
+
+.videoContainer {
+    position: relative;
+    width: 100%;
+    /* overflow: hidden; */
+  }
+  
+  .videoContainer iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  
+.ql-editor .ql-video {
+    display: block !important;
+    max-width: 100% !important;
+    width: 50vw !important;
+    height: 50vw !important;
+    object-fit: cover !important;
+}
+
+
+  
+  .videoContainer.portrait {
+    padding-top: 177.77%; /* Aspect ratio for portrait (9:16) */
+  }
+  
+  .videoContainer.landscape {
+    padding-top: 56.25%; /* Aspect ratio for landscape (16:9) */
+  }
+  
