@@ -17,8 +17,18 @@ export const ThemeContextProvider = ({ children }) => {
     const [theme, setTheme] = useState(getThemeFromLocalStorage());
     const [overlay, setOverlay] = useState(false);
     const [toggleSidePane, setToggleSidePane] = useState(false);
-    const [autoSaveDuration, setAutoSaveDuration] = useState(120000); 
-
+    const [autoSave, setAutoSave] = useState(() => {
+        const savedValue = localStorage.getItem('autoSave');
+        return savedValue !== null ? JSON.parse(savedValue) : true; 
+    });
+    const [autoSaveDuration, setAutoSaveDuration] = useState(() => {
+        const savedValue = localStorage.getItem('autoSaveDuration');
+        return savedValue !== null ? Number(savedValue) : 120000; 
+    });
+    const [quillTheme, setQuillTheme] = useState(() => {
+        const savedValue = localStorage.getItem('quillTheme');
+        return savedValue !== null ? savedValue : 'snow'; 
+    });
 
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -28,8 +38,16 @@ export const ThemeContextProvider = ({ children }) => {
         localStorage.setItem('theme', theme)
     }, [theme]);
 
+    useEffect(() => {
+        localStorage.setItem('quillTheme', quillTheme);
+      }, [quillTheme]);
+
+    useEffect(() => {
+        localStorage.setItem('autoSaveDuration', autoSaveDuration.toString());
+    }, [autoSaveDuration])
+
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme, overlay, setOverlay, toggleSidePane, setToggleSidePane, autoSaveDuration, setAutoSaveDuration }}> {/* Add value prop */}
+        <ThemeContext.Provider value={{ theme, toggleTheme, overlay, setOverlay, toggleSidePane, setToggleSidePane, autoSaveDuration, setAutoSaveDuration, autoSave, setAutoSave, quillTheme, setQuillTheme }}> {/* Add value prop */}
             {children}
         </ThemeContext.Provider>
     );

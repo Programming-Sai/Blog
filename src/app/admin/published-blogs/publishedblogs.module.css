@@ -6,7 +6,6 @@
     padding: 20px;
     top: 100%;
     margin-bottom: 5%;
-    /* background-color: red; */
 } 
 
 
@@ -32,3 +31,30 @@
     width: 100%;
     text-align: center;
 }
+
+
+
+@media screen and (max-width:1424px){
+    .container{
+        width: calc(100% - 80px);
+        left: 80px;
+    }
+}
+
+
+
+@media screen and (max-width:868px) {
+    .container{
+        width: 100%;
+        left: 0;
+        
+    }
+    
+}
+
+@media screen and (max-width:640px) {
+    .container{
+        margin-bottom: 30%;
+    }
+}
+
