@@ -5,7 +5,6 @@ import styles from './blogtable.module.css';
 import { ThemeContext } from '@/context/ThemeContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faClose, faComment, faEdit, faEye, faShare, faTag, faTrash } from '@fortawesome/free-solid-svg-icons';
-import Modal from '../modal/Modal';
 
 
 
