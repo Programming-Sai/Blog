@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const WriteComment = () => {
-  const status = 'authenticated';
+  const status = 'unauthenticated';
 
   return (
     <div className={styles.container}>

@@ -26,40 +26,39 @@ const SideNavbar = () => {
             <Image className={styles.img} src='/fashion.png' fill/>
         </div>
         <h1>Name</h1>
-        <p>email@gmail.com</p>
       </div>
 
       <ul>
         <li>
-            <Link className={styles.a} href='/admin/dashboard' title='Dashboard'>
+            <Link onClick={()=>{setToggleSidePane(!toggleSidePane)}} className={styles.a} href='/admin/dashboard' title='Dashboard'>
                 <FontAwesomeIcon className={styles.icon} icon={ faTachometerAlt } />
                 <span>Dashboard</span>
             </Link>
         </li>
 
         <li>
-            <Link className={styles.a} href='/admin/published-blogs' title='Published Blogs'>
+            <Link onClick={()=>{setToggleSidePane(!toggleSidePane)}} className={styles.a} href='/admin/published-blogs' title='Published Blogs'>
                 <FontAwesomeIcon className={styles.icon} icon={ faCheckCircle }  />
                 <span>Published Blogs</span>
             </Link>
         </li>
 
         <li>
-            <Link className={styles.a} href='/admin/drafts' title='Drafts'>
+            <Link onClick={()=>{setToggleSidePane(!toggleSidePane)}} className={styles.a} href='/admin/drafts' title='Drafts'>
                 <FontAwesomeIcon className={styles.icon} icon={ faPencilAlt } />
                 <span>Drafts</span>
             </Link>
         </li>
 
         <li>
-            <Link className={styles.a} href='/admin/editor' title='Editor'>
+            <Link onClick={()=>{setToggleSidePane(!toggleSidePane)}} className={styles.a} href='/admin/editor' title='Editor'>
                 <FontAwesomeIcon className={styles.icon} icon={ faEdit } />
                 <span>Editor</span>
             </Link>
         </li>
 
         <li>
-            <Link className={styles.a} href='/admin/settings' title='Settings'>
+            <Link onClick={()=>{setToggleSidePane(!toggleSidePane)}} className={styles.a} href='/admin/settings' title='Settings'>
                 <FontAwesomeIcon className={styles.icon} icon={ faGear } />
                 <span>Settings</span>
             </Link>

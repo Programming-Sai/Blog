@@ -55,23 +55,20 @@ const debounce = (func, delay) => {
 const Editor = () => {
 
   
-  const { toggleSidePane, autoSaveDuration } = useContext(ThemeContext);
+  const { toggleSidePane, autoSaveDuration, autoSave, setAutoSave, quillTheme, setQuillTheme } = useContext(ThemeContext);
   const [image, setImage] = useState('');
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [category, setCategory] = useState('Select A Category');
   const [blogContent, setBlogContent] = useState('');
   const [description, setDescription] = useState('');
-  const [quillTheme, setQuillTheme] = useState('snow');  
   const [draft, setDraft] = useState(true);  
   const [saved, setSaved] = useState(false);  
   const [readingTime, setReadingTime] = useState(calculateReadingTime(blogContent));
   const [date, setDate] = useState(getCurrentDate());
   const [keywords, setKeywords] = useState('');
-  const [autoSave, setAutoSave] = useState(() => {
-    const savedValue = localStorage.getItem('autoSave');
-    return savedValue !== null ? JSON.parse(savedValue) : true; // Change to != null
-  });
+    
+
 
 const handleTitleChange = (event) => {
   const inputTitle = event.target.value;
@@ -91,6 +88,9 @@ const handleTitleChange = (event) => {
       draft,
       keywords: (typeof keywords === 'string' ? keywords.split(',').map(keyword => keyword.trim()) : []),
       description,
+      comments:0,
+      views:0,
+      shares:0,
     };
     
     localStorage.setItem('previewData', JSON.stringify(blogData));
