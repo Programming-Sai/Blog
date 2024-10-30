@@ -1,0 +1,30 @@
+.flexWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-block: 5%;
+}
+
+.itemOne {
+  width: 70%;
+  margin-right: 5%;
+}
+
+.itemTwo {
+  width: 30%;
+}
+
+@media screen and (max-width: 768px) {
+  .flexWrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .itemOne {
+    margin-right: 0;
+  }
+  .itemTwo {
+    width: 90%;
+  }
+}
