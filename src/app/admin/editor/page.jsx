@@ -191,9 +191,7 @@ const handleTitleChange = (event) => {
     }
   }, []);
   
-  useEffect(() => {
-    localStorage.setItem('quillTheme', quillTheme);
-  }, [quillTheme]);
+  
 
 
 

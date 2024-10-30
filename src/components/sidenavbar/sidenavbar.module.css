@@ -210,6 +210,9 @@
     .container.active ul{
         margin-top: 50%;
     }  
+    .container ul li:last-child, .container.active ul li:last-child{
+        width: 100%;
+    }
     .imgContainer{
         width: 100px;
         height: 100px;

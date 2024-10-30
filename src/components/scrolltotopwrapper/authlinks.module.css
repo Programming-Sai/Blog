@@ -1,0 +1,12 @@
+.authlink:last-child{
+    margin-right: 30px;
+}
+
+
+
+
+@media screen and (max-width:580px) {  
+    .authlink:last-child{
+        margin-right: 0;
+    }    
+}

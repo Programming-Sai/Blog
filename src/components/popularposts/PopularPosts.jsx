@@ -92,7 +92,7 @@ const PopularPosts = ({ glow, width , className, borderRad, marginBlock, isOutli
         </div>
         {
           glow && <Glow 
-                    top='150%' 
+                    top='100%' 
                     left='50%' 
                     width={500} 
                     height={500} 

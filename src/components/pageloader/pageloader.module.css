@@ -1,0 +1,71 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-left: -30%;
+    margin-top: -15%;
+}
+
+.box{
+    position: absolute;
+    top: calc(50% -100px);
+    left: calc(50% -135px);
+    height: 200px;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateY(30deg);
+}
+
+.box div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform-style: preserve-3d;
+    display: flex;
+}
+
+.box div span{
+    position: relative;
+    display: block;
+    width: var(--width); 
+    height: 500px;
+    animation: animate 2.5s linear infinite;
+    animation-delay: calc(var(--i) * 0.2s);
+    background-image: linear-gradient(transparent, rgba(0,0,0,0.4), transparent), var(--img); 
+    background-size: 600px 100%; 
+    background-position: calc(var(--i) * calc(var(--width) * -1)) 0; 
+}
+
+
+@keyframes animate {
+    0%{
+        transform: rotateX(0deg);
+    }
+    50%{
+        transform: rotateX(360deg);
+    }
+    100%{
+        transform: rotateX(360deg);
+    }
+}
+
+@media screen and (max-width:860px) {
+    .container{
+        transform: scale(0.8);
+    }
+}
+
+@media screen and (max-width:640px) {
+    .container{
+        transform: scale(0.7);
+        margin-left: -60%;
+    }
+}
+
+@media screen and (max-width:480px) {
+    .container{
+        margin-left: -70%;
+        transform: translateY(-10%) scale(0.6);
+    }
+}

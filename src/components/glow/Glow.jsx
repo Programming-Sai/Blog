@@ -13,7 +13,8 @@ const Glow = ({ width, height, color, mtop, mleft, top = '-90%', left = '60%' })
         '--mleft': mleft,      // Custom variable for mobile left position
         width: `${width}px`,
         height: `${height}px`,
-        filter: `blur(${width / 4}px)`, // Dynamic blur based on width
+        filter: `blur(${width / 4}px)`, 
+        zIndex: -10,
       }}
     />
   );

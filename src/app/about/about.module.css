@@ -1,0 +1,17 @@
+.flexWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin-block: 5%;
+}
+
+.itemTwo{
+    width: 100%;
+}
+
+@media screen and (max-width:640px) {
+    .flexWrapper{
+        flex-direction: column;
+    }
+}

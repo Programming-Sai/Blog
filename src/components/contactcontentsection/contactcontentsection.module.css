@@ -1,0 +1,66 @@
+.container{
+    margin-block: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.container input, .container textarea, .centerSubmitButton input{
+    all: unset;
+    border: 5px solid var(--border-color);
+    padding: 20px;
+    background-color: var(--footer-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    width: 100%;
+    transition: 0.5s ease;
+}
+
+.container input:hover, .container textarea:hover, .centerSubmitButton input:hover{
+    background-color: var(--soft-text-color);
+}
+
+.container input:first-child{
+    width: 50%;
+}
+
+.container input:nth-child(2){
+    width: 70%;
+}
+
+.centerSubmitButton, .centerSubmitButton input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.centerSubmitButton input{
+    width: fit-content !important;
+    padding: 20px 100px;
+    cursor: pointer;
+}
+
+.centerSubmitButton input:hover{
+    transform: scale(1.1);
+}
+
+.container textarea{
+    height: 200px;
+}
+
+@media screen and (max-width:640px) {
+    .container{
+        width: 100%;
+    }
+    .container textarea{
+        width: 90% ;
+    }   
+}
+@media screen and (max-width:480px) {
+    .container textarea{
+        width: 85%;
+    }
+}

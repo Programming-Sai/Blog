@@ -21,7 +21,7 @@ const WriteComment = () => {
           </div>
 
       ) : (
-        <Link href='/login' >Please Login to Write A Comment</Link>
+        <Link href='/login' className={styles.aTag}>Please Login to Write A Comment</Link>
       )}
       
 

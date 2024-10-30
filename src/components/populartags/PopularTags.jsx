@@ -17,30 +17,30 @@ const PopularTags = () => {
             mtop='35%'
             mleft='0'
       />
-      <h1>Popular Tags</h1>
+      <h1>Categories / Tags</h1>
       <div className={styles.tagContainer}>
 
-       <Link href='/blog/sports' className={`${styles.tagItem} ${styles.sports}`}>
+       <Link scroll={true} href='/category/sports' className={`${styles.tagItem} ${styles.sports}`}>
           <Image width={50} height={50} src='/style.png' className={styles.img}/>
           <p>Sports</p>
         </Link>
 
-        <Link href='/' className={`${styles.tagItem} ${styles.news}`}>
+        <Link scroll={true} href='/category/news' className={`${styles.tagItem} ${styles.news}`}>
           <Image width={50} height={50} src='/fashion.png' className={styles.img}/>
           <p>News</p>
         </Link>
 
-        <Link href='/' className={`${styles.tagItem} ${styles.lifeStyle}`}>
+        <Link scroll={true} href='/category/lifestyle' className={`${styles.tagItem} ${styles.lifeStyle}`}>
           <Image width={50} height={50} src='/travel.png' className={styles.img}/>
           <p>Lifestyle</p>
         </Link>
 
-        <Link href='/' className={`${styles.tagItem} ${styles.music}`}>
+        <Link scroll={true} href='/category/music' className={`${styles.tagItem} ${styles.music}`}>
           <Image width={50} height={50} src='/culture.png' className={styles.img}/>
           <p>Music</p>
         </Link>
 
-        <Link href='/' className={`${styles.tagItem} ${styles.movie}`}>
+        <Link scroll={true} href='/category/movies' className={`${styles.tagItem} ${styles.movie}`}>
           <Image width={50} height={50} src='/food.png' className={styles.img}/>
           <p>Movies</p>
         </Link>

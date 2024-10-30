@@ -5,7 +5,7 @@
     background-color: var(--glow-color); /* Use a variable for color */
     filter: blur(25px); /* Default blur */
     border-radius: 50%; /* Circular shape */
-    z-index: -200;
+    z-index: -300;
     opacity: 0.6;
     top: var(--top);
     left: var(--left);
