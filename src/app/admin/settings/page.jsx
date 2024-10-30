@@ -1,10 +1,7 @@
 'use client'
 import React, { useContext, useState } from 'react'
 import styles from './settings.module.css';
-import ThemeToggle from '@/components/themetoggle/ThemeToggle';
-import Searchbar from '@/components/searchbar/Searchbar';
 import { ThemeContext } from '@/context/ThemeContext'
-import Card from '@/components/card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faUser, faPhone, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faXTwitter, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';

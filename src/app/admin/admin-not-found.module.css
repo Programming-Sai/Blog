@@ -2,10 +2,10 @@
     position: relative;
     width: calc(100% - var(--left));
     left: var(--left);
-    min-height: 100vh;
+    /* min-height: 100vh; */
     padding: 20px;
     top: 100%;
-    margin-bottom: 5%;
+    /* margin-bottom: 5%; */
 } 
 
 
@@ -32,6 +32,24 @@
     text-align: center;
 }
 
+.notFoundContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.notFoundContainer h3{
+    opacity: 0.6;
+}
+
+
+
+.notFoundContainer h6{
+    opacity: 0.4;
+}
 
 
 

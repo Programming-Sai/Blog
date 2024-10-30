@@ -2,7 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeContextProvider } from '@/context/ThemeContext';
 import ThemeProvider from '@/providers/ThemeProvider';
-import ScrollToTop from '../components/scrolltotop/ScrollToTop';
+import ScrollToTopWrapper from '@/components/scrolltotopwrapper/ScrollToTopWrapper';
 
 
 
@@ -21,8 +21,9 @@ export default function RootLayout({ children }) {
           <ThemeProvider>
             <div className="container" id='top'>
               <div className="wrapper">
-                {children}
-                <ScrollToTop />
+                <ScrollToTopWrapper>
+                  {children}
+                </ScrollToTopWrapper>
               </div>
             </div>
           </ThemeProvider>

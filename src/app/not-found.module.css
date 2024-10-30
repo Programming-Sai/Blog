@@ -1,3 +1,11 @@
+.container{
+    margin-block: 20%;
+}
+
+.container h1{
+    margin-block: 2%;
+}
+
 .flexWrapper{
     display: flex;
     justify-content: space-between;
@@ -15,7 +23,10 @@
     width: 30%;
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:868px) {
+    .container{
+        margin-block: 40%;
+    }
     .flexWrapper{
         flex-direction: column;
         justify-content: center;

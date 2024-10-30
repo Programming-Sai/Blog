@@ -8,7 +8,7 @@ import BlogTable from '@/components/blogtable/BlogTable';
 
 
 const Drafts = () => {
-  const { setToggleSidePane, toggleSidePane } = useContext(ThemeContext);
+  const { toggleSidePane } = useContext(ThemeContext);
 
   const blogData = [
     { id: 1, title: 'A Deep Dive into the World of Music', date: '01 Oct 2024', thumbnail: '/culture.png', category: 'Music', views: 150, comments: 5, shares: 10 },
