@@ -1,0 +1,44 @@
+.container {
+  margin-block: 5%;
+}
+
+.container h1 {
+  margin-block: 5%;
+}
+
+.container h2 {
+  margin-block: 4%;
+}
+
+.container h3 {
+  margin-block: 3%;
+}
+
+.container h4,
+.container p {
+  margin-block: 3%;
+}
+
+.container ul {
+  margin-left: 10%;
+  margin-block: 5%;
+}
+
+.container ul:first-of-type {
+  margin-block: 7%;
+}
+
+.container ul li {
+  margin-block: 1%;
+  list-style: disc;
+}
+
+.container ul:first-of-type li {
+  margin-block: 5%;
+}
+
+@media screen and (max-width: 860px) {
+  .container {
+    width: 100%;
+  }
+}

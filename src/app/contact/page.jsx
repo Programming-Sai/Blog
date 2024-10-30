@@ -9,7 +9,7 @@ import ContactContentSection from '@/components/contactcontentsection/ContactCon
 
 
 
-const Contact = ({ slug }) => {
+const Contact = () => {
   return (
     <>
         <Navbar />
