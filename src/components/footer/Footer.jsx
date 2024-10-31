@@ -42,19 +42,19 @@ const Footer = ({ disabled }) => {
       <div className={styles.item}>
         <div className={styles.title}>Categories</div>
         <div className={styles.tags}>
-          <Link href="/category/news" className={styles.link}>
+          <Link href="/category/news#categoryTop" className={styles.link}>
             News
           </Link>
-          <Link href="/category/lifestyle" className={styles.link}>
+          <Link href="/category/lifestyle#categoryTop" className={styles.link}>
             Lifestyle
           </Link>
-          <Link href="/category/sports" className={styles.link}>
+          <Link href="/category/sports#categoryTop" className={styles.link}>
             Sports
           </Link>
-          <Link href="/category/music" className={styles.link}>
+          <Link href="/category/music#categoryTop" className={styles.link}>
             Music
           </Link>
-          <Link href="/category/movies" className={styles.link}>
+          <Link href="/category/movies#categoryTop" className={styles.link}>
             Movies
           </Link>
         </div>

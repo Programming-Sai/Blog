@@ -1,7 +1,7 @@
 import React from "react";
 
 const BlogCategoryPage = () => {
-  return <></>; 
+  return <></>;
 };
 
 export default BlogCategoryPage;

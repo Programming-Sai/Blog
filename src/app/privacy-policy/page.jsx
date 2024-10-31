@@ -16,13 +16,14 @@ const PrivacyPolicy = () => {
           <PrivacyPolicyHeroSection />
           <div className={styles.flexWrapper}>
             <PrivacyPolicyContent className={styles.itemOne} />
-            <PopularPosts
-              className={styles.itemTwo}
-              glow={true}
-              borderRad="20px"
-              marginBlock="0%"
-              isOutline="2px"
-            />
+            <div className={styles.itemTwo}>
+              <PopularPosts
+                glow={true}
+                borderRad="20px"
+                marginBlock="0%"
+                isOutline="2px"
+              />
+            </div>
           </div>
         </div>
       </Wrapper>
