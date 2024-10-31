@@ -20,8 +20,11 @@ const PrivacyPolicyHeroSection = () => {
       />
       <div className={`${styles.item} ${styles.heroTextContainer}`}>
         <h3>
-          {/* Feel free to reach out to us with any questions or feedback using the
-          form below! */}
+          We are committed to protecting your privacy. Your trust is essential
+          to us, and we want you to feel secure while using our services. This
+          Privacy Policy outlines our practices regarding the collection, use,
+          and safeguarding of your personal information, ensuring you understand
+          how we respect and protect your data.
         </h3>
       </div>
     </div>

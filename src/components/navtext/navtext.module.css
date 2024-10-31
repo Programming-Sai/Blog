@@ -1,0 +1,13 @@
+.navText {
+  padding: 5px 10px;
+  margin-left: -10px;
+  border-radius: 20px;
+}
+
+.active {
+  background: linear-gradient(transparent, 95%, white 5%);
+}
+
+.navText:hover {
+  background: linear-gradient(transparent, 95%, gold 5%);
+}

@@ -1,12 +1,37 @@
-.authlink:last-child{
-    margin-right: 30px;
+.authlink {
+  padding: 5px 10px;
+  border-radius: 20px;
+  --color: gold;
+  margin: 0 !important;
 }
 
+.authlink:last-child {
+  margin-right: 30px;
+}
 
+.icon {
+  display: none;
+}
 
+.authlink:hover {
+  background: linear-gradient(transparent, 95%, var(--color) 5%);
+}
 
-@media screen and (max-width:580px) {  
-    .authlink:last-child{
-        margin-right: 0;
-    }    
+@media screen and (max-width: 580px) {
+  .authlink:last-child {
+    margin-right: 0;
+  }
+  .icon {
+    display: inline;
+    margin-left: -10px;
+  }
+  .authlink:hover {
+    --color: transparent;
+  }
+  .anchor {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
 }

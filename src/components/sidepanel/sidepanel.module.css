@@ -1,102 +1,107 @@
-
-.mobile{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: fit-content;
-    background-color: rgba(255, 255, 255, 0.2);
-    z-index: 110;
-    justify-content: flex-end;
-    align-items: center;
-    flex-grow: 1;
-    display: none;
-    backdrop-filter: blur(10px);
+.mobile {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: fit-content;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 110;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  display: none;
+  backdrop-filter: blur(10px);
 }
 
-
-.mobileClose{
-    animation: slideOut 1s ease-in-out 1 forwards;
+.mobileClose {
+  animation: slideOut 1s ease-in-out 1 forwards;
 }
 
-.mobileOpen{
-    animation: slideIn 1s ease-in-out 1 forwards;
+.mobileOpen {
+  animation: slideIn 1s ease-in-out 1 forwards;
 }
 
 @keyframes slideIn {
-    from{
-        left: 100%;
-    }
-    to{
-        left: 0;
-    }
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
 }
 
 @keyframes slideOut {
-    from{
-        left: 0;
-    }
-    to{
-        left: 100%;
-    }
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
 }
 
-.mobileLayer{
-    width: 85%;
-    background-color: var(--back-color);
-    height:100vh;
-    /* padding-inline: 20px; */
-}       
-
-
-.mobileLogo{
-    text-align: center;
-    font-size: 30px;
-    margin: 10px 0 20px 0;
-    padding-inline: 20px;
+.mobileLayer {
+  width: 85%;
+  /* background-color: var(--back-color); */
+  background-color: green;
+  height: 100vh;
+  /* padding-inline: 20px; */
 }
 
-.mobileLayer ul li a{
-    padding-block: 20px;
-    display: block;
-    font-weight:200;
-    font-size: 1.5rem;
-    padding-left: 40px;
-    transition: 0.5s ease;
+.mobileLogo {
+  text-align: center;
+  font-size: 30px;
+  margin: 10px 0 20px 0;
+  padding-inline: 20px;
 }
 
-.mobileLayer ul li a:hover{
-    background-color: rgba(255,255,255,0.2);
-    border-top-left-radius: 100px;
-    border-bottom-left-radius: 100px;
-    padding-left: 10px;
+.mobileLayer ul li a {
+  padding-block: 20px;
+  font-weight: 200;
+  font-size: 1.1rem;
+  padding-left: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  margin: 0 !important;
 }
 
+.mobileLayer ul li a:hover {
+  background-color: var(--border-color);
+}
 
-.mobileHeader{
+.active {
+  font-weight: bolder !important;
+  font-size: 1.2rem !important;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button {
+  font-size: 30px;
+  cursor: pointer;
+  display: none;
+  z-index: 100;
+  padding-inline: 20px;
+}
+
+.open {
+  padding: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 580px) {
+  .mobile,
+  .button {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.button{
+  }
+  .logo {
     font-size: 30px;
-    cursor: pointer;        
-    display: none;
-    z-index: 100; 
-    padding-inline: 20px;
-}
-
-.open{
-    padding: 0;
-    margin: 0;
-}
-
-
-@media screen and (max-width:580px) {  
-    .mobile, .button{
-        display: flex;
-    }
-    .logo{
-        font-size: 30px;
-    }
+  }
 }
