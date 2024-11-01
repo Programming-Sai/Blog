@@ -12,6 +12,7 @@ import Glow from "@/components/glow/Glow";
 import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import BASE_PATH from "../../../base";
 
 const PreviewContentPage = ({ blogData }) => {
   useEffect(() => {
@@ -68,11 +69,11 @@ const PreviewContentPage = ({ blogData }) => {
             </div>
             <div
               className={styles.item}
-              style={{ "--img": `url(${blogData.image})` }}
+              style={{ "--img": `url(${BASE_PATH}${blogData.image})` }} // Adding BASE_PATH here
             >
               <Image
                 fill
-                src={blogData.image}
+                src={`${BASE_PATH}${blogData.image}`} // Adding BASE_PATH here
                 alt={blogData.title}
                 className={styles.img}
               />

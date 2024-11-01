@@ -2,12 +2,18 @@ import React from "react";
 import styles from "./privacypolicyherosection.module.css";
 import Image from "next/image";
 import Glow from "../glow/Glow";
+import BASE_PATH from "../../../base";
 
 const PrivacyPolicyHeroSection = () => {
   return (
     <div className={styles.container}>
       <div className={`${styles.item} ${styles.heroImgContainer}`}>
-        <Image fill src="/privacyheroanim.gif" className={styles.img} />
+        <Image
+          fill
+          src={`${BASE_PATH}/privacyheroanim.gif`}
+          alt="Privacy Policy Animation"
+          className={styles.img}
+        />
       </div>
       <Glow
         top="50%"

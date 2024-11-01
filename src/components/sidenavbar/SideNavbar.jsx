@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { ThemeContext } from "@/context/ThemeContext";
+import BASE_PATH from "../../../base";
 
 const SideNavbar = () => {
   const { toggleSidePane, setToggleSidePane } = useContext(ThemeContext);
@@ -46,9 +47,14 @@ const SideNavbar = () => {
       <div className={styles.profileContainer}>
         <div
           className={styles.imgContainer}
-          style={{ "--img": 'url("/p1.jpeg")' }}
+          style={{ "--img": `url("${BASE_PATH}/p1.jpeg")` }} // Add BASE_PATH here
         >
-          <Image className={styles.img} src="/fashion.png" fill />
+          <Image
+            className={styles.img}
+            src={`${BASE_PATH}/fashion.png`}
+            fill
+            alt="Fashion"
+          />
         </div>
         <h1>Name</h1>
       </div>

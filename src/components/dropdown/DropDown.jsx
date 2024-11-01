@@ -4,6 +4,7 @@ import styles from "./dropdown.module.css";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import BASE_PATH from "../../../base";
 
 const DropDown = ({ className, category, setCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,23 +22,23 @@ const DropDown = ({ className, category, setCategory }) => {
   const options = [
     {
       label: "Sports",
-      image: "/food.png",
+      image: `${BASE_PATH}/food.png`,
     },
     {
       label: "News",
-      image: "/fashion.png",
+      image: `${BASE_PATH}/fashion.png`,
     },
     {
       label: "Lifestyle",
-      image: "/travel.png",
+      image: `${BASE_PATH}/travel.png`,
     },
     {
       label: "Music",
-      image: "/culture.png",
+      image: `${BASE_PATH}/culture.png`,
     },
     {
       label: "Movies",
-      image: "/coding.png",
+      image: `${BASE_PATH}/coding.png`,
     },
   ];
 
