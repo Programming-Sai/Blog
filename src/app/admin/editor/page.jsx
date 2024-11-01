@@ -14,6 +14,7 @@ import {
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
+import BASE_PATH from "../../../../base";
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
@@ -90,7 +91,7 @@ const Editor = () => {
     calculateReadingTime(blogContent)
   );
   const [date, setDate] = useState(getCurrentDate());
-  const [keywords, setKeywords] = useState("");
+  const [keywords, setKeywords] = useState([]);
 
   const handleTitleChange = (event) => {
     const inputTitle = event.target.value;
@@ -98,6 +99,7 @@ const Editor = () => {
   };
 
   const [previewData, setPreviewData] = useLocalStorage("previewData", {
+    // Initialize with existing values from localStorage
     image: "",
     title: "",
     slug: "",
@@ -106,7 +108,7 @@ const Editor = () => {
     readingTime: "",
     date: "",
     draft: true,
-    keywords: [],
+    keywords: [], // Ensure this is initialized properly
     description: "",
     comments: 0,
     views: 0,
@@ -126,7 +128,7 @@ const Editor = () => {
       keywords:
         typeof keywords === "string"
           ? keywords.split(",").map((keyword) => keyword.trim())
-          : [],
+          : keywords,
       description,
       comments: 0,
       views: 0,
@@ -160,7 +162,7 @@ const Editor = () => {
       const handleKeyDown = (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "y") {
           e.preventDefault();
-          window.open(`/preview/${slug || "preview"}`, "_blank");
+          window.open(`${BASE_PATH}/preview/${slug || "preview"}`, "_blank");
         }
       };
       window.addEventListener("keydown", handleKeyDown);
