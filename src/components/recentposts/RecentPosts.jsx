@@ -9,7 +9,7 @@ import BASE_PATH from "../../../base";
 const postsData = [
   {
     id: 1,
-    image: `${BASE_PATH}/fashion.jpg`,
+    image: `${BASE_PATH}/fashion.png`,
     date: "01-11-2024",
     category: "Fashion",
     title: "Fall Fashion Trends: What to Wear This Season",
@@ -19,7 +19,7 @@ const postsData = [
   },
   {
     id: 2,
-    image: `${BASE_PATH}/food.jpg`,
+    image: `${BASE_PATH}/food.png`,
     date: "28-10-2024",
     category: "Food",
     title: "10 Quick and Healthy Dinner Recipes",
@@ -29,7 +29,7 @@ const postsData = [
   },
   {
     id: 3,
-    image: `${BASE_PATH}/coding.jpg`,
+    image: `${BASE_PATH}/coding.png`,
     date: "15-10-2024",
     category: "Technology",
     title: "The Future of Web Development: Trends to Watch",
@@ -39,7 +39,7 @@ const postsData = [
   },
   {
     id: 4,
-    image: `${BASE_PATH}/culture.jpg`,
+    image: `${BASE_PATH}/culture.png`,
     date: "10-10-2024",
     category: "Culture",
     title: "Exploring Cultural Heritage: Festivals Around the World",
@@ -49,7 +49,7 @@ const postsData = [
   },
   {
     id: 5,
-    image: `${BASE_PATH}/travel.jpg`,
+    image: `${BASE_PATH}/travel.png`,
     date: "05-10-2024",
     category: "Travel",
     title: "Top 10 Destinations to Visit in 2025",
@@ -87,7 +87,7 @@ const RecentPosts = ({ width }) => {
             <div className={styles.post}>
               <p className={styles.timeTag}>
                 <span className={styles.time}>{post.date}</span> -{" "}
-                {post.category}
+                {post.category.toUpperCase()}
               </p>
               <h3>{post.title}</h3>
               <p className={styles.desc}>{post.description}</p>

@@ -1,98 +1,100 @@
-.container{
-    margin-block: 10%;
-    position: relative;
+.container {
+  margin-block: 10%;
+  position: relative;
 }
 
-.item{
-    margin-block: 3%;
+.item {
+  margin-block: 3%;
 }
 
-.item, .dateRead, .post{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3%;
+.item,
+.dateRead,
+.post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3%;
 }
 
-.imgContainer{
-    position: relative;
-    width: 70%;
-    height:15rem;
-    border-radius: 20px;
-    overflow: hidden; 
+.imgContainer {
+  position: relative;
+  width: 70%;
+  height: 15rem;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.imgContainer .img{
-    object-fit: cover; 
-    width: 100%;
-    height: 100%;
-    border-radius: 20px; 
+.imgContainer .img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
 }
 
+.post {
+  width: 100%;
+  flex-direction: column;
+  gap: 5%;
+}
 
-.post{
-    width: 100%;
+.post h3,
+.post .desc {
+  margin-block: 1%;
+  text-align: left;
+  width: 100%;
+}
+
+.post .desc {
+  font-weight: lighter;
+}
+
+.dateRead {
+  width: 100%;
+  margin-top: 3%;
+}
+
+.timeTag {
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.time,
+.date {
+  opacity: 0.5;
+}
+
+.readingTime {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5%;
+  width: fit-content;
+  white-space: nowrap;
+  margin-right: 10%;
+}
+
+.read {
+  color: var(--text-color);
+  padding: 10px 20px;
+  background-color: var(--back-color);
+  /* background-color: red; */
+  border-radius: 20px;
+}
+
+.read:hover {
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 580px) {
+  .item {
     flex-direction: column;
-    gap: 5%;
-}
-
-.post h3, .post .desc{
-    margin-block: 1%;
-}
-
-.post .desc{
-    font-weight: lighter;
-}
-
-.dateRead{
+  }
+  .imgContainer {
     width: 100%;
-    margin-top: 3%;
-}
-
-.timeTag{
-    width: 100%;
-    margin-bottom: 2%;
-}
-
-
-.time, .date{
-    opacity: 0.5;
-}
-
-.readingTime{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5%;
-    width: fit-content;
-    white-space: nowrap;
-    margin-right: 10%;
-}
-
-.read{
-    color: var(--text-color);
-    padding: 10px 20px;
-    background-color: var(--back-color);
-    /* background-color: red; */
     border-radius: 20px;
-}
-
-.read:hover{
-    transform: scale(1.1);
-}
-
-
-
-@media screen and (max-width:580px) {
-    .item{
-        flex-direction: column;
-    }
-    .imgContainer{
-        width: 100%;
-        border-radius: 20px; 
-        margin-block: 5%;
-    }
-    .readingTime{
-        margin-right: 0;
-    }    
+    margin-block: 5%;
+  }
+  .readingTime {
+    margin-right: 0;
+  }
 }

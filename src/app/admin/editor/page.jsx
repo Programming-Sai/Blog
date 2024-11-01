@@ -56,18 +56,18 @@ const debounce = (func, delay) => {
 
 const Editor = () => {
   const extractTextFromBlog = (content) => {
-    // Use the parser to convert HTML to a React node, then extract the text
-    const parsedContent = parse(content);
-    if (typeof parsedContent === "string") {
-      return parsedContent.replace(/\n/g, " ");
+    // Check if the code is running in a browser environment
+    if (typeof window !== "undefined") {
+      // Create a new DOMParser instance
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(content, "text/html");
+
+      // Extract the text content from the parsed document
+      return doc.body.textContent || "";
     }
 
-    return parsedContent.props.children
-      .map((child) =>
-        typeof child === "string" ? child : child.props.children
-      )
-      .join(" ")
-      .replace(/\n/g, " ");
+    // Return an empty string or handle the case where it's not in a browser
+    return "";
   };
 
   const {

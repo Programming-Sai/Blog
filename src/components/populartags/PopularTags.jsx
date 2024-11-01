@@ -3,7 +3,7 @@ import styles from "./populartags.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import Glow from "../glow/Glow";
-import BASE_PATH from "../../../base"; // Ensure BASE_PATH is imported
+import BASE_PATH from "../../../base";
 
 const PopularTags = () => {
   // Sample tag data with names and image paths

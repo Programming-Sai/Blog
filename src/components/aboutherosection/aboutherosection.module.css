@@ -1,35 +1,48 @@
 .container {
-    display: grid;
-    grid-template-areas:
-        "S S N"
-        "L M N"
-        "L M N"
-        "L U U";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 200px 150px 150px 200px; 
-    gap: 10px;
-    margin-block: 5%;
+  display: grid;
+  grid-template-areas:
+    "S S N"
+    "L M N"
+    "L M N"
+    "L U U";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 200px 150px 150px 200px;
+  gap: 10px;
+  margin-block: 5%;
+  opacity: 0.6;
 }
 
-.S { grid-area: S; background: var(--img); }
-.N { grid-area: N; background: var(--img); }
-.L { grid-area: L; background: var(--img); }
-.M { grid-area: M; background: var(--img); }
-.U { grid-area: U; background: var(--img); }
-
-
+.S {
+  grid-area: S;
+  background: var(--img);
+}
+.N {
+  grid-area: N;
+  background: var(--img);
+}
+.L {
+  grid-area: L;
+  background: var(--img);
+}
+.M {
+  grid-area: M;
+  background: var(--img);
+}
+.U {
+  grid-area: U;
+  background: var(--img);
+}
 
 .item {
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em;
-    text-align: center;
-    padding: 20px;
-    border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
 }
-  
