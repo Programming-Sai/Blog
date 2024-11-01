@@ -1,5 +1,5 @@
 // Import the base path from the basePath.js file
-import BASE_PATH from "./basePath"; // Adjust the path if necessary
+const BASE_PATH = require("./basePath");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
