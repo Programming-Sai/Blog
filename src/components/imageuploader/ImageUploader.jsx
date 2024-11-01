@@ -1,16 +1,12 @@
-'use client';
-import React from 'react';
-import { useDropzone } from 'react-dropzone';
-import styles from './imageuploader.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image';
-
-
-
+"use client";
+import React from "react";
+import { useDropzone } from "react-dropzone";
+import styles from "./imageuploader.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const ImageUploader = ({ image, setImage }) => {
-
   const onDrop = (acceptedFiles) => {
     if (acceptedFiles && acceptedFiles[0]) {
       const selectedImage = acceptedFiles[0];
@@ -25,24 +21,20 @@ const ImageUploader = ({ image, setImage }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-
-
-
-  
   return (
     <div {...getRootProps({ className: styles.imageUploader })}>
       <input {...getInputProps()} />
-      {
-        image ? 
-        (<Image src={image} fill className={styles.img} alt="Uploaded" />) : 
-        (<div className={styles.default}>
-          <FontAwesomeIcon icon={faCloudArrowUp} className={styles.icon}/> 
+      {image ? (
+        <Image src={image} fill className={styles.img} alt="Uploaded" />
+      ) : (
+        <div className={styles.default}>
+          <FontAwesomeIcon icon={faCloudArrowUp} className={styles.icon} />
           Upload Blog Thumbnail Here.
           {isDragActive && <div className={styles.overlay} />}
-        </div>)
-      }
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default ImageUploader
+export default ImageUploader;

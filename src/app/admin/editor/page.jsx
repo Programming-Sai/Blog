@@ -2,9 +2,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import styles from "./editor.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
-import ImageUploader from "@/components/imageuploader/ImageUploader";
-import DropDown from "@/components/dropdown/DropDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import useLocalStorage from "@/components/UseLocalStorage";
+import parse from "html-react-parser";
 import {
   faClose,
   faEye,
@@ -12,10 +13,19 @@ import {
   faSave,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
-import EditorOne from "@/components/editorone/EditorOne";
-import useLocalStorage from "@/components/UseLocalStorage";
-import parse from "html-react-parser";
+import dynamic from "next/dynamic";
+const ImageUploader = dynamic(
+  () => import("@/components/imageuploader/ImageUploader"),
+  {
+    ssr: false,
+  }
+);
+const DropDown = dynamic(() => import("@/components/dropdown/DropDown"), {
+  ssr: false,
+});
+const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
+  ssr: false,
+});
 
 const getCurrentDate = () => {
   const currentDate = new Date();

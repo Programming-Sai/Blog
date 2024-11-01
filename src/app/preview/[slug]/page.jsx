@@ -1,8 +1,7 @@
 import React from "react";
 import PreviewWrapper from "@/components/previewpagewrapper/PreviewPageWrapper";
-import useLocalStorage from "@/components/UseLocalStorage";
 
-const temporarySlugs = [
+const slugs = [
   "understanding-react-hooks",
   "css-grid-layout-guide",
   "building-a-nextjs-blog",
@@ -11,15 +10,13 @@ const temporarySlugs = [
 ];
 
 export async function generateStaticParams() {
-  return temporarySlugs.map((slug) => ({
+  return slugs.map((slug) => ({
     slug, // Matches the [slug] parameter in the URL
   }));
 }
 
 const PreviewPage = () => {
-  const [lsPreviewData, setLsPreviewData] = useLocalStorage("previewData", "");
-
-  return <PreviewWrapper lsPreviewData={lsPreviewData} />;
+  return <PreviewWrapper />;
 };
 
 export default PreviewPage;
