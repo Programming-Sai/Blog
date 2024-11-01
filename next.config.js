@@ -1,9 +1,12 @@
+// Import the base path from the basePath.js file
+import BASE_PATH from "./basePath"; // Adjust the path if necessary
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compress: true,
   output: "export",
-  basePath: "/Blog",
-  assetPrefix: "/Blog/",
+  basePath: BASE_PATH, // Use the imported base path
+  // assetPrefix: `${BASE_PATH}/`,
 };
 
-module.exports = nextConfig;
+export default nextConfig;
