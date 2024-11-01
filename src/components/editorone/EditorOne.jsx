@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css";
 import styles from "./editorone.module.css";
+import DOMPurify from "dompurify";
 
 const EditorOne = ({ blogContent, setBlogContent, quillTheme }) => {
   const modules = {
@@ -44,6 +45,12 @@ const EditorOne = ({ blogContent, setBlogContent, quillTheme }) => {
     "video",
   ];
 
+  const handleChange = (content) => {
+    // Sanitize the HTML content
+    const cleanContent = DOMPurify.sanitize(content);
+    setBlogContent(cleanContent);
+  };
+
   useEffect(() => {
     if (typeof document !== "undefined") {
       const adjustBubblePosition = () => {
@@ -59,7 +66,6 @@ const EditorOne = ({ blogContent, setBlogContent, quillTheme }) => {
           tooltip.style.left = `${screenWidth - rect.width - 10}px`; // Adjust for overflow on the right
         }
         if (rect.left < 0) {
-          // tooltip.style.right = `20px`;
           tooltip.style.right = `${screenWidth - rect.width - 10}px`; // Adjust for overflow on the right
         }
 
@@ -85,7 +91,7 @@ const EditorOne = ({ blogContent, setBlogContent, quillTheme }) => {
     <div className={styles.blogContent} key={quillTheme}>
       <ReactQuill
         value={blogContent}
-        onChange={setBlogContent}
+        onChange={handleChange} // Use the new handler
         modules={modules}
         formats={formats}
         theme={quillTheme}
