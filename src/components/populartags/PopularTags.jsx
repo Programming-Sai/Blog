@@ -1,53 +1,53 @@
-import React from 'react'
-import styles from './populartags.module.css';
-import Image from 'next/image';
-import Link from 'next/link';
-import Glow from '../glow/Glow';
-
+import React from "react";
+import styles from "./populartags.module.css";
+import Image from "next/image";
+import Link from "next/link";
+import Glow from "../glow/Glow";
+import BASE_PATH from "../../../base"; // Ensure BASE_PATH is imported
 
 const PopularTags = () => {
+  // Sample tag data with names and image paths
+  const tags = [
+    { name: "Sports", path: "/category/sports", img: "/style.png" },
+    { name: "News", path: "/category/news", img: "/fashion.png" },
+    { name: "Lifestyle", path: "/category/lifestyle", img: "/travel.png" },
+    { name: "Music", path: "/category/music", img: "/culture.png" },
+    { name: "Movies", path: "/category/movies", img: "/food.png" },
+  ];
+
   return (
     <div className={styles.container}>
-      <Glow 
-            top='-100%' 
-            left='-40%' 
-            width={600} 
-            height={600} 
-            color='#890A8C'
-            mtop='35%'
-            mleft='0'
+      <Glow
+        top="-100%"
+        left="-40%"
+        width={600}
+        height={600}
+        color="#890A8C"
+        mtop="35%"
+        mleft="0"
       />
       <h1>Categories / Tags</h1>
       <div className={styles.tagContainer}>
-
-       <Link scroll={true} href='/category/sports' className={`${styles.tagItem} ${styles.sports}`}>
-          <Image width={50} height={50} src='/style.png' className={styles.img}/>
-          <p>Sports</p>
-        </Link>
-
-        <Link scroll={true} href='/category/news' className={`${styles.tagItem} ${styles.news}`}>
-          <Image width={50} height={50} src='/fashion.png' className={styles.img}/>
-          <p>News</p>
-        </Link>
-
-        <Link scroll={true} href='/category/lifestyle' className={`${styles.tagItem} ${styles.lifeStyle}`}>
-          <Image width={50} height={50} src='/travel.png' className={styles.img}/>
-          <p>Lifestyle</p>
-        </Link>
-
-        <Link scroll={true} href='/category/music' className={`${styles.tagItem} ${styles.music}`}>
-          <Image width={50} height={50} src='/culture.png' className={styles.img}/>
-          <p>Music</p>
-        </Link>
-
-        <Link scroll={true} href='/category/movies' className={`${styles.tagItem} ${styles.movie}`}>
-          <Image width={50} height={50} src='/food.png' className={styles.img}/>
-          <p>Movies</p>
-        </Link>
-
+        {tags.map(({ name, path, img }) => (
+          <Link
+            key={name}
+            scroll={true}
+            href={path}
+            className={`${styles.tagItem} ${styles[name.toLowerCase()]}`}
+          >
+            <Image
+              width={50}
+              height={50}
+              src={`${BASE_PATH}${img}`}
+              className={styles.img}
+              alt={name}
+            />
+            <p>{name}</p>
+          </Link>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PopularTags
+export default PopularTags;

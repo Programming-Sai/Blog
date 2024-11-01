@@ -6,7 +6,7 @@ const nextConfig = {
   compress: true,
   output: "export",
   basePath: BASE_PATH, // Use the imported base path
-  // assetPrefix: `${BASE_PATH}/`,
+  assetPrefix: `${BASE_PATH}/`,
 };
 
 export default nextConfig;

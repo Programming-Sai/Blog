@@ -11,6 +11,7 @@ import Glow from "@/components/glow/Glow";
 import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import BASE_PATH from "../../../base";
 
 // Temporary slugs for development purposes
 const temporarySlugs = [
@@ -56,9 +57,14 @@ const SingleBlogPage = () => {
             </div>
             <div
               className={styles.item}
-              style={{ "--img": 'url("/fashion.png")' }}
+              style={{ "--img": `url("${BASE_PATH}/fashion.png")` }}
             >
-              <Image fill alt="f" src="/fashion.png" className={styles.img} />
+              <Image
+                fill
+                alt="f"
+                src={`${BASE_PATH}/fashion.png`}
+                className={styles.img}
+              />
             </div>
           </div>
           <div className={styles.content}>

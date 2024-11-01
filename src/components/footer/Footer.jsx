@@ -2,9 +2,17 @@ import React from "react";
 import styles from "./footer.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import BASE_PATH from "../../../base"; // Ensure BASE_PATH is imported
 
 const Footer = ({ disabled }) => {
   if (disabled) return null;
+
+  const socialLinks = [
+    { name: "Facebook", src: "/facebook.png", href: "/" },
+    { name: "Instagram", src: "/instagram.png", href: "/" },
+    { name: "Tiktok", src: "/tiktok.png", href: "/" },
+    { name: "Youtube", src: "/youtube.png", href: "/" },
+  ];
 
   return (
     <div className={styles.container} style={disabled && { display: "none" }}>
@@ -61,51 +69,21 @@ const Footer = ({ disabled }) => {
       </div>
       <div className={styles.item}>
         <div className={styles.title}>Socials</div>
-        <Link href="/" className={styles.socialLink}>
-          <Image
-            width={14}
-            height={14}
-            alt="Moon"
-            src="/facebook.png"
-            className={styles.socialImage}
-          />
-          <p>Facebook</p>
-        </Link>
-        <Link href="/" className={styles.socialLink}>
-          <Image
-            width={14}
-            height={14}
-            alt="Moon"
-            src="/instagram.png"
-            className={styles.socialImage}
-          />
-          <p>Instagram</p>
-        </Link>
-        <Link href="/" className={styles.socialLink}>
-          <Image
-            width={14}
-            height={14}
-            alt="Moon"
-            src="/tiktok.png"
-            className={styles.socialImage}
-          />
-          <p>Tiktok</p>
-        </Link>
-        <Link href="/" className={styles.socialLink}>
-          <Image
-            width={14}
-            height={14}
-            alt="Moon"
-            src="/youtube.png"
-            className={styles.socialImage}
-          />
-          <p>Youtube</p>
-        </Link>
+        {socialLinks.map(({ name, src, href }) => (
+          <Link key={name} href={href} className={styles.socialLink}>
+            <Image
+              width={14}
+              height={14}
+              alt={name}
+              src={`${BASE_PATH}${src}`} // Use BASE_PATH for the image source
+              className={styles.socialImage}
+            />
+            <p>{name}</p>
+          </Link>
+        ))}
       </div>
     </div>
   );
 };
-{
-  /* <div className={styles.title}></div> */
-}
+
 export default Footer;

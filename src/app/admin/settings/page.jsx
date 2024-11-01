@@ -17,6 +17,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
+import BASE_PATH from "../../../../base";
 
 const Settings = () => {
   const {
@@ -48,7 +49,7 @@ const Settings = () => {
         <div className={styles.profileImgContainer}>
           <Image
             fill
-            src="/fashion.png"
+            src={`${BASE_PATH}/fashion.png`}
             alt="profile picture"
             className={styles.img}
           />
@@ -99,8 +100,8 @@ const Settings = () => {
                   fill
                   src={
                     theme === "light"
-                      ? "/snow-theme-light.png"
-                      : "/snow-theme-dark.png"
+                      ? `${BASE_PATH}/snow-theme-light.png`
+                      : `${BASE_PATH}/snow-theme-dark.png`
                   }
                 />
               </div>
@@ -129,8 +130,8 @@ const Settings = () => {
                   fill
                   src={
                     theme === "light"
-                      ? "/bubble-theme-light.png"
-                      : "/bubble-theme-dark.png"
+                      ? `${BASE_PATH}/bubble-theme-light.png`
+                      : `${BASE_PATH}/bubble-theme-dark.png`
                   }
                 />
               </div>
