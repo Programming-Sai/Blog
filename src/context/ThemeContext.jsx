@@ -1,53 +1,36 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
+import useLocalStorage from "@/components/UseLocalStorage";
 
 export const ThemeContext = createContext();
 
-const getThemeFromLocalStorage = () => {
-  if (typeof window !== "undefined") {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) return storedTheme;
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    return systemPrefersDark ? "dark" : "light";
-  }
-  return "dark";
-};
-
 export const ThemeContextProvider = ({ children }) => {
-  const [theme, setTheme] = useState(getThemeFromLocalStorage());
+  const [theme, setTheme] = useLocalStorage("theme", getDefaultTheme());
   const [overlay, setOverlay] = useState(false);
   const [toggleSidePane, setToggleSidePane] = useState(false);
-  const [autoSave, setAutoSave] = useState(() => {
-    const savedValue = localStorage.getItem("autoSave");
-    return savedValue !== null ? JSON.parse(savedValue) : true;
-  });
-  const [autoSaveDuration, setAutoSaveDuration] = useState(() => {
-    const savedValue = localStorage.getItem("autoSaveDuration");
-    return savedValue !== null ? Number(savedValue) : 120000;
-  });
-  const [quillTheme, setQuillTheme] = useState(() => {
-    const savedValue = localStorage.getItem("quillTheme");
-    return savedValue !== null ? savedValue : "snow";
-  });
+  const [autoSave, setAutoSave] = useLocalStorage("autoSave", true);
+  const [autoSaveDuration, setAutoSaveDuration] = useLocalStorage(
+    "autoSaveDuration",
+    120000
+  );
+  const [quillTheme, setQuillTheme] = useLocalStorage("quillTheme", "snow");
+
+  function getDefaultTheme() {
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme) return storedTheme;
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      return systemPrefersDark ? "dark" : "light";
+    }
+    return "dark"; // Default to dark if no window
+  }
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  useEffect(() => {
-    localStorage.setItem("quillTheme", quillTheme);
-  }, [quillTheme]);
-
-  useEffect(() => {
-    localStorage.setItem("autoSaveDuration", autoSaveDuration.toString());
-  }, [autoSaveDuration]);
 
   return (
     <ThemeContext.Provider
@@ -66,8 +49,6 @@ export const ThemeContextProvider = ({ children }) => {
         setQuillTheme,
       }}
     >
-      {" "}
-      {/* Add value prop */}
       {children}
     </ThemeContext.Provider>
   );

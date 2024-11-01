@@ -17,6 +17,25 @@
   background: linear-gradient(transparent, 95%, var(--color) 5%);
 }
 
+@media screen and (max-width: 1324px) {
+  .authlink {
+    padding: 6px 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .authlink {
+    padding: 5px 7px;
+  }
+}
+
+@media screen and (max-width: 868px) {
+  .authlink .anchor span {
+    font-size: 0.8rem !important;
+    margin-left: -4px;
+  }
+}
+
 @media screen and (max-width: 580px) {
   .authlink:last-child {
     margin-right: 0;
