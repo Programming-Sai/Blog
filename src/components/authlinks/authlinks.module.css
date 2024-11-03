@@ -43,6 +43,8 @@
   .icon {
     display: inline;
     margin-left: -10px;
+    margin-right: 6px;
+    font-size: 1.4rem;
   }
   .authlink:hover {
     --color: transparent;
@@ -52,5 +54,8 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+  }
+  .authlink .anchor span {
+    font-size: 1.1rem !important;
   }
 }
