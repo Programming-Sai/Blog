@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeProvider from "@/providers/ThemeProvider";
 import ScrollToTopWrapper from "@/components/scrolltotopwrapper/ScrollToTopWrapper";
+import AuthProvider from "@/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,16 +16,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeContextProvider>
-          <ThemeProvider>
-            <div className="container" id="top">
-              <div className="wrapper">
-                <ScrollToTopWrapper>{children}</ScrollToTopWrapper>
+        <AuthProvider>
+          <ThemeContextProvider>
+            <ThemeProvider>
+              <div className="container" id="top">
+                <div className="wrapper">
+                  <ScrollToTopWrapper>{children}</ScrollToTopWrapper>
+                </div>
               </div>
-            </div>
-            <span id="bottom" />
-          </ThemeProvider>
-        </ThemeContextProvider>
+              <span id="bottom" />
+            </ThemeProvider>
+          </ThemeContextProvider>
+        </AuthProvider>
       </body>
     </html>
   );

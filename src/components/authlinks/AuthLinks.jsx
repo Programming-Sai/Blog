@@ -1,22 +1,34 @@
+"use client";
 import React from "react";
 import styles from "./authlinks.module.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShield,
   faSignIn,
   faSignOut,
   faUserLock,
 } from "@fortawesome/free-solid-svg-icons";
+import { signOut, useSession } from "next-auth/react";
 
 const AuthLinks = ({ currentRoute }) => {
-  // let isAdmin = false;
+  const { data, status } = useSession();
+
   let isAdmin = true;
-  const status = "unauthenticated";
+  // let isAdmin = status === "authenticated" && data?.user?.role === "admin";
+
   return (
     <>
       <li className={styles.authlink}>
-        <Link className={styles.anchor} href="/login">
+        <Link
+          className={styles.anchor}
+          href="/login"
+          onClick={(e) => {
+            if (status === "authenticated") {
+              e.preventDefault();
+              signOut();
+            }
+          }}
+        >
           <FontAwesomeIcon
             className={styles.icon}
             icon={status == "authenticated" ? faSignOut : faSignIn}
