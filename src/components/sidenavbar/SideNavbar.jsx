@@ -15,10 +15,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { ThemeContext } from "@/context/ThemeContext";
 import BASE_PATH from "../../../base";
+import { usePathname } from "next/navigation";
 
 const SideNavbar = () => {
   const { toggleSidePane, setToggleSidePane } = useContext(ThemeContext);
-
+  const router = usePathname();
   useEffect(() => {
     if (window.innerWidth <= 640) {
       setToggleSidePane(false);
@@ -149,7 +150,7 @@ const SideNavbar = () => {
                 : "";
             }}
             className={styles.a}
-            href="/login"
+            href={`/login?redirect=${encodeURIComponent(router)}`}
             title="Logout"
           >
             <FontAwesomeIcon className={styles.icon} icon={faSignOutAlt} />

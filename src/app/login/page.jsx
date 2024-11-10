@@ -1,17 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import BASE_PATH from "../../../base";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PageLoader from "@/components/pageloader/PageLoader";
 
 const Login = () => {
   const { data, status } = useSession();
-  const route = useRouter();
-  if (status == "loading") {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/";
+
+  if (status === "loading") {
     return (
       <PageLoader
         isBorderRadius={false}
@@ -22,11 +25,14 @@ const Login = () => {
     );
   }
 
-  if (status == "authenticated") {
-    route.push("/");
+  const handleLoginClick = (provider) => {
+    signIn(provider); // Trigger authentication
+  };
+
+  if (status === "authenticated") {
+    router.push(redirectPath);
   }
 
-  console.log(data, status);
   return (
     <div className={styles.container}>
       <div className={styles.back}>.</div>
@@ -34,12 +40,7 @@ const Login = () => {
         <div className={styles.loginContainer}>
           <h1>Sign In With</h1>
           <div className={styles.links}>
-            <Link
-              href="/login"
-              onClick={() => {
-                signIn("facebook");
-              }}
-            >
+            <Link href="#" onClick={() => handleLoginClick("facebook")}>
               <Image
                 className={styles.img}
                 src={`${BASE_PATH}/facebook.png`}
@@ -48,12 +49,7 @@ const Login = () => {
                 alt="Facebook"
               />
             </Link>
-            <Link
-              href="/login"
-              onClick={() => {
-                signIn("twitter");
-              }}
-            >
+            <Link href="#" onClick={() => handleLoginClick("twitter")}>
               <Image
                 className={styles.img}
                 src={`${BASE_PATH}/X.png`}
@@ -62,12 +58,7 @@ const Login = () => {
                 alt="X"
               />
             </Link>
-            <Link
-              href="/login"
-              onClick={() => {
-                signIn("google");
-              }}
-            >
+            <Link href="#" onClick={() => handleLoginClick("google")}>
               <Image
                 className={styles.img}
                 src={`${BASE_PATH}/Google.png`}
@@ -76,12 +67,7 @@ const Login = () => {
                 alt="Google"
               />
             </Link>
-            <Link
-              href="/login"
-              onClick={() => {
-                signIn("github");
-              }}
-            >
+            <Link href="#" onClick={() => handleLoginClick("github")}>
               <Image
                 className={styles.img}
                 src={`${BASE_PATH}/Github.png`}
@@ -90,12 +76,7 @@ const Login = () => {
                 alt="Github"
               />
             </Link>
-            <Link
-              href="/login"
-              onClick={() => {
-                signIn("linkedin");
-              }}
-            >
+            <Link href="#" onClick={() => handleLoginClick("linkedin")}>
               <Image
                 className={styles.img}
                 src={`${BASE_PATH}/LinkedIn.png`}

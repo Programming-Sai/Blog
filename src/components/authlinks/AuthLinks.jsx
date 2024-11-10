@@ -8,10 +8,12 @@ import {
   faSignOut,
   faUserLock,
 } from "@fortawesome/free-solid-svg-icons";
-import { signOut, useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
-const AuthLinks = ({ currentRoute }) => {
+const AuthLinks = () => {
   const { data, status } = useSession();
+  const router = usePathname();
 
   let isAdmin = true;
   // let isAdmin = status === "authenticated" && data?.user?.role === "admin";
@@ -21,7 +23,7 @@ const AuthLinks = ({ currentRoute }) => {
       <li className={styles.authlink}>
         <Link
           className={styles.anchor}
-          href="/login"
+          href={`/login?redirect=${encodeURIComponent(router)}`}
           onClick={(e) => {
             if (status === "authenticated") {
               e.preventDefault();
