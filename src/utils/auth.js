@@ -4,7 +4,15 @@ import TwitterProvider from "next-auth/providers/twitter";
 import FacebookProvider from "next-auth/providers/facebook";
 import LinkedInProvider from "next-auth/providers/linkedin";
 
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "./connect";
+
 export const authOptions = {
+  adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
@@ -57,23 +65,69 @@ export const authOptions = {
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
-      //   authorization: {
-      //     url: "https://www.facebook.com/v12.0/dialog/oauth",
-      //     params: {
-      //       scope: "email,public_profile", // Request both email and public profile (name and profile pic)
-      //     },
-      //   },
-      //   profile(profile) {
-      //     // Include the necessary user information (name, email, and profile picture)
-      //     return {
-      //       id: profile.id,
-      //       name: profile.name,
-      //       email: profile.email,
-      //       image: profile.picture.data.url, // This will give the profile picture URL
-      //     };
-      //   },
     }),
   ],
+
+  callbacks: {
+    async signIn({ user, account }) {
+      if (user.email) {
+        // Check if a user with the same email already exists
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email },
+        });
+
+        if (existingUser) {
+          // Check if this OAuth provider is already linked to the user
+          const linkedAccount = await prisma.account.findFirst({
+            where: {
+              userId: existingUser.id,
+              provider: account.provider,
+            },
+          });
+
+          if (!linkedAccount) {
+            // Link the new provider to the existing user account
+            await prisma.account.create({
+              data: {
+                userId: existingUser.id,
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                type: account.type,
+                access_token: account.access_token,
+                refresh_token: account.refresh_token,
+                expires_at: account.expires_at,
+              },
+            });
+          }
+          return true;
+        } else {
+          // Create a new user if none exists
+          const newUser = await prisma.user.create({
+            data: {
+              email: user.email,
+              name: user.name,
+              image: user.image,
+            },
+          });
+
+          // Link the new OAuth account to this user
+          await prisma.account.create({
+            data: {
+              userId: newUser.id,
+              provider: account.provider,
+              providerAccountId: account.providerAccountId,
+              type: account.type,
+              access_token: account.access_token,
+              refresh_token: account.refresh_token,
+              expires_at: account.expires_at,
+            },
+          });
+          return true;
+        }
+      }
+      return false; // Prevent sign-in if email is missing or invalid
+    },
+  },
 };
 
 // https://youtu.be/eTpkgNBmrX8     video link for solution to facebook oauth issues. make sure that the setting and permissions are set for both email and public_profile.
