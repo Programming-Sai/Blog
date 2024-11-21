@@ -5,8 +5,19 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base";
+import Link from "next/link";
 
-const EditorPick = () => {
+const getData = async () => {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`);
+
+  if (!result.ok) {
+    throw new Error("Failed to get posts");
+  }
+  return result.json();
+};
+
+const EditorPick = async () => {
+  const data = await getData();
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Editor's Pick</h1>
@@ -21,155 +32,83 @@ const EditorPick = () => {
           mleft="0"
         />
         <div className={styles.rowTwo}>
-          <div className={styles.item}>
-            <div className={styles.innerContainer}>
-              <Image
-                src={`${BASE_PATH}/fashion.png`}
-                fill
-                alt="img"
-                className={styles.img}
-              />
-            </div>
-            <div className={styles.innerContainer}>
-              <div className={styles.postTagTime}>
-                <p className={styles.tag}>Travel</p>
-                <div className={styles.time}>
-                  <FontAwesomeIcon icon={faClock} />
-                  <p>3min read</p>
+          {data.editorPick.slice(0, 2).map((item, _) => (
+            <div key={item._id} className={styles.item}>
+              <div className={styles.innerContainer}>
+                <Image
+                  src={`${item.image}`}
+                  fill
+                  alt="img"
+                  className={styles.img}
+                />
+              </div>
+              <div className={styles.innerContainer}>
+                <div className={styles.postTagTime}>
+                  <p className={styles.tag}>{item.catSlug}</p>
+                  <div className={styles.time}>
+                    <FontAwesomeIcon icon={faClock} />
+                    <p>{item.readingTime}min read</p>
+                  </div>
+                </div>
+                <h2>{item.title}</h2>
+                <p className={styles.desc}>{item.desc}</p>
+                <div className={styles.dateRead}>
+                  <p className={styles.date}>
+                    {new Date(item.createdAt)
+                      .toISOString()
+                      .substring(0, 10)
+                      .replace(/-/g, " • ")}
+                  </p>
+                  <Link href={`/${item.slug}`} className={styles.read}>
+                    Read More
+                  </Link>
                 </div>
               </div>
-              <h2>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h2>
-              <p className={styles.desc}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium dolorem officia, amet suscipit doloribus accusantium
-                animi qui odio est! Nemo!
-              </p>
-              <div className={styles.dateRead}>
-                <p className={styles.date}>25 Nov 2024</p>
-                <button className={styles.read}>Read More</button>
-              </div>
             </div>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.innerContainer}>
-              <Image
-                src={`${BASE_PATH}/food.png`}
-                fill
-                alt="img"
-                className={styles.img}
-              />
-            </div>
-            <div className={styles.innerContainer}>
-              <div className={styles.postTagTime}>
-                <p className={styles.tag}>Travel</p>
-                <div className={styles.time}>
-                  <FontAwesomeIcon icon={faClock} />
-                  <p>3min read</p>
-                </div>
-              </div>
-              <h2>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h2>
-              <p className={styles.desc}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium dolorem officia, amet suscipit doloribus accusantium
-                animi qui odio est! Nemo!
-              </p>
-              <div className={styles.dateRead}>
-                <p className={styles.date}>25 Nov 2024</p>
-                <button className={styles.read}>Read More</button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className={styles.rowTwo}>
-          <div className={styles.item}>
-            <div className={styles.innerContainer}>
-              <Image
-                src={`${BASE_PATH}/travel.png`}
-                fill
-                alt="img"
-                className={styles.img}
-              />
-            </div>
-            <div className={styles.innerContainer}>
-              <div className={styles.postTagTime}>
-                <p className={styles.tag}>Travel</p>
-                <div className={styles.time}>
-                  <FontAwesomeIcon icon={faClock} />
-                  <p>3min read</p>
+          {data.editorPick.slice(2, 5).map((item, _) => (
+            <div key={item._id} className={styles.item}>
+              <div className={styles.innerContainer}>
+                <Image
+                  src={`${item.image}`}
+                  fill
+                  alt="img"
+                  className={styles.img}
+                />
+              </div>
+              <div className={styles.innerContainer}>
+                <div className={styles.postTagTime}>
+                  {/* <p className={styles.tag}>Travel</p> */}
+                  <p className={styles.tag}>
+                    {item.catSlug.charAt(0).toUpperCase() +
+                      item.catSlug.slice(1)}
+                  </p>
+                  <div className={styles.time}>
+                    <FontAwesomeIcon icon={faClock} />
+                    <p>{item.readingTime}min read</p>
+                  </div>
+                </div>
+                <h2>{item.title}</h2>
+                <p className={styles.desc}>{item.desc}</p>
+                <div className={styles.dateRead}>
+                  <p className={styles.date}>
+                    {new Date(item.createdAt)
+                      .toISOString()
+                      .substring(0, 10)
+                      .replace(/-/g, " • ")}
+                  </p>
+                  <Link href={`/${item.slug}`} className={styles.read}>
+                    Read More
+                  </Link>
                 </div>
               </div>
-              <h2>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h2>
-              <p className={styles.desc}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium dolorem officia, amet suscipit doloribus accusantium
-                animi qui odio est! Nemo!
-              </p>
-              <div className={styles.dateRead}>
-                <p className={styles.date}>25 Nov 2024</p>
-                <button className={styles.read}>Read More</button>
-              </div>
             </div>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.innerContainer}>
-              <Image
-                src={`${BASE_PATH}/culture.png`}
-                fill
-                alt="img"
-                className={styles.img}
-              />
-            </div>
-            <div className={styles.innerContainer}>
-              <div className={styles.postTagTime}>
-                <p className={styles.tag}>Travel</p>
-                <div className={styles.time}>
-                  <FontAwesomeIcon icon={faClock} />
-                  <p>3min read</p>
-                </div>
-              </div>
-              <h2>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h2>
-              <p className={styles.desc}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium dolorem officia, amet suscipit doloribus accusantium
-                animi qui odio est! Nemo!
-              </p>
-              <div className={styles.dateRead}>
-                <p className={styles.date}>25 Nov 2024</p>
-                <button className={styles.read}>Read More</button>
-              </div>
-            </div>
-          </div>
-          <div className={styles.item}>
-            <div className={styles.innerContainer}>
-              <Image
-                src={`${BASE_PATH}/style.png`}
-                fill
-                alt="img"
-                className={styles.img}
-              />
-            </div>
-            <div className={styles.innerContainer}>
-              <div className={styles.postTagTime}>
-                <p className={styles.tag}>Travel</p>
-                <div className={styles.time}>
-                  <FontAwesomeIcon icon={faClock} />
-                  <p>3min read</p>
-                </div>
-              </div>
-              <h2>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h2>
-              <p className={styles.desc}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium dolorem officia, amet suscipit doloribus accusantium
-                animi qui odio est! Nemo!
-              </p>
-              <div className={styles.dateRead}>
-                <p className={styles.date}>25 Nov 2024</p>
-                <button className={styles.read}>Read More</button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
+
         <Glow
           top="70%"
           left="80%"

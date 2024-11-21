@@ -26,16 +26,23 @@ export const GET = async (request) => {
 
   try {
     // Fetch paginated posts, top posts, and featured post in parallel
-    const [paginatedPosts, topPosts, featuredPost] = await Promise.all([
-      prisma.post.findMany(queryOne),
-      prisma.post.findMany(queryTwo),
-      prisma.post.findFirst({
-        where: { isFeatured: true },
-        orderBy: {
-          createdAt: "desc", // Optional: Ensure the most recently featured post is fetched
-        },
-      }),
-    ]);
+    const [paginatedPosts, topPosts, featuredPost, editorPick] =
+      await Promise.all([
+        prisma.post.findMany(queryOne),
+        prisma.post.findMany(queryTwo),
+        prisma.post.findFirst({
+          where: { isFeatured: true },
+          orderBy: {
+            createdAt: "desc", // Optional: Ensure the most recently featured post is fetched
+          },
+        }),
+        prisma.post.findMany({
+          where: { isEditorPick: true },
+          orderBy: {
+            createdAt: "desc", // Optional: Ensure the most recently featured post is fetched
+          },
+        }),
+      ]);
 
     // Count the total number of posts
     const count = await prisma.post.count();
@@ -46,6 +53,7 @@ export const GET = async (request) => {
         paginatedPosts,
         topPosts,
         featuredPost,
+        editorPick,
         count,
         POST_PER_PAGE,
       }),
