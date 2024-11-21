@@ -6,7 +6,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base"; // Ensure BASE_PATH is imported
 
-const getData = async (page) => {
+const getData = async () => {
   const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`);
 
   if (!result.ok) {

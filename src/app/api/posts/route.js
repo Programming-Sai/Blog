@@ -25,24 +25,36 @@ export const GET = async (request) => {
   };
 
   try {
-    // Fetch paginated posts and top posts in parallel
-    const [paginatedPosts, topPosts] = await Promise.all([
+    // Fetch paginated posts, top posts, and featured post in parallel
+    const [paginatedPosts, topPosts, featuredPost] = await Promise.all([
       prisma.post.findMany(queryOne),
       prisma.post.findMany(queryTwo),
+      prisma.post.findFirst({
+        where: { isFeatured: true },
+        orderBy: {
+          createdAt: "desc", // Optional: Ensure the most recently featured post is fetched
+        },
+      }),
     ]);
 
     // Count the total number of posts
     const count = await prisma.post.count();
 
-    // Return both sets of posts, the count, and the number of posts per page
+    // Return the posts, count, posts per page, and the featured post
     return new NextResponse(
-      JSON.stringify({ paginatedPosts, topPosts, count, POST_PER_PAGE }),
+      JSON.stringify({
+        paginatedPosts,
+        topPosts,
+        featuredPost,
+        count,
+        POST_PER_PAGE,
+      }),
       { status: 200 }
     );
   } catch (e) {
     console.log(e);
     return new NextResponse(
-      { message: "Sorry, something went terribly wrong" },
+      JSON.stringify({ message: "Sorry, something went terribly wrong" }),
       { status: 500 }
     );
   }

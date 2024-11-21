@@ -3,8 +3,19 @@ import styles from "./featuredsection.module.css";
 import Image from "next/image";
 import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base";
+import Link from "next/link";
 
-const FeaturedSection = ({ theme }) => {
+const getData = async () => {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`);
+
+  if (!result.ok) {
+    throw new Error("Failed to get posts");
+  }
+  return result.json();
+};
+
+const FeaturedSection = async ({ theme }) => {
+  const data = await getData();
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -22,25 +33,31 @@ const FeaturedSection = ({ theme }) => {
             mleft="30%"
           />
           <h2 className={styles.subtitle}>
-            Simple Ways to Inspire your inner Innovator.
+            {/* Simple Ways to Inspire your inner Innovator. */}
+            {data.featuredPost.title}
           </h2>
           <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
             nostrum a, quibusdam, accusamus molestiae dolorem sed veniam animi,
             repudiandae amet veritatis ipsam! Fuga molestiae sed vero ad autem
             accusantium nam id, obcaecati quisquam aut saepe neque tempora
-            veritatis sunt ducimus?
+            veritatis sunt ducimus? */}
+            {data.featuredPost.desc}
           </p>
-          <button className={styles.readMore}>Read More</button>
+          <Link href={`/${data.featuredPost.slug}`} className={styles.readMore}>
+            Read More
+          </Link>
         </div>
 
         <div
           className={styles.sectionItem}
-          style={{ "--featured-bg": `url("${BASE_PATH}/p1.jpeg")` }}
+          // style={{ "--featured-bg": `url("${BASE_PATH}/p1.jpeg")` }}
+          style={{ "--featured-bg": `url("${data.featuredPost.image}")` }}
         >
           <Image
             className={styles.img}
-            src={`${BASE_PATH}/p1.jpeg`}
+            src={`${data.featuredPost.image}`}
+            // src={`${BASE_PATH}/p1.jpeg`}
             priority
             fill
             alt="Featured Image"
