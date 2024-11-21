@@ -6,7 +6,16 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base"; // Ensure BASE_PATH is imported
 
-const PopularPosts = ({
+const getData = async (page) => {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`);
+
+  if (!result.ok) {
+    throw new Error("Failed to get posts");
+  }
+  return result.json();
+};
+
+const PopularPosts = async ({
   glow,
   width,
   className,
@@ -14,44 +23,7 @@ const PopularPosts = ({
   marginBlock,
   isOutline,
 }) => {
-  // Sample post data with realistic names, titles, and dates
-  const posts = [
-    {
-      id: 1,
-      title: "The Rise of Sustainable Fashion",
-      img: "/fashion.png",
-      date: "15 Oct 2024",
-      readTime: "5 min read",
-    },
-    {
-      id: 2,
-      title: "Exploring the Best Travel Destinations for 2024",
-      img: "/travel.png",
-      date: "22 Oct 2024",
-      readTime: "4 min read",
-    },
-    {
-      id: 3,
-      title: "Top 10 Health Benefits of Yoga",
-      img: "/style.png",
-      date: "28 Oct 2024",
-      readTime: "3 min read",
-    },
-    {
-      id: 4,
-      title: "How to Build a Successful Morning Routine",
-      img: "/food.png",
-      date: "30 Oct 2024",
-      readTime: "6 min read",
-    },
-    {
-      id: 5,
-      title: "The Future of Technology: Trends to Watch",
-      img: "/coding.png",
-      date: "01 Nov 2024",
-      readTime: "7 min read",
-    },
-  ];
+  const posts = await getData();
 
   return (
     <div
@@ -65,11 +37,11 @@ const PopularPosts = ({
     >
       <h2>Popular Posts</h2>
       <div className={styles.postsContainer}>
-        {posts.map(({ id, title, img, date, readTime }) => (
-          <div key={id} className={styles.item}>
+        {posts.topPosts.map(({ _id, image, title, readingTime, createdAt }) => (
+          <div key={_id} className={styles.item}>
             <div className={styles.imgContainer}>
               <Image
-                src={`${BASE_PATH}${img}`}
+                src={image}
                 fill
                 className={styles.img}
                 alt={title}
@@ -81,9 +53,15 @@ const PopularPosts = ({
               <div className={styles.timeDate}>
                 <div className={styles.readingTime}>
                   <FontAwesomeIcon icon={faClock} />
-                  <p>{readTime}</p>
+                  <p>{readingTime} min(s) read</p>
                 </div>
-                <p>{date}</p>
+                {"  |"}
+                <p>
+                  {new Date(createdAt)
+                    .toISOString()
+                    .substring(0, 10)
+                    .replace(/-/g, " • ")}
+                </p>
               </div>
             </div>
           </div>

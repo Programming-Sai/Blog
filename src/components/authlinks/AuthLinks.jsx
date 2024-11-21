@@ -11,19 +11,21 @@ import {
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
-const AuthLinks = () => {
+const AuthLinks = ({ past }) => {
   const { data, status } = useSession();
   const router = usePathname();
 
-  let isAdmin = true;
-  // let isAdmin = status === "authenticated" && data?.user?.role === "admin";
+  console.log(status, data, data?.user?.role);
+
+  // let isAdmin = true;
+  let isAdmin = status === "authenticated" && data?.user?.role === "ADMIN";
 
   return (
     <>
       <li className={styles.authlink}>
         <Link
           className={styles.anchor}
-          href={`/login?redirect=${encodeURIComponent(router)}`}
+          href={`/login?redirect=${encodeURIComponent(past ? past : router)}`}
           onClick={(e) => {
             if (status === "authenticated") {
               e.preventDefault();

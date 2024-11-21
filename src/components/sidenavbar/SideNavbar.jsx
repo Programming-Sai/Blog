@@ -16,15 +16,20 @@ import Image from "next/image";
 import { ThemeContext } from "@/context/ThemeContext";
 import BASE_PATH from "../../../base";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 const SideNavbar = () => {
   const { toggleSidePane, setToggleSidePane } = useContext(ThemeContext);
   const router = usePathname();
+  const { data, status } = useSession();
+
   useEffect(() => {
     if (window.innerWidth <= 640) {
       setToggleSidePane(false);
     }
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
+
+  console.log(data);
 
   return (
     <div
@@ -48,16 +53,20 @@ const SideNavbar = () => {
       <div className={styles.profileContainer}>
         <div
           className={styles.imgContainer}
-          style={{ "--img": `url("${BASE_PATH}/p1.jpeg")` }} // Add BASE_PATH here
+          style={{
+            "--img": `url(${
+              data?.user?.image || BASE_PATH + "/LinkedInAvatar.png"
+            })`,
+          }}
         >
           <Image
             className={styles.img}
-            src={`${BASE_PATH}/fashion.png`}
+            src={data?.user?.image || `${BASE_PATH}/LinkedInAvatar.png`}
             fill
             alt="Fashion"
           />
         </div>
-        <h1>Name</h1>
+        <h3>{data?.user?.name}</h3>
       </div>
 
       <ul>
@@ -142,20 +151,21 @@ const SideNavbar = () => {
         </li>
 
         <li>
-          {/* <Link className={styles.a} href='/admin/logout' title='Logout'> */}
-          <Link
-            onClick={() => {
+          <button
+            onClick={(e) => {
               window.innerWidth <= 868
                 ? setToggleSidePane(!toggleSidePane)
                 : "";
+              if (status === "authenticated") {
+                signOut({ callbackUrl: "/" });
+              }
             }}
             className={styles.a}
-            href={`/login?redirect=${encodeURIComponent(router)}`}
             title="Logout"
           >
             <FontAwesomeIcon className={styles.icon} icon={faSignOutAlt} />
             <span>Logout</span>
-          </Link>
+          </button>
         </li>
       </ul>
     </div>

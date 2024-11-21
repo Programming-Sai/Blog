@@ -7,7 +7,7 @@ import Searchbar from "../searchbar/Searchbar";
 import SidePanel from "../sidepanel/SidePanel";
 import NavText from "../navtext/NavText";
 
-const Navbar = ({ disabled }) => {
+const Navbar = ({ past, disabled }) => {
   if (disabled) return null;
 
   return (
@@ -36,7 +36,7 @@ const Navbar = ({ disabled }) => {
                 <NavText>Contact</NavText>
               </Link>
             </li>
-            <AuthLinks />
+            <AuthLinks past={past} />
           </ul>
         </nav>
 

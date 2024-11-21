@@ -7,7 +7,7 @@ import AboutHeroSection from "@/components/aboutherosection/AboutHeroSection";
 import AboutContent from "@/components/aboutcontent/AboutContent";
 import PopularPosts from "@/components/popularposts/PopularPosts";
 
-const About = ({ slug }) => {
+const About = ({ page }) => {
   return (
     <>
       <Navbar />

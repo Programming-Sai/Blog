@@ -5,16 +5,17 @@ import Link from "next/link";
 import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base";
 
-const PopularTags = () => {
-  // Sample tag data with names and image paths
-  const tags = [
-    { name: "Sports", path: "/category/sports", img: "/style.png" },
-    { name: "News", path: "/category/news", img: "/fashion.png" },
-    { name: "Lifestyle", path: "/category/lifestyle", img: "/travel.png" },
-    { name: "Music", path: "/category/music", img: "/culture.png" },
-    { name: "Movies", path: "/category/movies", img: "/food.png" },
-  ];
+const getData = async () => {
+  const result = await fetch("/api/categories");
 
+  if (!result.ok) {
+    throw new Error("Failed to get categories");
+  }
+  return result.json();
+};
+
+const PopularTags = async () => {
+  const tags = await getData();
   return (
     <div className={styles.container}>
       <Glow
@@ -28,21 +29,21 @@ const PopularTags = () => {
       />
       <h1>Categories / Tags</h1>
       <div className={styles.tagContainer}>
-        {tags.map(({ name, path, img }) => (
+        {tags.map(({ id, slug, title, image }) => (
           <Link
-            key={name}
+            key={id}
             scroll={true}
-            href={path}
-            className={`${styles.tagItem} ${styles[name.toLowerCase()]}`}
+            href={`/category/${slug}`}
+            className={`${styles.tagItem} ${styles[slug]}`}
           >
             <Image
               width={50}
               height={50}
-              src={`${BASE_PATH}${img}`}
+              src={image}
               className={styles.img}
-              alt={name}
+              alt={title}
             />
-            <p>{name}</p>
+            <p>{title}</p>
           </Link>
         ))}
       </div>

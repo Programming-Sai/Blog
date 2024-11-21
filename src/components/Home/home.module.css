@@ -1,30 +1,30 @@
-.container{
-    min-height: 100vh;
+.container {
+  min-height: 100vh;
 }
 
-.lower{
-    display: flex;
-    flex-direction: row;
-    gap: 5%;
+.lower {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
 }
 
-.itemOne{
-    width: 70%;
+.itemOne {
+  width: 500px;
 }
 
-.itemTwo{
-    width: 30%;
+.itemTwo {
+  margin-top: 12%;
 }
 
-@media screen and (max-width:880px) {
-    .lower{
-        flex-direction: column-reverse;
-    }
-    .itemOne{
-        width: 100%;
-    }
-    
-    .itemTwo{
-        width: 100%;
-    }
+@media screen and (max-width: 880px) {
+  .lower {
+    flex-direction: column-reverse;
+  }
+  .itemOne {
+    width: 100%;
+  }
+
+  .itemTwo {
+    margin-top: 0%;
+  }
 }

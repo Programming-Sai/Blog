@@ -1,25 +1,29 @@
-import React from 'react';
+import React from "react";
 import FeaturedSection from "@/components/featuredsection/FeaturedSection";
-import EditorPick from '../editorpick/EditorPick';
-import PopularTags from '../populartags/PopularTags';
-import RecentPosts from '../recentposts/RecentPosts';
-import PopularPosts from '../popularposts/PopularPosts';
-import styles from './home.module.css';
-import Pagination from '../pagination/Pagination';
+import EditorPick from "../editorpick/EditorPick";
+import PopularTags from "../populartags/PopularTags";
+import RecentPosts from "../recentposts/RecentPosts";
+import PopularPosts from "../popularposts/PopularPosts";
+import styles from "./home.module.css";
+import Pagination from "../pagination/Pagination";
 
-
-export default function Home({ theme }) {
-  let width = '70%';
-  return(
+export default function Home({ page, theme }) {
+  let width = "70%";
+  return (
     <div className={styles.container}>
-      <FeaturedSection theme={ theme }/>
+      <FeaturedSection theme={theme} />
       <EditorPick />
       <PopularTags />
       <div className={styles.lower}>
-          <RecentPosts  className={styles.itemOne}/>
-          <PopularPosts  className={styles.itemTwo} borderRad='20px' marginBlock='5%' isOutline='2px'/>
+        <RecentPosts page={page} className={styles.itemOne} />
+        <PopularPosts
+          className={styles.itemTwo}
+          borderRad="20px"
+          marginBlock="5%"
+          isOutline="2px"
+        />
       </div>
-      <Pagination theme={ theme } width={ width }/>
+      <Pagination page={page} theme={theme} width={width} />
     </div>
-    );
+  );
 }

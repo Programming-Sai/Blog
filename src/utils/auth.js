@@ -22,42 +22,30 @@ export const authOptions = {
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
+
     LinkedInProvider({
       clientId: process.env.LINKEDIN_ID,
       clientSecret: process.env.LINKEDIN_SECRET,
       client: { token_endpoint_auth_method: "client_secret_post" },
-      scope: "r_liteprofile r_emailaddress",
       issuer: "https://www.linkedin.com",
-      userinfo: {
-        url: "https://api.linkedin.com/v2/userinfo",
-      },
-      tokenUri: "https://www.linkedin.com/oauth/v2/accessToken",
-      wellKnown:
-        "https://www.linkedin.com/oauth/.well-known/openid-configuration",
-      authorization: {
-        url: "https://www.linkedin.com/oauth/v2/authorization",
-        params: {
-          scope: "profile email openid",
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
-
-      token: {
-        url: "https://www.linkedin.com/oauth/v2/accessToken",
-      },
-      jwks_endpoint: "https://www.linkedin.com/oauth/openid/jwks",
-      async profile(profile) {
+      profile(profile) {
         return {
           id: profile.sub,
           name: profile.name,
-          firstname: profile.given_name,
-          lastname: profile.family_name,
           email: profile.email,
+          image: profile.picture,
         };
       },
+
+      wellKnown:
+        "https://www.linkedin.com/oauth/.well-known/openid-configuration",
+      authorization: {
+        params: {
+          scope: "openid profile email",
+        },
+      },
     }),
+
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
@@ -101,7 +89,7 @@ export const authOptions = {
           }
           return true;
         } else {
-          // Create a new user if none exists
+          // Create a new user with default role
           const newUser = await prisma.user.create({
             data: {
               email: user.email,
@@ -126,6 +114,32 @@ export const authOptions = {
         }
       }
       return false; // Prevent sign-in if email is missing or invalid
+    },
+
+    async jwt({ token, user }) {
+      // Attach the role to the token
+      if (user) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+        });
+        if (dbUser) {
+          token.role = dbUser.role;
+        }
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (token?.email) {
+        const updatedUser = await prisma.user.findUnique({
+          where: { email: token.email },
+        });
+
+        if (updatedUser) {
+          session.user.role = updatedUser.role; // Update role from DB
+        }
+      }
+      return session;
     },
   },
 };

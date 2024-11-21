@@ -2,7 +2,7 @@
   margin-block: var(--marginBlock);
   border: var(--outline) solid var(--border-color);
   background-color: var(--footer-bg);
-  padding: 20px;
+  padding: 20px 40px;
   border-radius: var(--borderRad);
   position: relative;
   height: fit-content;

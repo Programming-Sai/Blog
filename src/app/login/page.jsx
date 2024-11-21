@@ -1,19 +1,20 @@
 "use client";
 import React, { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
+import PageLoader from "@/components/pageloader/PageLoader";
 import styles from "./login.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import BASE_PATH from "../../../base";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import PageLoader from "@/components/pageloader/PageLoader";
 
 const Login = () => {
-  const { data, status } = useSession();
+  const { data, status } = useSession(); // Get session status
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectPath = searchParams.get("redirect") || "/";
+  const redirectPath = searchParams.get("redirect") || "/"; // Get redirect path from query params
 
+  // While the session is loading, show a loading spinner
   if (status === "loading") {
     return (
       <PageLoader
@@ -25,13 +26,13 @@ const Login = () => {
     );
   }
 
-  const handleLoginClick = (provider) => {
-    signIn(provider); // Trigger authentication
-  };
-
   if (status === "authenticated") {
-    router.push(redirectPath);
+    router.push(redirectPath); // Redirect the user to the requested path
   }
+
+  const handleLoginClick = (provider) => {
+    signIn(provider); // Trigger sign-in with the chosen provider
+  };
 
   return (
     <div className={styles.container}>
@@ -55,7 +56,7 @@ const Login = () => {
                 src={`${BASE_PATH}/X.png`}
                 width={90}
                 height={90}
-                alt="X"
+                alt="Twitter"
               />
             </Link>
             <Link href="#" onClick={() => handleLoginClick("google")}>

@@ -42,17 +42,22 @@ model Session {
  
   @@map("sessions")
 }
+
+enum UserRole {
+  ADMIN
+  USER
+}
  
 model User {
   id            String    @id @default(cuid()) @map("_id")
   name          String?
-  role          String?
-  email         String?   @unique
+  role          String    @default("USER")
+  email         String    @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
+  Comment       Comment[]
   @@map("users")
 }
  
@@ -63,4 +68,40 @@ model VerificationToken {
  
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Category {
+  id            String    @id @default(cuid()) @map("_id")
+  slug          String    @unique
+  title         String  
+  image         String?
+  Posts         Post[]
+}
+
+model Post {
+  id            String    @id @default(cuid()) @map("_id")
+  createdAt     DateTime  @default(now())
+  slug          String    @unique
+  title         String  
+  catSlug       String  
+  desc          String  
+  image         String?
+  views         Int       @default(0)
+  readingTime   Float     @default(0)
+  isFeatured    Boolean?     @default(false)  
+  isEditorPick  Boolean?    @default(false)
+  cat           Category  @relation(fields: [catSlug], references: [slug])
+  comment       Comment[]
+}
+
+
+
+model Comment {
+  id            String    @id @default(cuid()) @map("_id")
+  createdAt     DateTime  @default(now())
+  desc          String  
+  userEmail     String
+  user          User      @relation(fields: [userEmail], references: [email])
+  postSlug      String
+  post          Post       @relation(fields: [postSlug], references: [slug])
 }
