@@ -5,22 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Glow from "../glow/Glow";
 import Link from "next/link";
+import Pagination from "../pagination/Pagination";
 
-const getData = async (page) => {
-  const result = await fetch(`/api/posts?page=${page}`);
-
-  if (!result.ok) {
-    throw new Error("Failed to get posts");
-  }
-  return result.json();
-};
-
-const RecentPosts = async ({ page, width }) => {
-  const postsData = await getData(page);
-
-  console.log(page);
+const RecentPosts = ({
+  paginatedPosts,
+  POST_PER_PAGE,
+  count,
+  currentPage,
+  cat,
+  totalPages,
+  onPageChange,
+  theme,
+}) => {
   return (
-    <div className={styles.container} style={{ width: width }} id="recentPost">
+    <div className={styles.container} id="recentPost">
       <h1>Recent Posts</h1>
       <div className={styles.recentPostsContainer}>
         <Glow
@@ -32,8 +30,7 @@ const RecentPosts = async ({ page, width }) => {
           mtop="35%"
           mleft="0"
         />
-
-        {postsData.paginatedPosts.map((post) => (
+        {paginatedPosts.map((post) => (
           <div className={styles.item} key={post._id}>
             <div className={styles.imgContainer}>
               <Image
@@ -54,7 +51,7 @@ const RecentPosts = async ({ page, width }) => {
                 - {post?.catSlug.toUpperCase()}
               </p>
               <h3>{post.title}</h3>
-              <p className={styles.desc}>{post.desc}</p>
+              <p className={styles.desc}>{post.desc.slice(0, 150) + "..."}</p>
               <div className={styles.dateRead}>
                 <Link href={`/${post.slug}`} className={styles.read}>
                   Read More
@@ -68,6 +65,16 @@ const RecentPosts = async ({ page, width }) => {
           </div>
         ))}
       </div>
+      <Pagination
+        width="100%"
+        page={currentPage}
+        cat={cat}
+        theme={theme}
+        count={count}
+        totalPages={totalPages}
+        postsPerPage={POST_PER_PAGE}
+        onPageChange={onPageChange}
+      />
     </div>
   );
 };

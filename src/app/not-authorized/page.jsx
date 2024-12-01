@@ -9,6 +9,7 @@ import PopularPosts from "@/components/popularposts/PopularPosts";
 import Glow from "@/components/glow/Glow";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import RecentPostsWrapper from "@/components/recentpostwrapper/RecentPostsWrapper";
 
 const NotAuthorized = () => {
   return (
@@ -55,7 +56,8 @@ const NotAuthorized = () => {
               mleft="0%"
             />
             <div className={styles.flexWrapper}>
-              <RecentPosts className={styles.itemOne} />
+              {/* <RecentPosts className={styles.itemOne} /> */}
+              <RecentPostsWrapper className={styles.itemOne} />
               <PopularPosts
                 className={styles.itemTwo}
                 glow={true}

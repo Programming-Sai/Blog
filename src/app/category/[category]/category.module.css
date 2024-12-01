@@ -1,50 +1,50 @@
-.container{
-    margin-block: 10%;
-    position: relative;
+.container {
+  margin-block: 10%;
+  position: relative;
 }
 
-.content, .blog{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 5%;
+.content,
+.blog {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 5%;
 }
 
-.container .title{
-    text-align: center;
-    background-color: var(--bg-color);
-    padding: 1rem;
-    border-radius: 200px;
+.container .title {
+  text-align: center;
+  background-color: var(--bg-color);
+  padding: 1rem;
+  border-radius: 200px;
 }
 
-
-.itemOne{
-    width: 70%;
+.itemOne {
+  width: 70%;
 }
 
-.blog{
+.blog {
+  flex-direction: column;
+  width: 100%;
+}
+
+.button {
+  width: 150%;
+}
+
+.itemTwo {
+  width: 40%;
+}
+
+@media screen and (max-width: 880px) {
+  .content {
     flex-direction: column;
-}
+    align-items: center;
+  }
+  .itemOne {
+    width: 100%;
+  }
 
-.button{
-    width: 150%;
-}
-
-.itemTwo{
-    width: 40%;
-}
-
-
-@media screen and (max-width:880px) {
-    .content{
-        flex-direction: column;
-        align-items: center;
-    }
-    .itemOne{
-        width: 100%;
-    }
-    
-    .itemTwo{
-        width: fit-content;
-    }
+  .itemTwo {
+    width: fit-content;
+  }
 }

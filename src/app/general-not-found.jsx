@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import RecentPosts from "@/components/recentposts/RecentPosts";
 import PopularPosts from "@/components/popularposts/PopularPosts";
 import Glow from "@/components/glow/Glow";
+import RecentPostsWrapper from "@/components/recentpostwrapper/RecentPostsWrapper";
 
 const GeneralNotFound = () => {
   return (
@@ -26,7 +27,8 @@ const GeneralNotFound = () => {
               mleft="0%"
             />
             <div className={styles.flexWrapper}>
-              <RecentPosts className={styles.itemOne} />
+              {/* <RecentPosts className={styles.itemOne} /> */}
+              <RecentPostsWrapper className={styles.itemOne} />
               <PopularPosts
                 className={styles.itemTwo}
                 glow={true}

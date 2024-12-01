@@ -15,8 +15,6 @@ const AuthLinks = ({ past }) => {
   const { data, status } = useSession();
   const router = usePathname();
 
-  console.log(status, data, data?.user?.role);
-
   // let isAdmin = true;
   let isAdmin = status === "authenticated" && data?.user?.role === "ADMIN";
 

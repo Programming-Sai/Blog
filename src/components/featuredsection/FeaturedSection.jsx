@@ -5,17 +5,7 @@ import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base";
 import Link from "next/link";
 
-const getData = async () => {
-  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`);
-
-  if (!result.ok) {
-    throw new Error("Failed to get posts");
-  }
-  return result.json();
-};
-
-const FeaturedSection = async ({ theme }) => {
-  const data = await getData();
+const FeaturedSection = ({ featuredPost, theme }) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -32,32 +22,24 @@ const FeaturedSection = async ({ theme }) => {
             mtop="-40%"
             mleft="30%"
           />
-          <h2 className={styles.subtitle}>
-            {/* Simple Ways to Inspire your inner Innovator. */}
-            {data.featuredPost.title}
-          </h2>
+          <h2 className={styles.subtitle}>{featuredPost.title}</h2>
           <p className={styles.desc}>
-            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            nostrum a, quibusdam, accusamus molestiae dolorem sed veniam animi,
-            repudiandae amet veritatis ipsam! Fuga molestiae sed vero ad autem
-            accusantium nam id, obcaecati quisquam aut saepe neque tempora
-            veritatis sunt ducimus? */}
-            {data.featuredPost.desc}
+            {featuredPost.desc.slice(0, 500) + "..."}
           </p>
-          <Link href={`/${data.featuredPost.slug}`} className={styles.readMore}>
+          <Link href={`/${featuredPost.slug}`} className={styles.readMore}>
             Read More
           </Link>
         </div>
 
         <div
           className={styles.sectionItem}
-          // style={{ "--featured-bg": `url("${BASE_PATH}/p1.jpeg")` }}
-          style={{ "--featured-bg": `url("${data.featuredPost.image}")` }}
+          style={{
+            "--featured-bg": `url("${featuredPost.image}")`,
+          }}
         >
           <Image
             className={styles.img}
-            src={`${data.featuredPost.image}`}
-            // src={`${BASE_PATH}/p1.jpeg`}
+            src={`${featuredPost.image}`}
             priority
             fill
             alt="Featured Image"

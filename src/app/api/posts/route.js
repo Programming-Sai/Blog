@@ -4,60 +4,32 @@ import { NextResponse } from "next/server";
 export const GET = async (request) => {
   const { searchParams } = new URL(request.url);
   let page = searchParams.get("page");
+  let cat = searchParams.get("cat");
 
   // Ensure the page is a positive number and default to 1 if invalid
   page = page && !isNaN(page) && page > 0 ? parseInt(page) : 1;
+
   const POST_PER_PAGE = 3;
 
-  const queryOne = {
+  const paginatedPosts = await prisma.post.findMany({
     take: POST_PER_PAGE,
     skip: POST_PER_PAGE * (page - 1),
     orderBy: {
-      createdAt: "desc", // Order by createdAt in descending order to get the most recent posts
+      createdAt: "desc",
     },
-  };
-
-  const queryTwo = {
-    take: 5,
-    orderBy: {
-      views: "desc",
+    where: {
+      ...(cat && { catSlug: cat }),
     },
-  };
+  });
+  const count = await prisma.post.count({
+    where: {
+      ...(cat && { catSlug: cat }),
+    },
+  });
 
   try {
-    // Fetch paginated posts, top posts, and featured post in parallel
-    const [paginatedPosts, topPosts, featuredPost, editorPick] =
-      await Promise.all([
-        prisma.post.findMany(queryOne),
-        prisma.post.findMany(queryTwo),
-        prisma.post.findFirst({
-          where: { isFeatured: true },
-          orderBy: {
-            createdAt: "desc", // Optional: Ensure the most recently featured post is fetched
-          },
-        }),
-        prisma.post.findMany({
-          where: { isEditorPick: true },
-          orderBy: {
-            createdAt: "desc", // Optional: Ensure the most recently featured post is fetched
-          },
-        }),
-      ]);
-
-    // Count the total number of posts
-    const count = await prisma.post.count();
-
-    // Return the posts, count, posts per page, and the featured post
     return new NextResponse(
-      JSON.stringify({
-        paginatedPosts,
-        topPosts,
-        featuredPost,
-        editorPick,
-        count,
-        POST_PER_PAGE,
-      }),
-      { status: 200 }
+      JSON.stringify({ paginatedPosts, POST_PER_PAGE, count }, { status: 200 })
     );
   } catch (e) {
     console.log(e);

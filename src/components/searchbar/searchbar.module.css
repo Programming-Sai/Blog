@@ -1,226 +1,217 @@
-
 .container {
-    background-color: rgb(230, 239, 218);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-    transition: 0.5s ease;
-    z-index: 101;
-    position: relative;
-    margin-left: -60px;
+  background-color: rgb(230, 239, 218);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  z-index: 101;
+  position: relative;
+  margin-left: -60px;
 }
 
 .searchbar {
-    width: 100%;
-    height: 100%;
-    padding: 15px 25px;
-    padding-left: 5px;
-    margin-left: 10px;
-    outline: none;
-    border: none;
-    background-color: transparent;
+  width: 100%;
+  height: 100%;
+  padding: 15px 25px;
+  padding-left: 5px;
+  margin-left: 10px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.loader {
+  margin-top: 15%;
+  transform: scale(0.8);
 }
 
 .searchIcon {
-    margin-left: 10px;
-    color: black;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+  margin-left: 10px;
+  color: black;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 .grow {
-    transform: scale(1.2) translateX(15%);
-    width: 200%;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); 
+  transform: scale(1.2) translateX(15%);
+  width: 200%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(255, 255, 255, 0.2);
-    width: 100vw;
-    height: 100vh;
-    backdrop-filter: blur(10px);
-    z-index: 100 !important;
-    pointer-events: auto; 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  z-index: 100 !important;
+  pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .result {
-    width: 100%;
-    height: 90%;
-    overflow: auto;
-    padding: 10px;
-    margin-top:10%;
-    padding-bottom: 5%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-    gap: 5%;
+  width: 100%;
+  height: 90%;
+  overflow: auto;
+  padding: 10px;
+  margin-top: 10%;
+  padding-bottom: 10%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 5%;
 }
 
-
-.counter{
-    counter-reset: count;
+.counter {
+  counter-reset: count;
 }
 
-.resultContainer{
-    width: 30%;
-    padding: 20px;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    position: relative;
-    background: linear-gradient(transparent 5%, var(--gradient)), var(--back);
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    transition: 0.5s ease;
-    cursor: pointer;
-    counter-increment: count;
+.resultContainer {
+  width: 30%;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  position: relative;
+  background: linear-gradient(transparent 5%, var(--gradient)), var(--back);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: 0.5s ease;
+  cursor: pointer;
+  counter-increment: count;
 }
 
-.resultContainer:hover{
-    transform: scale(1.05);
+.resultContainer:hover {
+  transform: scale(1.05);
 }
 
+.resultContainer::before {
+  content: counter(count, decimal-leading-zero);
+  position: absolute;
+  z-index: 10;
+  left: 60%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  font-size: 7rem;
+  font-weight: 900;
+  color: var(--index-color);
+}
 
+.noResult {
+  font-size: 70px;
+  margin-top: 10%;
+  font-weight: bold;
+}
 
-.resultContainer::before{
-    content: counter(count, decimal-leading-zero);
+@media screen and (max-width: 1100px) {
+  .container {
+    margin-left: -40px;
+  }
+  .grow {
     position: absolute;
-    z-index: 10;
-    left: 60%;
-    top: 0%;
-    width: 100%;
-    height: 100%;
-    font-size: 7rem;
-    font-weight:900;
-    color: var(--index-color);
+    background-color: rgb(230, 239, 218);
+    width: 95%;
+    height: auto;
+    margin: 0;
+    transform: translateX(-18%);
+  }
 }
-
-
-
-
-.noResult{
-    font-size: 70px;
-    margin-top: 10%;
-    font-weight: bold;
-}
-
-
-
-@media screen and (max-width:  1100px) {
-    .container{
-        margin-left: -40px;
-    }
-    .grow {
-        position: absolute;
-        background-color: rgb(230, 239, 218);
-        width: 95%; 
-        height: auto; 
-        margin: 0; 
-        transform: translateX(-18%);
-    }
-}
-
 
 @media screen and (max-width: 868px) {
-    .grow, .container{
-        width: 100%;
-    }
-    .resultContainer{
-        width: 80%;
-    }
-    .result{
-        margin-top: 20%;
-    }
-    .resultContainer:last-child{
-        margin-bottom: 20%;
-    }
-    .grow {
-        transform: translateX(-20%);
-    }
+  .grow,
+  .container {
+    width: 100%;
+  }
+  .resultContainer {
+    width: 80%;
+  }
+  .result {
+    margin-top: 20%;
+  }
+  .resultContainer:last-child {
+    margin-bottom: 20%;
+  }
+  .grow {
+    transform: translateX(-20%);
+  }
 }
 
-
-
-@media screen and (max-width:668px) {
-    .container{
-        margin-left: -20px;
-    }
-    .grow {
-        transform: translateX(-15%);
-    }
+@media screen and (max-width: 668px) {
+  .container {
+    margin-left: -20px;
+  }
+  .grow {
+    transform: translateX(-15%);
+  }
 }
-
 
 @media screen and (max-width: 580px) {
-    .searchIcon {
-        padding: 7px;
-        width: 17px;
-        height: 17px;
-        background-color: var(--text-color);
-        border-radius: 50%; 
-        color: var(--bg);
-        transition: 0.5s ease-in-out;
-        position: static;
-        margin: 0;
-        display: block;
-    }
+  .searchIcon {
+    padding: 7px;
+    width: 17px;
+    height: 17px;
+    background-color: var(--text-color);
+    border-radius: 50%;
+    color: var(--bg);
+    transition: 0.5s ease-in-out;
+    position: static;
+    margin: 0;
+    display: block;
+  }
 
-    .searchbar {
-        opacity: 0;
-        width: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
+  .searchbar {
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 
-    .container {
-        width: 0;
-        height: 0;
-    }
+  .container {
+    width: 0;
+    height: 0;
+  }
 
-    .grow {
-        position: absolute;
-        background-color: rgb(230, 239, 218);
-        width: 95%; 
-        height: auto; 
-        margin: 0; 
-        transform: translateX(-50%);
-    }
+  .grow {
+    position: absolute;
+    background-color: rgb(230, 239, 218);
+    width: 95%;
+    height: auto;
+    margin: 0;
+    transform: translateX(-50%);
+  }
 
-    .grow > .searchbar {
-        opacity: 1;
-        width: 100%;
-        visibility: visible;
-        pointer-events: all;
-    }
-    
-    .grow > .searchIcon {
-        background-color: transparent;
-        color: black;
-        position: static;
-    }
-    .result{
-        margin-top: 20%;
-        padding-bottom: 10rem;
-        overflow-x: hidden;
-    }
-    .resultContainer{
-        width: 85%;
-    }
-    .resultContainer::before{
-        left: 45%;
-    }
-    .noResult{
-        font-size: 2.5rem;
-    }
+  .grow > .searchbar {
+    opacity: 1;
+    width: 100%;
+    visibility: visible;
+    pointer-events: all;
+  }
+
+  .grow > .searchIcon {
+    background-color: transparent;
+    color: black;
+    position: static;
+  }
+  .result {
+    margin-top: 20%;
+    padding-bottom: 10rem;
+    overflow-x: hidden;
+  }
+  .resultContainer {
+    width: 85%;
+  }
+  .resultContainer::before {
+    left: 45%;
+  }
+  .noResult {
+    font-size: 2.5rem;
+  }
 }
-
-

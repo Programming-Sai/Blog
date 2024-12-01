@@ -1,81 +1,43 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./searchbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { ThemeContext } from "@/context/ThemeContext";
 import BASE_PATH from "../../../base";
-
-const searchResult = [
-  {
-    key: "1",
-    title: "Understanding React's Virtual DOM",
-    description:
-      "A comprehensive guide to understanding the Virtual DOM in React and how it optimizes performance.",
-    image: "/food.png",
-  },
-  {
-    key: "2",
-    title: "JavaScript Promises and Async/Await",
-    description:
-      "Learn about JavaScript promises and how to use async/await for cleaner asynchronous code.",
-    image: "/fashion.png",
-  },
-  {
-    key: "3",
-    title: "CSS Grid vs Flexbox: Which One to Use?",
-    description:
-      "A comparison of CSS Grid and Flexbox layout techniques, their use cases, and which one to choose.",
-    image: "/culture.png",
-  },
-  {
-    key: "4",
-    title: "Building Scalable APIs with Node.js",
-    description:
-      "Discover best practices for building scalable and maintainable APIs using Node.js.",
-    image: "/coding.png",
-  },
-  {
-    key: "5",
-    title: "Getting Started with TypeScript",
-    description:
-      "An introductory guide to TypeScript, its benefits, and how to get started in your next JavaScript project.",
-    image: "/travel.png",
-  },
-  {
-    key: "6",
-    title: "Best UI/UX Practices for Web Design",
-    description:
-      "Explore the best practices for designing user interfaces and improving user experiences on the web.",
-    image: "/style.png",
-  },
-];
+import Link from "next/link";
+import ComponentLoader from "../componentloader/ComponentLoader";
 
 const Searchbar = () => {
   const { overlay, setOverlay } = useContext(ThemeContext);
 
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const searchAndReturn = () => {
-    if (search.trim() === "") return; // Prevent searching when input is empty
-
-    const newResults = []; // Array to hold new results
-    const searchLower = search.toLowerCase(); // Convert search to lowercase for case insensitive matching
-
-    for (const obj of searchResult) {
-      // Check if title or description includes the search string
-      if (
-        obj.title.toLowerCase().includes(searchLower) ||
-        obj.description.toLowerCase().includes(searchLower)
-      ) {
-        newResults.push(obj); // Add matching results to the new array
+  const fetchResults = async () => {
+    if (!search.trim()) return; // Do nothing if the search term is empty
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/search?searchTerm=${search}`
+      );
+      if (!response.ok) {
+        throw new Error("Something Went Wrong");
       }
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-
-    setResult(newResults); // Set the new results to the state
   };
 
+  const handleSearch = () => {
+    if (!search.trim()) return; // Guard against empty input
+    fetchResults();
+  };
   return (
     <>
       <div
@@ -96,7 +58,7 @@ const Searchbar = () => {
           }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              searchAndReturn();
+              handleSearch();
             }
           }}
           value={search}
@@ -109,26 +71,34 @@ const Searchbar = () => {
       </div>
       {overlay && (
         <div className={styles.overlay}>
-          <div className={`${styles.result} ${styles.counter}`}>
-            {result.length > 0 ? (
-              result.map((res) => (
-                <div
-                  key={res.key}
-                  className={styles.resultContainer}
-                  style={{ "--back": `url(${BASE_PATH}${res.image})` }}
-                  onClick={() => {
-                    console.log(res);
-                    setSearch("");
-                  }}
-                >
-                  <h1 className={styles.resultTitle}>{res.title}</h1>
-                  <p className={styles.resultDescription}>{res.description}</p>
-                </div>
-              ))
-            ) : (
-              <p className={styles.noResult}>No Result Found</p>
-            )}
-          </div>
+          {loading ? (
+            <div className={styles.loader}>
+              <ComponentLoader />
+            </div>
+          ) : (
+            <div className={`${styles.result} ${styles.counter}`}>
+              {result.length > 0 ? (
+                result.map((res) => (
+                  <Link
+                    href={`/${res.slug}`}
+                    key={res.key}
+                    className={styles.resultContainer}
+                    style={{ "--back": `url(${BASE_PATH}${res.image})` }}
+                    onClick={() => {
+                      setOverlay(!overlay);
+                    }}
+                  >
+                    <h1 className={styles.resultTitle}>{res.title}</h1>
+                    <p className={styles.resultDescription}>
+                      {res.desc.slice(0, 100) + "..."}
+                    </p>
+                  </Link>
+                ))
+              ) : (
+                <p className={styles.noResult}>No Result Found</p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </>

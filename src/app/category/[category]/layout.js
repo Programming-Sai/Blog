@@ -1,12 +1,11 @@
 import React from "react"; // Import useEffect for side effects
 import { notFound } from "next/navigation";
 import styles from "./category.module.css";
-import RecentPosts from "@/components/recentposts/RecentPosts";
-import PopularPosts from "@/components/popularposts/PopularPosts";
-import Pagination from "@/components/pagination/Pagination";
 import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import RecentPostsWrapper from "@/components/recentpostwrapper/RecentPostsWrapper";
+import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const validCategories = {
   sports: { color: "green" },
@@ -41,10 +40,12 @@ const BlogCategoryLayout = ({ children, params }) => {
           </h1>
           <div className={styles.content}>
             <div className={styles.blog}>
-              <RecentPosts className={styles.itemOne} />
-              <Pagination width={"100%"} className={styles.button} />
+              <RecentPostsWrapper
+                cat={normalizedCategory}
+                className={styles.itemOne}
+              />
             </div>
-            <PopularPosts
+            <PopularPostsWrapper
               className={styles.itemTwo}
               borderRad="20px"
               marginBlock="5%"
@@ -59,3 +60,5 @@ const BlogCategoryLayout = ({ children, params }) => {
 };
 
 export default BlogCategoryLayout;
+
+// TODO: MAke sure to set up loagic to place paginated data on the page if and only if it is in that category given

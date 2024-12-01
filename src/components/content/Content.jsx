@@ -12,7 +12,10 @@ export default function Content({ page }) {
       className={styles.container}
       style={overlay || toggleSidePane ? { zIndex: 0 } : { zIndex: 1 }}
     >
-      <Home page={page} theme={theme} />
+      {/* <Home data={data} theme={theme} /> */}
+      <Home theme={theme} />
     </div>
   );
 }
+
+// comeback and handle the double page reload and non faSuitcaseRolling.

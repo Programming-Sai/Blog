@@ -5,17 +5,7 @@ import Link from "next/link";
 import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base";
 
-const getData = async () => {
-  const result = await fetch("/api/categories");
-
-  if (!result.ok) {
-    throw new Error("Failed to get categories");
-  }
-  return result.json();
-};
-
-const PopularTags = async () => {
-  const tags = await getData();
+const PopularTags = ({ tags }) => {
   return (
     <div className={styles.container}>
       <Glow
