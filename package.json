@@ -30,7 +30,8 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.10",
     "react-quill": "^2.0.0",
-    "recharts": "^2.13.0"
+    "recharts": "^2.13.0",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "prisma": "^5.22.0"

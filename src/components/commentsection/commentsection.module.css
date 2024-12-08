@@ -1,66 +1,70 @@
-.container{
-    margin-block: 5%;
-    padding: 20px;
-    border-radius: 20px;
-    position: relative;
-    height: fit-content;
+.container {
+  margin-block: 5%;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+  height: fit-content;
 }
 
-.item, .timeDate, .readingTime{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5%;
+.item,
+.timeDate,
+.readingTime {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5%;
 }
 
-.item{
-    margin-block: 6%;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
+.item {
+  margin-block: 6%;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
 }
 
-.readingTime{
-    white-space: nowrap;
+.lastItem {
+  border-bottom: 2px solid transparent !important;
 }
 
-.timeDate{
-    opacity: 0.5;
+.readingTime {
+  white-space: nowrap;
 }
 
-.imgContainer{
-    position: relative;
-    min-width: 4.5rem; 
-    min-height: 4.5rem;
-    overflow: hidden;
-    border-radius: 100px;
+.timeDate {
+  opacity: 0.7;
 }
 
-.img{
+.imgContainer {
+  position: relative;
+  min-width: 4.5rem;
+  min-height: 4.5rem;
+  overflow: hidden;
+  border-radius: 100px;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post {
+  width: 100%;
+}
+
+.post h4 {
+  margin-block: 5%;
+}
+
+.timeDate p {
+  white-space: nowrap;
+}
+
+.timeDate {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 580px) {
+  .container {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.post{
-    width: 100%;
-}
-
-.post h4{
-    margin-block: 5%;
-}
-
-.timeDate p{
-    white-space: nowrap;
-}
-
-
-.timeDate{
-    font-size: 1rem;
-}
-
-
-@media screen and (max-width:580px) {
-    .container{
-        width: 100%;
-    }
+  }
 }

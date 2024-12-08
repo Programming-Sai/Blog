@@ -6,6 +6,7 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./connect";
+import { getServerSession } from "next-auth";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -143,5 +144,7 @@ export const authOptions = {
     },
   },
 };
+
+export const getAuthSession = () => getServerSession(authOptions);
 
 // https://youtu.be/eTpkgNBmrX8     video link for solution to facebook oauth issues. make sure that the setting and permissions are set for both email and public_profile.

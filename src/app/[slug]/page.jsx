@@ -4,15 +4,13 @@ import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faEye } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import WriteComment from "@/components/writecomment/WriteComment";
-import CommentSection from "@/components/commentsection/CommentSection";
-import Pagination from "@/components/pagination/Pagination";
 import Glow from "@/components/glow/Glow";
 import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import DOMPurify from "dompurify";
 import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
+import CommentWrapper from "@/components/CommentWrapper";
 
 // Temporary slugs for development purposes
 // const temporarySlugs = [
@@ -109,10 +107,7 @@ const SingleBlogPage = async ({ params }) => {
                 mtop="90%"
                 mleft="-10%"
               />
-              {/* </div> */}
-              <WriteComment />
-              <CommentSection />
-              <Pagination />
+              <CommentWrapper postSlug={slug} />
             </div>
             <PopularPostsWrapper
               className={styles.popularPosts}

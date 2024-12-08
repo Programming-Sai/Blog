@@ -2,43 +2,59 @@ import React from "react";
 import styles from "./commentsection.module.css";
 import Image from "next/image";
 import Glow from "../glow/Glow";
-import BASE_PATH from "../../../base";
+import ComponentLoader from "../componentloader/ComponentLoader";
 
-const comments = Array.from({ length: 5 }, () => ({
-  username: "Jane Smith",
-  date: "25 Nov 2025",
-  text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias nam eaque aliquam quod recusandae ut culpa dicta pariatur incidunt id tempora, officia laudantium vel, ea omnis modi est! Nam, corrupti?",
-  imageSrc: `${BASE_PATH}/fashion.png`,
-}));
+const CommentSection = ({ width, isLoading, error, comments }) => {
+  if (isLoading) return <ComponentLoader />;
+  if (error) return <div>Error loading comments: {error.message}</div>;
+  if (!comments || comments.length === 0)
+    return <div>No comments available.</div>;
 
-const CommentSection = ({ width }) => {
   return (
     <div className={styles.container} style={{ width: width }}>
       <div className={styles.postsContainer}>
-        {comments.map((comment, index) => (
-          <div className={styles.item} key={index}>
-            <div className={styles.imgContainer}>
-              <Image
-                src={comment.imageSrc}
-                fill
-                className={styles.img}
-                alt={comment.username}
-                objectFit="cover"
-              />
-            </div>
-            <div className={styles.post}>
-              <h4>{comment.text}</h4>
-              <div className={styles.timeDate}>
-                <p className={styles.username}>{comment.username}</p>
-                <p>{comment.date}</p>
+        {comments && comments.length > 0 ? (
+          comments.map((comment, index) => (
+            <div
+              className={`${styles.item} ${
+                index === comments.length - 1 ? styles.lastItem : ""
+              }`}
+              key={comment.id}
+            >
+              <div className={styles.imgContainer}>
+                {comment?.user?.image && (
+                  <Image
+                    src={comment?.user?.image}
+                    fill
+                    className={styles.img}
+                    alt={comment?.user?.name || "User Image"}
+                    objectFit="cover"
+                  />
+                )}
+              </div>
+              <div className={styles.post}>
+                <h4>"{comment.desc}"</h4>
+                <div className={styles.timeDate}>
+                  <p className={styles.username}>
+                    {comment?.user?.name || "Anonymous"}
+                  </p>
+                  <p>
+                    {new Date(comment.createdAt)
+                      .toISOString()
+                      .substring(0, 10)
+                      .replace(/-/g, " • ")}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div>No comments available.</div>
+        )}
 
         <Glow
-          top="-30%"
-          left="-10%"
+          top="50%"
+          left="50%"
           width={500}
           height={500}
           color="#F0E711"

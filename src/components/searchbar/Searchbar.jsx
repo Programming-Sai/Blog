@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./searchbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
