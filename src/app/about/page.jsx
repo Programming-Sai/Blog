@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import AboutHeroSection from "@/components/aboutherosection/AboutHeroSection";
 import AboutContent from "@/components/aboutcontent/AboutContent";
 import PopularPosts from "@/components/popularposts/PopularPosts";
+import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const About = ({ page }) => {
   return (
@@ -16,7 +17,7 @@ const About = ({ page }) => {
           <AboutHeroSection />
           <div className={styles.flexWrapper}>
             <AboutContent className={styles.itemOne} />
-            <PopularPosts
+            <PopularPostsWrapper
               className={styles.itemTwo}
               glow={true}
               borderRad="20px"

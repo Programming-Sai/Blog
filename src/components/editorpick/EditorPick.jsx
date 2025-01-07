@@ -6,7 +6,23 @@ import Image from "next/image";
 import Glow from "../glow/Glow";
 import Link from "next/link";
 
-const EditorPick = (editorPick) => {
+async function getData() {
+  try {
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/editorPick`
+    );
+    if (!result.ok) {
+      throw new Error("Failed to fetch editor's pick");
+    }
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    console.log("Failed to fetch editor's pick", error);
+  }
+}
+
+const EditorPick = async () => {
+  const editorPick = await getData();
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Editor's Pick</h1>
@@ -21,7 +37,7 @@ const EditorPick = (editorPick) => {
           mleft="0"
         />
         <div className={styles.rowTwo}>
-          {editorPick.editorPick.slice(0, 2).map((item, _) => (
+          {editorPick.slice(0, 2).map((item, _) => (
             <div key={item._id} className={styles.item}>
               <div className={styles.innerContainer}>
                 <Image
@@ -57,7 +73,7 @@ const EditorPick = (editorPick) => {
           ))}
         </div>
         <div className={styles.rowTwo}>
-          {editorPick.editorPick.slice(2, 5).map((item, _) => (
+          {editorPick.slice(2, 5).map((item, _) => (
             <div key={item._id} className={styles.item}>
               <div className={styles.innerContainer}>
                 <Image

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./searchbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -10,13 +10,12 @@ import ComponentLoader from "../componentloader/ComponentLoader";
 
 const Searchbar = () => {
   const { overlay, setOverlay } = useContext(ThemeContext);
-
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchResults = async () => {
-    if (!search.trim()) return; // Do nothing if the search term is empty
+    if (!search.trim()) return;
     setLoading(true);
     try {
       const response = await fetch(
@@ -38,6 +37,24 @@ const Searchbar = () => {
     if (!search.trim()) return; // Guard against empty input
     fetchResults();
   };
+
+  const handleKeyCombination = (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === "/") {
+      event.preventDefault();
+      setOverlay(!overlay);
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener
+    window.addEventListener("keydown", handleKeyCombination);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeyCombination);
+    };
+  }, [overlay]); // Empty dependency array to run only on mount/unmount
+
   return (
     <>
       <div
@@ -95,7 +112,7 @@ const Searchbar = () => {
                   </Link>
                 ))
               ) : (
-                <p className={styles.noResult}>No Result Found</p>
+                <p className={styles.noResult}>No Result Found </p>
               )}
             </div>
           )}

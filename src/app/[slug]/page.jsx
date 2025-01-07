@@ -11,33 +11,28 @@ import Footer from "@/components/footer/Footer";
 import DOMPurify from "dompurify";
 import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 import CommentWrapper from "@/components/CommentWrapper";
-
-// Temporary slugs for development purposes
-// const temporarySlugs = [
-//   "understanding-react-hooks",
-//   "css-grid-layout-guide",
-//   "building-a-nextjs-blog",
-//   "introduction-to-typescript",
-//   "optimizing-performance-in-react",
-// ];
-
-// export async function generateStaticParams() {
-//   return temporarySlugs.map((slug) => ({
-//     slug, // This will match the [slug] parameter in the URL
-//   }));
-// }
+import GeneralNotFound from "../general-not-found";
 
 const getData = async (slug) => {
   const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/${slug}`);
   if (!result.ok) {
     throw new Error("Failed to get Post");
   }
-  return result.json();
+  const data = result.json();
+  if (!data) {
+    console.log("NO DATA FOUND!!!!!");
+    return { notFound: true };
+  }
+  return data;
 };
 
 const SingleBlogPage = async ({ params }) => {
   const { slug } = params;
   const { post } = await getData(slug);
+  if (!post) {
+    console.log(post);
+    return <GeneralNotFound />;
+  }
   return (
     <>
       <Navbar />
@@ -77,13 +72,11 @@ const SingleBlogPage = async ({ params }) => {
             </div>
             <div
               className={styles.item}
-              // style={{ "--img": `url("${BASE_PATH}/fashion.png")` }}
               style={{ "--img": `url(${post?.image})` }}
             >
               <Image
                 fill
-                alt="f"
-                // src={`${BASE_PATH}/fashion.png`}
+                alt={post?.title}
                 src={post?.image}
                 className={styles.img}
               />

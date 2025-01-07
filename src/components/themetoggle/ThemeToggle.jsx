@@ -44,7 +44,6 @@ const ThemeToggle = () => {
         alt="Moon"
         src={`${BASE_PATH}/moon.png`}
       />{" "}
-      {/* Add BASE_PATH here */}
       <div
         className={styles.ball}
         style={
@@ -60,7 +59,6 @@ const ThemeToggle = () => {
         alt="Sun"
         src={`${BASE_PATH}/sun.png`}
       />{" "}
-      {/* Add BASE_PATH here */}
     </div>
   );
 };

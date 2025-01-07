@@ -5,7 +5,24 @@ import Glow from "../glow/Glow";
 import BASE_PATH from "../../../base";
 import Link from "next/link";
 
-const FeaturedSection = ({ featuredPost, theme }) => {
+async function getData() {
+  try {
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/featuredPost`
+    );
+    if (!result.ok) {
+      throw new Error("Failed to fetch featured post");
+    }
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    console.log("Failed to fetch featured post", error);
+  }
+}
+
+const FeaturedSection = async ({ theme }) => {
+  const featuredPost = await getData();
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>

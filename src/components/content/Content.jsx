@@ -4,7 +4,7 @@ import styles from "./content.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 import Home from "../Home/Home";
 
-export default function Content({ page }) {
+export default function Content({ page, items }) {
   const { overlay, theme, toggleSidePane } = useContext(ThemeContext);
 
   return (
@@ -13,7 +13,7 @@ export default function Content({ page }) {
       style={overlay || toggleSidePane ? { zIndex: 0 } : { zIndex: 1 }}
     >
       {/* <Home data={data} theme={theme} /> */}
-      <Home theme={theme} />
+      <Home theme={theme} {...items} />
     </div>
   );
 }

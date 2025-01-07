@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
 
 const Wrapper = ({ children }) => {
-  const { overlay, toggleSidePane } = useContext(ThemeContext);
+  const { overlay, theme, toggleSidePane } = useContext(ThemeContext);
 
   return (
     <div
