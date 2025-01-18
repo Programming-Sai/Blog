@@ -17,8 +17,7 @@ const Contact = () => {
           <ContactHeroSection />
           <div className={styles.flexWrapper}>
             <ContactContentSection className={styles.itemOne} />
-            <PopularPostsWrapper
-              className={styles.itemTwo}
+            <PopularPosts
               glow={true}
               borderRad="20px"
               marginBlock="0%"

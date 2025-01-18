@@ -17,8 +17,7 @@ const About = ({ page }) => {
           <AboutHeroSection />
           <div className={styles.flexWrapper}>
             <AboutContent className={styles.itemOne} />
-            <PopularPostsWrapper
-              className={styles.itemTwo}
+            <PopularPosts
               glow={true}
               borderRad="20px"
               marginBlock="0%"
