@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
-    const categories = await prisma.category.findMany();
-
     const topPosts = await prisma.post.findMany({
-      take: 5,
+      take: 10,
       orderBy: {
         views: "desc",
       },

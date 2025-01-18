@@ -6,7 +6,6 @@ import Footer from "@/components/footer/Footer";
 import AboutHeroSection from "@/components/aboutherosection/AboutHeroSection";
 import AboutContent from "@/components/aboutcontent/AboutContent";
 import PopularPosts from "@/components/popularposts/PopularPosts";
-import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const About = ({ page }) => {
   return (

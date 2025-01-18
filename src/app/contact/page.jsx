@@ -6,7 +6,6 @@ import Footer from "@/components/footer/Footer";
 import PopularPosts from "@/components/popularposts/PopularPosts";
 import ContactHeroSection from "@/components/contactheorsection/ContactHeroSection";
 import ContactContentSection from "@/components/contactcontentsection/ContactContentSection";
-import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const Contact = () => {
   return (

@@ -18,7 +18,7 @@
   margin-top: 120%;
 }
 .container.active ul {
-  margin-top: 200%;
+  margin-top: 400%;
 }
 
 .container ul li {
@@ -27,7 +27,8 @@
   transition: 0.1s ease;
 }
 
-.container ul li:hover {
+.container ul li:hover,
+.container ul .sideActive {
   background-color: var(--bg);
   border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
@@ -78,12 +79,15 @@
 }
 
 .container ul li .a::before,
-.container ul li .a::after {
+.container ul .sideActive .a::before,
+.container ul li .a::after,
+.container ul .sideActive .a::after {
   box-shadow: 10px 10px 10px 10px green;
   transition: box-shadow 0.3s ease;
 }
 
-.container ul li:hover .a::before {
+.container ul li:hover .a::before,
+.container ul .sideActive .a::before {
   content: "";
   position: absolute;
   right: 0;
@@ -95,7 +99,8 @@
   box-shadow: 35px 35px 0 12px var(--bg);
 }
 
-.container ul li:hover .a::after {
+.container ul li:hover .a::after,
+.container ul .sideActive .a::after {
   content: "";
   position: absolute;
   right: 0;
@@ -147,11 +152,6 @@
   height: 50px;
 }
 
-.container.active h3,
-.container.active p {
-  display: none;
-}
-
 .img {
   width: 100%;
   height: 100%;
@@ -171,6 +171,7 @@
   .container {
     width: 80px;
   }
+
   .container ul {
     margin-top: 250%;
   }
@@ -201,6 +202,9 @@
     z-index: 100;
     background-color: green;
   }
+  .profileContainer h3 {
+    display: block;
+  }
   .container.active ul {
     margin-top: 50%;
   }
@@ -213,7 +217,9 @@
     height: 100px;
   }
   .container ul li:hover .a::before,
-  .container ul li:hover .a::after {
+  .container ul li:hover .a::after,
+  .container ul .sideActive .a::before,
+  .container ul .sideActive .a::after {
     box-shadow: none;
   }
   .container ul li:last-child {

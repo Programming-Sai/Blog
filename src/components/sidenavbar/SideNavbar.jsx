@@ -20,7 +20,7 @@ import { signOut, useSession } from "next-auth/react";
 
 const SideNavbar = () => {
   const { toggleSidePane, setToggleSidePane } = useContext(ThemeContext);
-  const router = usePathname();
+  const pathname = usePathname();
   const { data, status } = useSession();
 
   useEffect(() => {
@@ -28,8 +28,6 @@ const SideNavbar = () => {
       setToggleSidePane(false);
     }
   }, []);
-
-  console.log(data);
 
   return (
     <div
@@ -70,7 +68,7 @@ const SideNavbar = () => {
       </div>
 
       <ul>
-        <li>
+        <li className={pathname == "/admin/dashboard" ? styles.sideActive : ""}>
           <Link
             onClick={() => {
               window.innerWidth <= 868
@@ -86,7 +84,11 @@ const SideNavbar = () => {
           </Link>
         </li>
 
-        <li>
+        <li
+          className={
+            pathname == "/admin/published-blogs" ? styles.sideActive : ""
+          }
+        >
           <Link
             onClick={() => {
               window.innerWidth <= 868
@@ -102,7 +104,7 @@ const SideNavbar = () => {
           </Link>
         </li>
 
-        <li>
+        <li className={pathname == "/admin/drafts" ? styles.sideActive : ""}>
           <Link
             onClick={() => {
               window.innerWidth <= 868
@@ -118,7 +120,7 @@ const SideNavbar = () => {
           </Link>
         </li>
 
-        <li>
+        <li className={pathname == "/admin/editor" ? styles.sideActive : ""}>
           <Link
             onClick={() => {
               window.innerWidth <= 868
@@ -134,7 +136,7 @@ const SideNavbar = () => {
           </Link>
         </li>
 
-        <li>
+        <li className={pathname == "/admin/settings" ? styles.sideActive : ""}>
           <Link
             onClick={() => {
               window.innerWidth <= 868

@@ -21,6 +21,7 @@ import {
 import AdminCommentsSection from "@/components/admincommentssection/AdminCommentsSection";
 import AdminRecentPosts from "@/components/adminrecentpost/AdminRecentPosts";
 import ServerStatus from "@/components/serverstatus/ServerStatus";
+import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const DashBoard = () => {
   const { toggleSidePane } = useContext(ThemeContext);
@@ -89,7 +90,7 @@ const DashBoard = () => {
           <PostPerformanceChart />
         </Card>
 
-        <PopularPosts
+        <PopularPostsWrapper
           glow={false}
           imageWidth={10}
           className={`${styles.card} ${styles.card2}`}
