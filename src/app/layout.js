@@ -4,6 +4,7 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeProvider from "@/providers/ThemeProvider";
 import ScrollToTopWrapper from "@/components/scrolltotopwrapper/ScrollToTopWrapper";
 import AuthProvider from "@/providers/AuthProvider";
+import GoogleAnalyticsWrapper from "@/components/GoogleAnalyticsWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
           </ThemeContextProvider>
         </AuthProvider>
       </body>
+      <GoogleAnalyticsWrapper />
     </html>
   );
 }
@@ -42,3 +44,5 @@ export default function RootLayout({ children }) {
 //      7. Calculate the reading time for each blog.
 //      8. What should be on the dashboard.
 //      9.
+
+// TODO Make popular posts for dashbaord fully client side
