@@ -135,3 +135,24 @@ export default DashBoard;
 
 // TODO When the page reaches a tablet screen, in the css medai query change the --left progerty so it stays, 80px.
 // TODO Add a subtitle to each blog (Optionally)
+
+// Specific to Your Dashboard Widgets
+// Top Metrics Cards:
+
+// Today's Visits: date, userType, country.
+// % Unique Visits: deviceCategory, source/medium.
+// Total Number of Posts: postStatus (e.g., published, pending).
+// Bounce Rate: pagePath, deviceCategory.
+// Charts and Popular Posts:
+
+// PostPerformanceChart: postId, engagementType (e.g., likes, shares, comments).
+// TrafficSourcesChart: source/medium, region.
+// ContentEngagementChart: pagePath, engagementType.
+// GrowthRateChart: week, month.
+// Additional Components:
+
+// PopularPostsWrapper: postId, engagementType, postCategory.
+// AdminRecentPosts: postId, postDate, author.
+// ServerStatus: System health metrics (e.g., uptime, latency).
+// SEOMetrics: pagePath, searchEngine, keyword.
+// AdminCommentsSection: postId, commentDate, userType.
