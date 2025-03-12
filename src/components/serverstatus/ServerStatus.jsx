@@ -67,7 +67,7 @@ const ServerStatus = () => {
       <h3>Server Metrics</h3>
       <p className={styles.summary}>Summary of the status of your server.</p>
       <div className={styles.progresses}>
-        {serverMetrics.map((metrics, i) => (
+        {serverMetrics?.map((metrics, i) => (
           <ProgressBar
             key={i}
             color={metrics.color}

@@ -53,13 +53,13 @@ const SideNavbar = () => {
           className={styles.imgContainer}
           style={{
             "--img": `url(${
-              data?.user?.image || BASE_PATH + "/LinkedInAvatar.png"
+              data?.user?.image || '/coding.png' || BASE_PATH + "/LinkedInAvatar.png"
             })`,
           }}
         >
           <Image
             className={styles.img}
-            src={data?.user?.image || `${BASE_PATH}/LinkedInAvatar.png`}
+            src={data?.user?.image || '/coding.png' || `${BASE_PATH}/LinkedInAvatar.png`}
             fill
             alt="Fashion"
           />

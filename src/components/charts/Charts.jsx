@@ -68,7 +68,7 @@ const TrafficSourcesChart = () => {
             }}
           >
             <p>{detail}</p>
-            {socialMediaData.map((source, index) => (
+            {socialMediaData?.map((source, index) => (
               <p key={index} style={{ color: source.color }}>
                 {source.name}: {source.value}%
               </p>
@@ -114,7 +114,7 @@ const TrafficSourcesChart = () => {
           paddingAngle={5}
           dataKey="value"
         >
-          {trafficData.map((entry, index) => (
+          {trafficData?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -328,7 +328,7 @@ const ContentEngagementChart = () => {
           fill="#8884d8"
           dataKey="value"
         >
-          {data.map((entry, index) => (
+          {data?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -470,7 +470,7 @@ const SEOMetrics = () => {
           </tr>
         </thead>
         <tbody>
-          {seoData.map((data, i) => (
+          {seoData?.map((data, i) => (
             <tr key={i}>
               <td>{data.keyword}</td>
               <td>{data.clicks}</td>
@@ -479,7 +479,7 @@ const SEOMetrics = () => {
               <td>{data.avg_position}</td>
               <td>
                 <ul>
-                  {data.pages.map((item, i) => (
+                  {data.pages?.map((item, i) => (
                     <li key={i}>
                       <a href={item} title={item}>
                         {item}

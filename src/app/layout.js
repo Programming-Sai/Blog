@@ -9,7 +9,7 @@ import GoogleAnalyticsWrapper from "@/components/GoogleAnalyticsWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Blog App",
+  title: "Ghana Trendz",
   description: "The best blog app!",
 };
 

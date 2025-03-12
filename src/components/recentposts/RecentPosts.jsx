@@ -49,7 +49,7 @@ const RecentPosts = ({
           <div className={styles.item} key={post._id}>
             <div className={styles.imgContainer}>
               <Image
-                src={post?.image}
+                src={post?.image || '/coding.png'}
                 alt={post.title}
                 layout="fill"
                 objectFit="cover"
@@ -66,7 +66,7 @@ const RecentPosts = ({
                 - {post?.catSlug.toUpperCase()}
               </p>
               <h3>{post.title}</h3>
-              <p className={styles.desc}>{post.desc.slice(0, 150) + "..."}</p>
+              <p className={styles.desc}>{post.desc?.slice(0, 150) + "..."}</p>
               <div className={styles.dateRead}>
                 <Link href={`/${post.slug}`} className={styles.read}>
                   Read More

@@ -37,11 +37,11 @@ const EditorPick = async () => {
           mleft="0"
         />
         <div className={styles.rowTwo}>
-          {editorPick.slice(0, 2).map((item, _) => (
+          {editorPick?.slice(0, 2).map((item, _) => (
             <div key={item._id} className={styles.item}>
               <div className={styles.innerContainer}>
                 <Image
-                  src={`${item.image}`}
+                  src={`${item.image || '/coding.png'}`}
                   fill
                   alt="img"
                   className={styles.img}
@@ -56,7 +56,7 @@ const EditorPick = async () => {
                   </div>
                 </div>
                 <h2>{item.title}</h2>
-                <p className={styles.desc}>{item.desc.slice(0, 100) + "..."}</p>
+                <p className={styles.desc}>{item.desc?.slice(0, 100) + "..."}</p>
                 <div className={styles.dateRead}>
                   <p className={styles.date}>
                     {new Date(item.createdAt)
@@ -73,11 +73,11 @@ const EditorPick = async () => {
           ))}
         </div>
         <div className={styles.rowTwo}>
-          {editorPick.slice(2, 5).map((item, _) => (
+          {editorPick?.slice(2, 5).map((item, _) => (
             <div key={item._id} className={styles.item}>
               <div className={styles.innerContainer}>
                 <Image
-                  src={`${item.image}`}
+                  src={`${item.image || '/coding.png'}`}
                   fill
                   alt="img"
                   className={styles.img}
@@ -92,7 +92,7 @@ const EditorPick = async () => {
                   </div>
                 </div>
                 <h2>{item.title}</h2>
-                <p className={styles.desc}>{item.desc.slice(0, 100) + "..."}</p>
+                <p className={styles.desc}>{item.desc?.slice(0, 100) + "..."}</p>
                 <div className={styles.dateRead}>
                   <p className={styles.date}>
                     {new Date(item.createdAt)

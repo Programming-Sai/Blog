@@ -101,11 +101,11 @@ const AdminCommentsSection = () => {
           </tr>
         </thead>
         <tbody>
-          {comments.map((comment, index) => (
+          {comments?.map((comment, index) => (
             <tr key={index}>
               <td>
                 <img
-                  src={`${BASE_PATH}${comment.image}`}
+                  src={`${BASE_PATH}${comment.image || '/coding.png'}`}
                   alt="Commenter"
                   className={styles.commentImage}
                 />

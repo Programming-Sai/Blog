@@ -95,7 +95,7 @@ export const authOptions = {
             data: {
               email: user.email,
               name: user.name,
-              image: user.image,
+              image: user.image || '/coding.png',
             },
           });
 

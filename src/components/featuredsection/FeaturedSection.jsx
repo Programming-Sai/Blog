@@ -21,7 +21,7 @@ async function getData() {
 }
 
 const FeaturedSection = async ({ theme }) => {
-  const featuredPost = await getData();
+  const featuredPost = await getData() || {};
 
   return (
     <div className={styles.container}>
@@ -41,7 +41,7 @@ const FeaturedSection = async ({ theme }) => {
           />
           <h2 className={styles.subtitle}>{featuredPost.title}</h2>
           <p className={styles.desc}>
-            {featuredPost.desc.slice(0, 500) + "..."}
+            {featuredPost.desc?.slice(0, 500) + "..."}
           </p>
           <Link href={`/${featuredPost.slug}`} className={styles.readMore}>
             Read More
@@ -51,12 +51,12 @@ const FeaturedSection = async ({ theme }) => {
         <div
           className={styles.sectionItem}
           style={{
-            "--featured-bg": `url("${featuredPost.image}")`,
+            "--featured-bg": `url("${featuredPost.image || '/coding.png'}")`,
           }}
         >
           <Image
             className={styles.img}
-            src={`${featuredPost.image}`}
+            src={`${featuredPost.image || '/coding.png'}`}
             priority
             fill
             alt="Featured Image"

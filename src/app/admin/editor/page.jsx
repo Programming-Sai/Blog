@@ -127,7 +127,7 @@ const Editor = () => {
       draft,
       keywords:
         typeof keywords === "string"
-          ? keywords.split(",").map((keyword) => keyword.trim())
+          ? keywords.split(",")?.map((keyword) => keyword.trim())
           : keywords,
       description,
       comments: 0,

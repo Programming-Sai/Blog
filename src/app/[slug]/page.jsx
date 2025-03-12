@@ -72,12 +72,12 @@ const SingleBlogPage = async ({ params }) => {
             </div>
             <div
               className={styles.item}
-              style={{ "--img": `url(${post?.image})` }}
+              style={{ "--img": `url(${post?.image || '/coding.png'})` }}
             >
               <Image
                 fill
                 alt={post?.title}
-                src={post?.image}
+                src={post?.image || '/coding.png'}
                 className={styles.img}
               />
             </div>

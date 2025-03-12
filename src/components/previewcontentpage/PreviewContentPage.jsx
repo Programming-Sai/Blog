@@ -69,11 +69,11 @@ const PreviewContentPage = ({ blogData }) => {
             </div>
             <div
               className={styles.item}
-              style={{ "--img": `url(${blogData.image})` }} // Adding BASE_PATH here
+              style={{ "--img": `url(${blogData.image || '/coding.png'})` }} // Adding BASE_PATH here
             >
               <Image
                 fill
-                src={`${blogData.image}`} // Adding BASE_PATH here
+                src={`${blogData.image || '/coding.png'}`} // Adding BASE_PATH here
                 alt={blogData.title}
                 className={styles.img}
               />

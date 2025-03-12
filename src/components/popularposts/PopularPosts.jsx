@@ -43,7 +43,7 @@ const PopularPosts = async ({
     >
       <h2>Popular Posts</h2>
       <div className={styles.postsContainer}>
-        {topPosts.map(({ slug, _id, image, title, readingTime, createdAt }) => (
+        {topPosts?.map(({ slug, _id, image, title, readingTime, createdAt }) => (
           <Link href={`/${slug}`} key={_id} className={styles.item}>
             <div className={styles.imgContainer}>
               <Image

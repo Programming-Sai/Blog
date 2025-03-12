@@ -69,7 +69,7 @@ const Footer = ({ disabled }) => {
       </div>
       <div className={styles.item}>
         <div className={styles.title}>Socials</div>
-        {socialLinks.map(({ name, src, href }) => (
+        {socialLinks?.map(({ name, src, href }) => (
           <Link key={name} href={href} className={styles.socialLink}>
             <Image
               width={14}

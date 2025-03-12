@@ -69,14 +69,14 @@ const DropDown = ({ className, category, setCategory }) => {
       </div>
       {isOpen && (
         <div className={styles.dropdownList}>
-          {options.map((option, index) => (
+          {options?.map((option, index) => (
             <div
               key={index}
               className={styles.dropdownItem}
               onClick={() => handleOptionClick(option.label)}
             >
               <div className={styles.imgContainer}>
-                <Image fill src={option.image} className={styles.img} />
+                <Image fill src={option.image || '/coding.png'} className={styles.img} />
               </div>
               <p>{option.label}</p>
             </div>

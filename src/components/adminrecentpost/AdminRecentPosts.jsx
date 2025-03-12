@@ -85,7 +85,7 @@ const AdminRecentPosts = () => {
         className={styles.sliderItems}
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
-        {sliderData.map((item, i) => (
+        {sliderData?.map((item, i) => (
           <div
             className={styles.sliderItem}
             key={i}
@@ -132,7 +132,7 @@ const AdminRecentPosts = () => {
       </div>
 
       <div className={styles.dashes}>
-        {sliderData.map((_, i) => (
+        {sliderData?.map((_, i) => (
           <div
             key={i}
             className={`${styles.dash} ${

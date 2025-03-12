@@ -14,7 +14,7 @@ const CommentSection = ({ width, isLoading, error, comments }) => {
     <div className={styles.container} style={{ width: width }}>
       <div className={styles.postsContainer}>
         {comments && comments.length > 0 ? (
-          comments.map((comment, index) => (
+          comments?.map((comment, index) => (
             <div
               className={`${styles.item} ${
                 index === comments.length - 1 ? styles.lastItem : ""
@@ -22,9 +22,9 @@ const CommentSection = ({ width, isLoading, error, comments }) => {
               key={comment.id}
             >
               <div className={styles.imgContainer}>
-                {comment?.user?.image && (
+                {comment?.user?.image || '/coding.png' && (
                   <Image
-                    src={comment?.user?.image}
+                    src={comment?.user?.image || '/coding.png'}
                     fill
                     className={styles.img}
                     alt={comment?.user?.name || "User Image"}

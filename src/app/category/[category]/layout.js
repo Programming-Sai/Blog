@@ -35,7 +35,7 @@ const BlogCategoryLayout = ({ children, params }) => {
             style={{ "--bg-color": validCategories[normalizedCategory].color }}
           >
             {normalizedCategory.charAt(0).toUpperCase() +
-              normalizedCategory.slice(1)}{" "}
+              normalizedCategory?.slice(1)}{" "}
             Related Blogs
           </h1>
           <div className={styles.content}>

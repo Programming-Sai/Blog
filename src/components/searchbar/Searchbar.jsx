@@ -95,19 +95,19 @@ const Searchbar = () => {
           ) : (
             <div className={`${styles.result} ${styles.counter}`}>
               {result.length > 0 ? (
-                result.map((res) => (
+                result?.map((res) => (
                   <Link
                     href={`/${res.slug}`}
                     key={res.key}
                     className={styles.resultContainer}
-                    style={{ "--back": `url(${BASE_PATH}${res.image})` }}
+                    style={{ "--back": `url(${BASE_PATH}${res.image || '/coding.png'})` }}
                     onClick={() => {
                       setOverlay(!overlay);
                     }}
                   >
                     <h1 className={styles.resultTitle}>{res.title}</h1>
                     <p className={styles.resultDescription}>
-                      {res.desc.slice(0, 100) + "..."}
+                      {res.desc?.slice(0, 100) + "..."}
                     </p>
                   </Link>
                 ))

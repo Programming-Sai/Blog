@@ -35,7 +35,7 @@ const PopularTags = async () => {
       />
       <h1>Categories / Tags</h1>
       <div className={styles.tagContainer}>
-        {tags.map(({ id, slug, title, image }) => (
+        {tags?.map(({ id, slug, title, image }) => (
           <Link
             key={id}
             scroll={true}
