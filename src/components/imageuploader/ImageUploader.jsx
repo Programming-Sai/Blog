@@ -22,7 +22,7 @@ const ImageUploader = ({ image, setImage }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps({ className: styles.image || '/coding.png'Uploader })}>
+    <div {...getRootProps({ className: styles.image })}>
       <input {...getInputProps()} />
       {image ? (
         <Image src={image} fill className={styles.img} alt="Uploaded" />
