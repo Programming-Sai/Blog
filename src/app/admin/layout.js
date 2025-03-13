@@ -8,6 +8,7 @@ import React from "react";
 import "./globals.css";
 
 export default async function AdminLayout({ children }) {
+  // const session = {user:{role:'ADMIN'}};
   const session = await getServerSession(authOptions);
 
   // Server-side check for user session
