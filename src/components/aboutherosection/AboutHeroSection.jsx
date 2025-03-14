@@ -1,30 +1,45 @@
 import React from "react";
 import styles from "./aboutherosection.module.css";
 import BASE_PATH from "../../../base";
+import Link from "next/link";
 
-const AboutHeroSection = () => {
+
+async function getData() {
+  try {
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/editorPick`
+    );
+    if (!result.ok) {
+      throw new Error("Failed to fetch featured post");
+    }
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    console.log("Failed to fetch featured post", error);
+  }
+}
+
+
+  
+const AboutHeroSection = async () => {
+  const topPosts = await getData() || {};
+  const styleList = [styles.S, styles.N, styles.L, styles.M, styles.U]
+
   return (
     <div className={styles.container}>
-      <div
-        style={{ "--img": `url("${BASE_PATH}/food.png")` }}
-        className={`${styles.item} ${styles.S}`}
-      />
-      <div
-        style={{ "--img": `url("${BASE_PATH}/fashion.png")` }}
-        className={`${styles.item} ${styles.N}`}
-      />
-      <div
-        style={{ "--img": `url("${BASE_PATH}/travel.png")` }}
-        className={`${styles.item} ${styles.L}`}
-      />
-      <div
-        style={{ "--img": `url("${BASE_PATH}/style.png")` }}
-        className={`${styles.item} ${styles.M}`}
-      />
-      <div
-        style={{ "--img": `url("${BASE_PATH}/culture.png")` }}
-        className={`${styles.item} ${styles.U}`}
-      />
+      {topPosts?.map((post, idx) => {
+        return (
+            <Link 
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}${post.slug}`} 
+              key={post.id} 
+              className={`${styles.item} ${styleList[idx]}`} 
+              style={{ "--img": `url("${BASE_PATH}${post.image}")` }}
+            />
+          
+        );
+      })}
+
+
     </div>
   );
 };
