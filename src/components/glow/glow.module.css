@@ -9,6 +9,7 @@
     opacity: 0.6;
     top: var(--top);
     left: var(--left);
+    opacity: var(--glow-opacity);
 }
 
 /* Media Query for Smaller Screens */
