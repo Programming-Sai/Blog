@@ -57,7 +57,7 @@
 }
 
 .desc{
-    font-weight: 200;
+    font-weight: var(--font-weight);
 }
 
 .readMore{

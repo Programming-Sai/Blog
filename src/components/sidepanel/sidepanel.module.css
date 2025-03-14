@@ -55,7 +55,7 @@
 
 .mobileLayer ul li a {
   padding-block: 20px;
-  font-weight: 200;
+  font-weight: var(--font-weight);
   font-size: 1.1rem;
   padding-left: 40px;
   width: 100%;

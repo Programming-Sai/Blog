@@ -46,7 +46,7 @@
 }
 
 .post .desc {
-  font-weight: lighter;
+  font-weight: var(--font-weight);
 }
 
 .dateRead {

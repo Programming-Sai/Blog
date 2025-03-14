@@ -9,7 +9,7 @@
   grid-template-rows: 200px 150px 150px 200px;
   gap: 10px;
   margin-block: 5%;
-  opacity: 0.6;
+  opacity: var(--opacity);
 
 }
 
@@ -55,5 +55,5 @@
 }
 
 .container:hover .item:not(:hover) {
-  opacity: 0.5;
+  opacity: var(--opacity);
 }
