@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "./dashboard.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 import Card from "@/components/card/Card";
@@ -25,6 +25,43 @@ import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const DashBoard = () => {
   const { toggleSidePane } = useContext(ThemeContext);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/analytics`); // Replace with actual API endpoint
+        const result = await response.json();
+
+        // Extracting and cleaning data
+        const cleanedData = {
+          todayVisits: result?.todayVisits?.rowCount || 0,
+          uniqueVisits: result?.uniqueVisits?.rows?.reduce((acc, row) => {
+            acc[row.dimensionValues[0].value] = parseInt(row.metricValues[0].value, 10);
+            return acc;
+          }, {}),
+          bounceRate: result?.bounceRate?.rows?.reduce((acc, row) => {
+            const key = `${row.dimensionValues[0].value} (${row.dimensionValues[1].value})`;
+            acc[key] = parseFloat(row.metricValues[0].value);
+            return acc;
+          }, {}),
+          trafficSources: result?.trafficSources?.rows?.reduce((acc, row) => {
+            acc[row.dimensionValues[0].value] = parseInt(row.metricValues[0].value, 10);
+            return acc;
+          }, {}),
+        };
+
+        setData(cleanedData);
+      } catch (error) {
+        console.error("Error fetching analytics data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(data)
+
 
   return (
     <div
