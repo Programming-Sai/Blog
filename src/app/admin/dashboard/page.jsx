@@ -25,30 +25,23 @@ import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
 const DashBoard = () => {
   const { toggleSidePane } = useContext(ThemeContext);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/analytics`); // Replace with actual API endpoint
-        const result = await response.json();
+        const jsonData = await response.json();
+        console.log("Raw Json Response:", jsonData)
 
+        const result = jsonData?.result;
+        console.log("Results:", result)
         // Extracting and cleaning data
         const cleanedData = {
-          todayVisits: result?.todayVisits?.rowCount || 0,
-          uniqueVisits: result?.uniqueVisits?.rows?.reduce((acc, row) => {
-            acc[row.dimensionValues[0].value] = parseInt(row.metricValues[0].value, 10);
-            return acc;
-          }, {}),
-          bounceRate: result?.bounceRate?.rows?.reduce((acc, row) => {
-            const key = `${row.dimensionValues[0].value} (${row.dimensionValues[1].value})`;
-            acc[key] = parseFloat(row.metricValues[0].value);
-            return acc;
-          }, {}),
-          trafficSources: result?.trafficSources?.rows?.reduce((acc, row) => {
-            acc[row.dimensionValues[0].value] = parseInt(row.metricValues[0].value, 10);
-            return acc;
-          }, {}),
+          todayVisits:  result?.todayVisits?.rowCount,
+          uniqueVisits:  result?.uniqueVisits?.rowCount,
+          bounceRate:  result?.bounceRate?.rows,
+          trafficSources:  result?.trafficSources?.rows ,
         };
 
         setData(cleanedData);
@@ -60,7 +53,15 @@ const DashBoard = () => {
     fetchData();
   }, []);
 
-  console.log(data)
+  useEffect(() => {
+    console.log("Updated Data:", data);
+  }, [data]); // Runs when `data` updates
+  
+  const getBounceRate = (rows)=>{
+    if (!Array.isArray(rows) || rows.length === 0) return 0;
+    const totalRates = rows.reduce((sum, row) => sum + parseFloat(row.metricValues[0].value), 0);
+    return Math.round(totalRates / rows.length* 100) / 100;
+  };
 
 
   return (
@@ -76,7 +77,8 @@ const DashBoard = () => {
         <Card className={styles.cardTop} justify={"space-between"}>
           <div className={styles.text}>
             <p className={styles.big}>Today's Visits</p>
-            <h1>1,234,567</h1>
+            <h1>{data?.todayVisits || 0}</h1>
+            {/* <h1>1,234,567</h1> */}
             <p className={styles.small}>24% higher yesterday</p>
           </div>
 
@@ -88,7 +90,8 @@ const DashBoard = () => {
         <Card className={styles.cardTop} justify={"space-between"}>
           <div className={styles.text}>
             <p className={styles.big}>% Unique Visits</p>
-            <h1>54.45%</h1>
+            <h1>{data?.uniqueVisits || 0}</h1>
+            {/* <h1>54.45%</h1> */}
             <p className={styles.small}>23% average duration</p>
           </div>
 
@@ -101,6 +104,7 @@ const DashBoard = () => {
           <div className={styles.text}>
             <p className={styles.big}>Total Number of Posts</p>
             <h1>53</h1>
+            {/* <h1>53</h1> */}
             <p className={styles.small}>5 pending</p>
           </div>
 
@@ -112,7 +116,8 @@ const DashBoard = () => {
         <Card className={styles.cardTop} justify={"space-between"}>
           <div className={styles.text}>
             <p className={styles.big}>Bounce Rate</p>
-            <h1>19.78%</h1>
+            <h1>{getBounceRate(data?.bounceRate)}%</h1> 
+            {/* <h1>19.78%</h1>  */}
             <p className={styles.small}>65.45% on average time</p>
           </div>
 
