@@ -130,7 +130,8 @@
 
 .card3 {
   grid-area: c;
-  height: 380px;
+  height: 415px;
+  /* padding-top: 5px; */
   width: 100%;
 }
 
@@ -172,7 +173,7 @@
 
 .card9 {
   grid-area: i;
-  height: 600px;
+  height: 610px;
 }
 
 @media screen and (max-width: 1424px) {

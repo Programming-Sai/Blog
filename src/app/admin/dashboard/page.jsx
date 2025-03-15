@@ -211,8 +211,6 @@ const DashBoard = () => {
 
 export default DashBoard;
 
-// TODO When the page reaches a tablet screen, in the css medai query change the --left progerty so it stays, 80px.
-// TODO Add a subtitle to each blog (Optionally)
 
 // Specific to Your Dashboard Widgets
 // Top Metrics Cards:
