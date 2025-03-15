@@ -41,7 +41,7 @@ const TrafficSourcesChart = ({trafficData, socialMediaData}) => {
           <div
             className="custom-tooltip"
             style={{
-              backgroundColor: "#fff",
+              backgroundColor: "#333333",
               padding: "10px",
               borderRadius: "5px",
               border: "1px solid #ccc",
