@@ -54,7 +54,7 @@ export const GET = async () => {
     });
 
     // Traffic Sources Chart: source/medium, region
-    const [trafficSources] = await analyticsDataClient.runReport({
+    const [trafficSourcesGeneral] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: [
         {
@@ -62,67 +62,31 @@ export const GET = async () => {
           endDate: "today",
         },
       ],
-      dimensions: [{ name: "ssessionMedium" }],
-      metrics: [{ name: "activeUsers" }],
+      dimensions: [{ name: "sessionMedium" }],
+      metrics: [{ name: "sessions" }],
     });
 
-    ////// MIGHT HAVE TO REMOVE THIS---------------------
+    // Traffic Sources Chart: source, region
+    const [trafficSourcesSocials] = await analyticsDataClient.runReport({
+      property: `properties/${propertyId}`,
+      dateRanges: [
+        {
+          startDate: "2025-01-18",
+          endDate: "today",
+        },
+      ],
+      dimensions: [{ name: "sessionSource" }],
+      metrics: [{ name: "sessions" }],
+    });
 
-    // // Content Engagement Chart: pagePath, engagementType
-    // const [contentEngagement] = await analyticsDataClient.runReport({
-    //   property: `properties/${propertyId}`,
-    //   dateRanges: [
-    //     {
-    //       //   startDate: "2025-01-18",
-    //       startDate: "30daysago",
-    //       endDate: "today",
-    //     },
-    //   ],
-    //   dimensions: [{ name: "pagePath" }, { name: "engagementType" }],
-    //   metrics: [{ name: "engagedSessions" }],
-    // });
-
-    ////// MIGHT HAVE TO REMOVE THIS---------------------
-
-    // // Growth Rate Chart: week, month
-    // const [growthRate] = await analyticsDataClient.runReport({
-    //   property: `properties/${propertyId}`,
-    //   dateRanges: [
-    //     {
-    //       startDate: "2025-01-18",
-    //       endDate: "today",
-    //     },
-    //   ],
-    //   dimensions: [{ name: "week" }, { name: "month" }],
-    //   metrics: [{ name: "activeUsers" }],
-    // });
-
-    // // SEO Metrics: pagePath, searchEngine, keyword
-    // const [seoMetrics] = await analyticsDataClient.runReport({
-    //   property: `properties/${propertyId}`,
-    //   dateRanges: [
-    //     {
-    //       startDate: "2025-01-18",
-    //       endDate: "today",
-    //     },
-    //   ],
-    //   dimensions: [
-    //     // { name: "pagePath" },
-    //     // { name: "searchEngine" },
-    //     // { name: "keyword" },
-    //   ],
-    //   metrics: [{ name: "entrances" }],
-    // });
-
-    // Combining all the results
+    
     const result = {
       todayVisits,
       uniqueVisits,
       bounceRate,
-      trafficSources,
-      //   contentEngagement,
-      //   growthRate,
-      //   seoMetrics,
+      trafficSourcesGeneral,
+      trafficSourcesSocials,
+     
     };
 
     return NextResponse.json({ result }, { status: 200 });

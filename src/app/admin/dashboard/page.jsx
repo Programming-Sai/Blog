@@ -41,7 +41,8 @@ const DashBoard = () => {
           todayVisits:  result?.todayVisits?.rowCount,
           uniqueVisits:  result?.uniqueVisits?.rowCount,
           bounceRate:  result?.bounceRate?.rows,
-          trafficSources:  result?.trafficSources?.rows ,
+          trafficSourcesGeneral:  result?.trafficSourcesGeneral?.rows ,
+          trafficSourcesSocials:  result?.trafficSourcesSocials?.rows ,
         };
 
         setData(cleanedData);
@@ -55,13 +56,51 @@ const DashBoard = () => {
 
   useEffect(() => {
     console.log("Updated Data:", data);
-  }, [data]); // Runs when `data` updates
+  }, [data]); 
   
   const getBounceRate = (rows)=>{
     if (!Array.isArray(rows) || rows.length === 0) return 0;
     const totalRates = rows.reduce((sum, row) => sum + parseFloat(row.metricValues[0].value), 0);
     return Math.round(totalRates / rows.length* 100) / 100;
   };
+
+  const capitalise = (str) =>{
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  };
+
+  const getTrafficGeneralData = (rows) => {
+    if (!Array.isArray(rows) || rows.length === 0) return [];
+    let res = rows?.map((row, idx)=>({
+      name: row.dimensionValues[0].value === '(none)' ? 'Direct': row.dimensionValues[0].value === '(not set)' ? 'Unknown' : capitalise(row.dimensionValues[0].value) || "Other",
+      value: parseInt(row.metricValues[0].value) || 0,
+    }));
+    res = [...res, {name:'Other', value: getTrafficSocialData(data?.trafficSourcesSocials)?.reduce((sum, row)=>sum + parseInt(row.value), 0)}]
+    console.log("La Resulte Generale:", res);
+    return res
+  };
+
+
+
+  const getTrafficSocialData = (rows) => {
+    const COLORS = [
+      "#4CAF50", // Green (Facebook)
+      "#81C784", // Light Green (Twitter)
+      "#A5D6A7", // Light Greenish (Instagram)
+      "#4A8C2A", // Darker Green (LinkedIn)
+      "#66BB6A", // Medium Green (YouTube)
+      "#DCE775", // Light Yellowish Green (Snapchat)
+      "#C6FF00", // Bright Green (TikTok)
+    ];
+    if (!Array.isArray(rows) || rows.length === 0) return [];
+    let res = rows?.map((row, idx)=>({
+      name: row.dimensionValues[0].value === '(none)' || row.dimensionValues[0].value === '(direct)' ? 'Direct': row.dimensionValues[0].value === '(not set)' ? 'Unknown' : (row.dimensionValues[0].value) || "Other",
+      value: parseInt(row.metricValues[0].value) || 0,
+      color:COLORS[Math.floor(Math.random() * COLORS.length)]
+    }));
+    console.log("La Resulte:", res);
+    return res
+  };
+
 
 
   return (
@@ -142,7 +181,7 @@ const DashBoard = () => {
         />
 
         <Card className={`${styles.card} ${styles.card3}`}>
-          <TrafficSourcesChart />
+          <TrafficSourcesChart trafficData={getTrafficGeneralData(data?.trafficSourcesGeneral)} socialMediaData={getTrafficSocialData(data?.trafficSourcesSocials, 'social')}/>
         </Card>
 
         <Card className={`${styles.card} ${styles.card4}`}>

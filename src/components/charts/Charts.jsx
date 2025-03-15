@@ -18,27 +18,8 @@ import {
 import styles from "./charts.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 
-const TrafficSourcesChart = () => {
-  // Sample data for traffic sources including social media
-  const trafficData = [
-    { name: "Organic Search", value: 55 },
-    { name: "Direct", value: 25 },
-    { name: "Referral", value: 10 },
-    { name: "Social Media", value: 5 }, // Aggregate for social media
-    { name: "Email", value: 5 },
-  ];
-
-  // Sample data for social media breakdown
-  const socialMediaData = [
-    { name: "Facebook", value: 3, color: "#4CAF50" }, // Green
-    { name: "Twitter", value: 1, color: "#81C784" }, // Light Green
-    { name: "Instagram", value: 1, color: "#A5D6A7" }, // Light Greenish
-    { name: "LinkedIn", value: 2, color: "#4A8C2A" }, // Darker Green
-    { name: "YouTube", value: 2, color: "#66BB6A" }, // Medium Green
-    { name: "Snapchat", value: 1, color: "#DCE775" }, // Light Yellowish Green
-    { name: "TikTok", value: 1, color: "#C6FF00" }, // Bright Green
-  ];
-
+const TrafficSourcesChart = ({trafficData, socialMediaData}) => {
+  
   const COLORS = [
     "#4CAF50", // Green (Facebook)
     "#81C784", // Light Green (Twitter)
@@ -55,8 +36,7 @@ const TrafficSourcesChart = () => {
       const { name, value } = payload[0];
       let detail = `${name}: ${value}%`;
 
-      // If the "Social Media" segment is hovered, show breakdown
-      if (name === "Social Media") {
+      if (name === "Other") {
         return (
           <div
             className="custom-tooltip"
