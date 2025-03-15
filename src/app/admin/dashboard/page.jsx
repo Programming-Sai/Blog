@@ -10,7 +10,6 @@ import {
   faStopwatch,
   faTv,
 } from "@fortawesome/free-solid-svg-icons";
-import PopularPosts from "@/components/popularposts/PopularPosts";
 import {
   PostPerformanceChart,
   GrowthRateChart,
@@ -75,7 +74,6 @@ const DashBoard = () => {
       value: parseInt(row.metricValues[0].value) || 0,
     }));
     res = [...res, {name:'Other', value: getTrafficSocialData(data?.trafficSourcesSocials)?.reduce((sum, row)=>sum + parseInt(row.value), 0)}]
-    console.log("La Resulte Generale:", res);
     return res
   };
 
@@ -97,7 +95,6 @@ const DashBoard = () => {
       value: parseInt(row.metricValues[0].value) || 0,
       color:COLORS[Math.floor(Math.random() * COLORS.length)]
     }));
-    console.log("La Resulte:", res);
     return res
   };
 
@@ -184,17 +181,17 @@ const DashBoard = () => {
           <TrafficSourcesChart trafficData={getTrafficGeneralData(data?.trafficSourcesGeneral)} socialMediaData={getTrafficSocialData(data?.trafficSourcesSocials, 'social')}/>
         </Card>
 
-        <Card className={`${styles.card} ${styles.card4}`}>
+        {/* <Card className={`${styles.card} ${styles.card4}`}>
           <ContentEngagementChart />
-        </Card>
+        </Card> */}
 
         <Card className={`${styles.card} ${styles.card5}`}>
           <AdminRecentPosts />
         </Card>
 
-        <Card className={`${styles.card} ${styles.card6}`}>
+        {/* <Card className={`${styles.card} ${styles.card6}`}>
           <GrowthRateChart />
-        </Card>
+        </Card> */}
 
         <Card className={`${styles.card} ${styles.card7}`}>
           <ServerStatus />

@@ -105,7 +105,7 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "a a b"
-    "c d b"
+    "c c b"
     "f f f"
     "e h h"
     "i i g"
