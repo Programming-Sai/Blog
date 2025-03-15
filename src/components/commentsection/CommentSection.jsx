@@ -22,9 +22,9 @@ const CommentSection = ({ width, isLoading, error, comments }) => {
               key={comment.id}
             >
               <div className={styles.imgContainer}>
-                {comment?.user?.image || '/coding.png' && (
+                {comment?.user?.image && (
                   <Image
-                    src={comment?.user?.image || '/coding.png'}
+                    src={comment?.user?.image}
                     fill
                     className={styles.img}
                     alt={comment?.user?.name || "User Image"}

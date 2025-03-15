@@ -62,7 +62,7 @@ export const GET = async () => {
           endDate: "today",
         },
       ],
-      dimensions: [{ name: "sourceMedium" }],
+      dimensions: [{ name: "ssessionMedium" }],
       metrics: [{ name: "activeUsers" }],
     });
 
