@@ -2,3 +2,4 @@ node_modules/
 .next/
 .env
 test.js
+src/utils/service.config.json

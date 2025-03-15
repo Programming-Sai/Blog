@@ -1,11 +1,16 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
-import credentials from "@/utils/service.config.json"; // Path to your service account JSON
 
 export const GET = async () => {
   try {
     const auth = new google.auth.GoogleAuth({
-      credentials,
+      credentials: {
+        client_email: process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_ANALYTICS_PRIVATE_KEY?.replace(
+          /\\n/g,
+          "\n"
+        ),
+      },
       scopes: ["https://www.googleapis.com/auth/webmasters.readonly"],
     });
 
