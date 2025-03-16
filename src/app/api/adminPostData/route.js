@@ -7,11 +7,13 @@ export const GET = async () => {
 
     const postsByCategory = await prisma.post.groupBy({
       by: ['catSlug'],
-      _sum: { views: true },
-      _sum: { likes: true },
-      _sum: { shares: true },
+      _sum: {
+        views: true,
+        likes: true,
+        shares: true,
+      },
     });
-
+    
     
     const allPosts = await prisma.post.findMany({
       select: {
@@ -64,10 +66,10 @@ export const GET = async () => {
       orderBy: { createdAt: 'desc' },
       include: {
         post: {
-          select: { title: true }, 
+          select: { title: true, catSlug: true }, 
         },
         user: {
-          select: { name: true, email: true, image: true }, 
+          select: { name: true, image: true }, 
         },
       },
     });

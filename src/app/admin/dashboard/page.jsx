@@ -143,7 +143,7 @@ const DashBoard = () => {
         <Card className={styles.cardTop} justify={"space-between"}>
           <div className={styles.text}>
             <p className={styles.big}>Total Number of Posts</p>
-            <h1>{data?.adminPostData?.totalPosts}</h1>
+            <h1>{data?.adminPostData?.totalPosts || 0}</h1>
             {/* <h1>53</h1> */}
             <p className={styles.small}>5 pending</p>
           </div>

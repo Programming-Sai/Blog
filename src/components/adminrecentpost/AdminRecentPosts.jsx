@@ -4,7 +4,6 @@ import styles from "./adminrecentpost.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBarChart,
-  faClock,
   faComment,
   faEye,
   faGear,
@@ -15,71 +14,30 @@ import {
 import BASE_PATH from "../../../base";
 
 const AdminRecentPosts = ({data}) => {
-  console.log("LATEST DATA:", data)
-  const sliderData = [
-    {
-      img: "/style.png",
-      title: "20 Best Travel Tips After 5 Years Of Traveling The World",
-      views: "12K Views",
-      shares: "234 Shares",
-      comments: "44 Comments",
-      released: "30 Likes",
-    },
-    {
-      img: "/coding.png",
-      title: "Top 10 Programming Tips for Beginners",
-      views: "15K Views",
-      shares: "300 Shares",
-      comments: "60 Comments",
-      released: "2k Likes",
-    },
-    {
-      img: "/food.png",
-      title: "Best Recipes for Home-Cooked Meals in 2024",
-      views: "18K Views",
-      shares: "500 Shares",
-      comments: "120 Comments",
-      released: "53 Likes",
-    },
-    {
-      img: "/fashion.png",
-      title: "Fashion Trends to Watch in 2024",
-      views: "9K Views",
-      shares: "150 Shares",
-      comments: "30 Comments",
-      released: "100 Likes",
-    },
-    {
-      img: "/travel.png",
-      title: "Hidden Travel Gems Around the World You Must Visit",
-      views: "20K Views",
-      shares: "450 Shares",
-      comments: "80 Comments",
-      released: "10 Likes",
-    },
-    {
-      img: "/culture.png",
-      title: "Understanding Global Cultures: A Guide for 2024",
-      views: "22K Views",
-      shares: "600 Shares",
-      comments: "140 Comments",
-      released: "3 Likes",
-    },
-  ];
+  const sliderData = data?.map(post => ({
+    img: post.image, 
+    title: `${post.title}`,
+    views: `${post.views} Views`,
+    shares: `${post.shares} Shares`,
+    comments: `${post._count.comment} Comments`,
+    likes:`${post.likes} Likes`,
+  }));
+
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = sliderData.length;
+  const totalSlides = sliderData?.length;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
-      if (currentSlide === totalSlides - 1) {
-        sliderData.push(sliderData.shift());
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
+    if (totalSlides > 0) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+      }, 5000);
+  
+      return () => clearInterval(interval);
+    }
   }, [totalSlides]);
+  
+  
 
   return (
     <div className={styles.container}>
@@ -125,7 +83,7 @@ const AdminRecentPosts = ({data}) => {
                 </div>
                 <div className={styles.stat}>
                   <FontAwesomeIcon className={styles.icon} icon={faHeart} />
-                  <p>{item.released}</p>
+                  <p>{item.likes}</p>
                 </div>
               </div>
             </div>
