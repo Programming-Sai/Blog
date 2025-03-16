@@ -125,7 +125,7 @@ const DashBoard = () => {
 
         <Card className={styles.cardTop} justify={"space-between"}>
           <div className={styles.text}>
-            <p className={styles.big}>% Unique Visits</p>
+            <p className={styles.big}>Unique Visits</p>
             <h1>{data?.uniqueVisits || 0}</h1>
             {/* <h1>54.45%</h1> */}
             <p className={styles.small}>23% average duration</p>

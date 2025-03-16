@@ -8,6 +8,7 @@ import {
   faComment,
   faEye,
   faGear,
+  faHeart,
   faPencil,
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +22,7 @@ const AdminRecentPosts = () => {
       views: "12K Views",
       shares: "234 Shares",
       comments: "44 Comments",
-      released: "Released 3d ago",
+      released: "30 Likes",
     },
     {
       img: "/coding.png",
@@ -29,7 +30,7 @@ const AdminRecentPosts = () => {
       views: "15K Views",
       shares: "300 Shares",
       comments: "60 Comments",
-      released: "Released 2d ago",
+      released: "2k Likes",
     },
     {
       img: "/food.png",
@@ -37,7 +38,7 @@ const AdminRecentPosts = () => {
       views: "18K Views",
       shares: "500 Shares",
       comments: "120 Comments",
-      released: "Released 5d ago",
+      released: "53 Likes",
     },
     {
       img: "/fashion.png",
@@ -45,7 +46,7 @@ const AdminRecentPosts = () => {
       views: "9K Views",
       shares: "150 Shares",
       comments: "30 Comments",
-      released: "Released 1w ago",
+      released: "100 Likes",
     },
     {
       img: "/travel.png",
@@ -53,7 +54,7 @@ const AdminRecentPosts = () => {
       views: "20K Views",
       shares: "450 Shares",
       comments: "80 Comments",
-      released: "Released 1d ago",
+      released: "10 Likes",
     },
     {
       img: "/culture.png",
@@ -61,7 +62,7 @@ const AdminRecentPosts = () => {
       views: "22K Views",
       shares: "600 Shares",
       comments: "140 Comments",
-      released: "Released 3h ago",
+      released: "3 Likes",
     },
   ];
 
@@ -122,7 +123,7 @@ const AdminRecentPosts = () => {
                   <p>{item.comments}</p>
                 </div>
                 <div className={styles.stat}>
-                  <FontAwesomeIcon className={styles.icon} icon={faClock} />
+                  <FontAwesomeIcon className={styles.icon} icon={faHeart} />
                   <p>{item.released}</p>
                 </div>
               </div>
