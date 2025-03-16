@@ -108,8 +108,8 @@
     "c c b"
     "f f f"
     "e h h"
-    "i i g"
-    "i i g";
+    "i i i"
+    "i i i";
   grid-auto-rows: 200px auto fit-content;
   margin-top: 20px;
 }
@@ -157,7 +157,7 @@
 .card7 {
   grid-area: g;
   height: 600px;
-  position: relative;
+  /* position: relative; */
 }
 
 .card8 {
@@ -174,6 +174,7 @@
 .card9 {
   grid-area: i;
   height: 610px;
+  width: 100%;
 }
 
 @media screen and (max-width: 1424px) {

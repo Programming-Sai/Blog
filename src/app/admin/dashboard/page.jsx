@@ -193,9 +193,9 @@ const DashBoard = () => {
           <GrowthRateChart />
         </Card> */}
 
-        <Card className={`${styles.card} ${styles.card7}`}>
+        {/* <Card className={`${styles.card} ${styles.card7}`}>
           <ServerStatus />
-        </Card>
+        </Card> */}
 
         <Card className={`${styles.card} ${styles.card8}`}>
           <SEOMetrics />
