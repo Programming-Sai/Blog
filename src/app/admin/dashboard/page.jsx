@@ -29,20 +29,27 @@ const DashBoard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/analytics`); // Replace with actual API endpoint
-        const jsonData = await response.json();
-        console.log("Raw Json Response:", jsonData)
-
-        const result = jsonData?.result;
-        console.log("Results:", result)
-        // Extracting and cleaning data
+        const [analyticsRes, adminPostRes] = await Promise.all([
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/analytics`).then((res) => res.json()),
+          fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminPostData`).then((res) => res.json()),
+        ]);
+  
+        console.log("Raw Analytics Response:", analyticsRes);
+        console.log("Raw Admin Post Response:", adminPostRes);
+  
+        const resultAnalytics = analyticsRes?.result;
+        const resultAdminPost = adminPostRes;
+  
         const cleanedData = {
-          todayVisits:  result?.todayVisits?.rowCount,
-          uniqueVisits:  result?.uniqueVisits?.rowCount,
-          bounceRate:  result?.bounceRate?.rows,
-          trafficSourcesGeneral:  result?.trafficSourcesGeneral?.rows ,
-          trafficSourcesSocials:  result?.trafficSourcesSocials?.rows ,
+          todayVisits: resultAnalytics?.todayVisits?.rowCount,
+          uniqueVisits: resultAnalytics?.uniqueVisits?.rowCount,
+          bounceRate: resultAnalytics?.bounceRate?.rows,
+          trafficSourcesGeneral: resultAnalytics?.trafficSourcesGeneral?.rows,
+          trafficSourcesSocials: resultAnalytics?.trafficSourcesSocials?.rows,
+          adminPostData: resultAdminPost, // Store admin post data directly
         };
+  
+    
 
         setData(cleanedData);
       } catch (error) {
@@ -53,9 +60,6 @@ const DashBoard = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log("Updated Data:", data);
-  }, [data]); 
   
   const getBounceRate = (rows)=>{
     if (!Array.isArray(rows) || rows.length === 0) return 0;
@@ -139,7 +143,7 @@ const DashBoard = () => {
         <Card className={styles.cardTop} justify={"space-between"}>
           <div className={styles.text}>
             <p className={styles.big}>Total Number of Posts</p>
-            <h1>53</h1>
+            <h1>{data?.adminPostData?.totalPosts}</h1>
             {/* <h1>53</h1> */}
             <p className={styles.small}>5 pending</p>
           </div>
@@ -165,7 +169,7 @@ const DashBoard = () => {
 
       <div className={styles.secondRow}>
         <Card className={`${styles.card} ${styles.card1}`}>
-          <PostPerformanceChart />
+          <PostPerformanceChart data={data?.adminPostData?.categoryStats}/>
         </Card>
 
         <PopularPostsWrapper
@@ -186,7 +190,7 @@ const DashBoard = () => {
         </Card> */}
 
         <Card className={`${styles.card} ${styles.card5}`}>
-          <AdminRecentPosts />
+          <AdminRecentPosts data={data?.adminPostData?.latestPosts}/>
         </Card>
 
         {/* <Card className={`${styles.card} ${styles.card6}`}>
@@ -202,7 +206,7 @@ const DashBoard = () => {
         </Card>
 
         <Card className={`${styles.card} ${styles.card9}`}>
-          <AdminCommentsSection />
+          <AdminCommentsSection data={data?.adminPostData?.latestComments}/>
         </Card>
       </div>
     </div>

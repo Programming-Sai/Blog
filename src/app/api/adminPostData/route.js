@@ -8,6 +8,8 @@ export const GET = async () => {
     const postsByCategory = await prisma.post.groupBy({
       by: ['catSlug'],
       _sum: { views: true },
+      _sum: { likes: true },
+      _sum: { shares: true },
     });
 
     
@@ -37,6 +39,8 @@ export const GET = async () => {
     const categoryStats = postsByCategory.map(category => ({
       catSlug: category.catSlug,
       totalViews: category._sum.views || 0,
+      totalLikes: category._sum.likes || 0,
+      totalShares: category._sum.shares || 0,
       totalComments: commentsByCategory[category.catSlug] || 0,
     }));
     
@@ -73,7 +77,7 @@ export const GET = async () => {
         totalPosts,
         categoryStats,
         latestPosts,
-        latestComments
+        latestComments,
       },
       { status: 200 }
     );

@@ -103,56 +103,57 @@ const TrafficSourcesChart = ({trafficData, socialMediaData}) => {
   );
 };
 
-const PostPerformanceChart = () => {
+const PostPerformanceChart = ({data}) => {
+  console.log("CHART DATA: ", data)
   const { theme } = useContext(ThemeContext);
 
-  const data = [
-    {
-      name: "Music",
-      Views: 400,
-      Shares: 240,
-      Likes: 150,
-      Comments: 45,
-      "Engagement Rate": ((150 + 240 + 45) / 400) * 100, // 108.75%
-      "Virality Rate": (240 / 400) * 100, // 60%
-    },
-    {
-      name: "News",
-      Views: 300,
-      Shares: 221,
-      Likes: 120,
-      Comments: 30,
-      "Engagement Rate": ((120 + 221 + 30) / 300) * 100, // 123.67%
-      "Virality Rate": (221 / 300) * 100, // 73.67%
-    },
-    {
-      name: "Movies",
-      Views: 200,
-      Shares: 229,
-      Likes: 180,
-      Comments: 55,
-      "Engagement Rate": ((180 + 229 + 55) / 200) * 100, // 232%
-      "Virality Rate": (229 / 200) * 100, // 114.5%
-    },
-    {
-      name: "Sports",
-      Views: 278,
-      Shares: 200,
-      Likes: 140,
-      Comments: 40,
-      "Engagement Rate": ((140 + 200 + 40) / 278) * 100, // 137.41%
-      "Virality Rate": (200 / 278) * 100, // 71.94%
-    },
-    {
-      name: "Lifestyle",
-      Views: 189,
-      Shares: 218,
-      Likes: 160,
-      Comments: 38,
-      "Engagement Rate": ((160 + 218 + 38) / 189) * 100, // 218.52%
-      "Virality Rate": (218 / 189) * 100, // 115.34%
-    },
-  ];
+  // const data = [
+  //   {
+  //     name: "Music",
+  //     Views: 400,
+  //     Shares: 240,
+  //     Likes: 150,
+  //     Comments: 45,
+  //     "Engagement Rate": ((150 + 240 + 45) / 400) * 100, // 108.75%
+  //     "Virality Rate": (240 / 400) * 100, // 60%
+  //   },
+  //   {
+  //     name: "News",
+  //     Views: 300,
+  //     Shares: 221,
+  //     Likes: 120,
+  //     Comments: 30,
+  //     "Engagement Rate": ((120 + 221 + 30) / 300) * 100, // 123.67%
+  //     "Virality Rate": (221 / 300) * 100, // 73.67%
+  //   },
+  //   {
+  //     name: "Movies",
+  //     Views: 200,
+  //     Shares: 229,
+  //     Likes: 180,
+  //     Comments: 55,
+  //     "Engagement Rate": ((180 + 229 + 55) / 200) * 100, // 232%
+  //     "Virality Rate": (229 / 200) * 100, // 114.5%
+  //   },
+  //   {
+  //     name: "Sports",
+  //     Views: 278,
+  //     Shares: 200,
+  //     Likes: 140,
+  //     Comments: 40,
+  //     "Engagement Rate": ((140 + 200 + 40) / 278) * 100, // 137.41%
+  //     "Virality Rate": (200 / 278) * 100, // 71.94%
+  //   },
+  //   {
+  //     name: "Lifestyle",
+  //     Views: 189,
+  //     Shares: 218,
+  //     Likes: 160,
+  //     Comments: 38,
+  //     "Engagement Rate": ((160 + 218 + 38) / 189) * 100, // 218.52%
+  //     "Virality Rate": (218 / 189) * 100, // 115.34%
+  //   },
+  // ];
 
   return (
     <ResponsiveContainer width="90%" height={300} className={styles.container}>
@@ -169,14 +170,7 @@ const PostPerformanceChart = () => {
         <Bar dataKey="Shares" fill={theme === "dark" ? "#81C784" : "#B4D2A1"} />
         <Bar dataKey="Likes" fill={theme === "dark" ? "#82ca9d" : "#F2B957"} />
         <Bar dataKey="Comments" fill={theme ? "#0FEB3B" : "#82ca9d"} />
-        <Bar
-          dataKey="Engagement Rate"
-          fill={theme === "dark" ? "green" : "#F57F20"}
-        />
-        <Bar
-          dataKey="Virality Rate"
-          fill={theme === "dark" ? "#FF9800" : "pink"}
-        />
+        
       </BarChart>
     </ResponsiveContainer>
   );

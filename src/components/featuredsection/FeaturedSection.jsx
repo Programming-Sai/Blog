@@ -26,7 +26,8 @@ const FeaturedSection = async ({ theme }) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
-        Hey <b>{"<< Name >>"}</b> here, Discover my stories and creative ideas.
+        {/* Hey <b>{"<< Name >>"}</b> here, Discover my stories and creative ideas. */}
+        <br/>
       </h1>
       <div className={styles.section}>
         <div className={styles.sectionItem}>

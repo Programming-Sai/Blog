@@ -14,7 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import BASE_PATH from "../../../base";
 
-const AdminRecentPosts = () => {
+const AdminRecentPosts = ({data}) => {
+  console.log("LATEST DATA:", data)
   const sliderData = [
     {
       img: "/style.png",

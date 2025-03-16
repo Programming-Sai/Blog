@@ -85,7 +85,8 @@ const comments = [
   },
 ];
 
-const AdminCommentsSection = () => {
+const AdminCommentsSection = ({data}) => {
+  console.log("COMMENT DATA: ", data)
   return (
     <div className={styles.container}>
       <h2>Recent Comments</h2>
