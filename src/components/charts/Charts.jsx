@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   PieChart,
   Pie,
@@ -17,6 +17,14 @@ import {
 } from "recharts";
 import styles from "./charts.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
+import DataTable from "react-data-table-component";
+import tablestyles from "../../components/blogtable/blogtable.module.css";
+import BASE_PATH from "../../../base";
+import Link from "next/link";
+import { faEye, faTrash, } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 const TrafficSourcesChart = ({trafficData, socialMediaData}) => {
   
@@ -270,7 +278,7 @@ const ContentEngagementChart = () => {
   );
 };
 
-const SEOMetrics = () => {
+const SEOMetrics = ({ data }) => {
   const seoData = [
     {
       keyword: "Best Travel Tips",
@@ -386,46 +394,187 @@ const SEOMetrics = () => {
     },
   ];
 
+
+  const formattedData = seoData?.map((row, idx)=> {
+    return {
+      keyword: row?.keyword,
+      clicks: row?.clicks,
+      impressions: row?.impressions,
+      ctr: row?.ctr,
+      avg_position: row?.avg_position,
+      pages: row?.pages, 
+    }
+  });
+  const { theme } = useContext(ThemeContext);
+  const [records, setRecords] = useState(formattedData);
+  
+  useEffect(() => {
+    setRecords(formattedData);
+  }, [data]);
+  
+  
+  const getColumns = () => {
+      return [
+        {
+          name: "Keywords",
+          selector: (row) => row?.keyword,
+          sortable: true,
+          width: "200px",
+        },
+        {
+          name: "Clicks",
+          selector: (row) => row?.clicks,
+          sortable: true,
+          width: "90px",
+        },
+        {
+          name: "Impressions",
+          selector: (row) => row?.impressions,
+          sortable: true,
+          width: "120px",
+        },
+        {
+          name: "(CTR) Click Through Rate",
+          selector: (row) => row?.ctr,
+          sortable: true,
+          width: "110px",
+        },
+        {
+          name: "Ranking",
+          selector: (row) => row?.avg_position,
+          sortable: true,
+          width: "110px",
+        },
+        {
+          name: "Visited Pages",
+          cell: (row) => (
+            <div style={{display:'flex', flexDirection:'column', gap:'10px', padding:'10px'}}>
+            {row?.pages?.map((r, idx)=>(
+              <Link
+                href={`${process.env.NEXT_PUBLIC_BASE_URL}${r}`}
+                style={{textDecoration:'underline'}}
+              >
+                {r}
+              </Link>
+            ))}
+            </div>
+          ),
+          width: "250px",
+        },
+      ];
+  };
+
+  const handleSelectedRowsChange = ({ selectedRows }) => {
+    console.log("Selected Rows:", selectedRows);
+  };
+
+  const customStyles = {
+    table: {
+      style: {
+        backgroundColor: "transparent", // Clip content that overflows the border
+      },
+    },
+    headRow: {
+      style: {
+        backgroundColor: `rgba(6,120,11,0.6)`,
+      },
+    },
+    headCells: {
+      style: {
+        color: theme === "light" ? "black" : "white",
+        fontWeight: "bold",
+        fontSize: "1.1em",
+        padding: "10px",
+        textAlign: "left",
+      },
+    },
+    rows: {
+      style: {
+        backgroundColor: "rgba(217, 217, 217, 0.43)",
+        "&:hover": {
+          backgroundColor: "rgba(217, 217, 217, 0.43)",
+        },
+      },
+    },
+    pagination: {
+      style: {
+        backgroundColor: `rgba(6,120,11,0.6)`,
+        color: "#ffffff",
+        borderTop: "1px solid #ddd",
+        display: "flex",
+        justifyContent: "center",
+        padding: "10px",
+      },
+      pageButtonsStyle: {
+        backgroundColor:
+          theme === "light"
+            ? "rgba(217, 217, 217, 0.43)"
+            : "rgba(217, 217, 217, 0.5)",
+        border: "none", // Remove border
+        padding: "8px 12px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "10px",
+        margin: "0 4px", // Margin between buttons
+        cursor: "pointer", // Pointer on hover
+        ":focus": {
+          outline: "none", // Remove focus outline
+        },
+      },
+    },
+  };
+
+  const handleFilter = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+  
+    if (!searchValue) {
+      // If the input is cleared, reset the records to the original data
+      setRecords(formattedData);
+      return;
+    }
+  
+    const fieldsToSearch = ["keyword"];
+    setRecords(
+      formattedData.filter((row) => {
+        return fieldsToSearch.some((field) =>
+           // Check the first element of "post"
+             row[field]?.toLowerCase().includes(searchValue) // Check other fields
+        );
+      })
+    );
+  };
+
   return (
-    <div className={styles.containerTable}>
-      <h3> SEO Performance Metrics </h3>
-      <table className={styles.tableContainer}>
-        <thead>
-          <tr>
-            <th>Keywords</th>
-            <th>Clicks</th>
-            <th>Impressions</th>
-            <th>Click Through Rate (%)</th>
-            <th>Average Posiiton</th>
-            <th>Visited Pages</th>
-          </tr>
-        </thead>
-        <tbody>
-          {seoData?.map((data, i) => (
-            <tr key={i}>
-              <td>{data.keyword}</td>
-              <td>{data.clicks}</td>
-              <td>{data.impressions}</td>
-              <td>{data.ctr}</td>
-              <td>{data.avg_position}</td>
-              <td>
-                <ul>
-                  {data.pages?.map((item, i) => (
-                    <li key={i}>
-                      <a href={item} title={item}>
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className={tablestyles.container}>
+      <h3>SEO Metrics</h3>
+      <div className={tablestyles.filterContainer}>
+        <input
+          placeholder="Search By Keyword..."
+          onChange={handleFilter}
+        />
+        <div className={tablestyles.underline} />
+      </div>
+      <DataTable
+        columns={getColumns()}
+        data={records}
+        pagination
+        paginationPerPage={2} // Set the default number of rows per page
+        paginationRowsPerPageOptions={[2, 5, 10, 15, 20, 30, 50]}  
+        responsive
+        highlightOnHover
+        striped
+        customStyles={customStyles}
+        selectableRows
+        onSelectedRowsChange={handleSelectedRowsChange}
+        theme={theme === "light" ? "solarized" : "dark"}
+      />
+
+
     </div>
   );
 };
+
 
 export default SEOMetrics;
 

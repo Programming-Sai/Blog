@@ -21,6 +21,7 @@ import AdminCommentsSection from "@/components/admincommentssection/AdminComment
 import AdminRecentPosts from "@/components/adminrecentpost/AdminRecentPosts";
 import ServerStatus from "@/components/serverstatus/ServerStatus";
 import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
+import PopularPosts from "@/components/popularposts/PopularPosts";
 
 const DashBoard = () => {
   const { toggleSidePane } = useContext(ThemeContext);
@@ -172,7 +173,16 @@ const DashBoard = () => {
           <PostPerformanceChart data={data?.adminPostData?.categoryStats}/>
         </Card>
 
-        <PopularPostsWrapper
+        {/* <PopularPostsWrapper
+          glow={false}
+          imageWidth={10}
+          className={`${styles.card} ${styles.card2}`}
+          borderRad="5px"
+          marginBlock="0"
+          isOutline="0"
+        /> */}
+
+        <PopularPosts
           glow={false}
           imageWidth={10}
           className={`${styles.card} ${styles.card2}`}

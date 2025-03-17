@@ -13,6 +13,7 @@ const WriteComment = ({ postSlug, mutate }) => {
   const router = usePathname();
 
   const handleSubmit = async () => {
+    if (!desc){return};
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/comments?postSlug=${postSlug}`,

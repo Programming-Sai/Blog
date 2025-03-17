@@ -1,20 +1,10 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react"; 
-// import styles from "./admincommentssection.module.css";
 import DataTable from "react-data-table-component";
 import styles from "../../components/blogtable/blogtable.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendar,
-  faClose,
-  faComment,
-  faEdit,
-  faEye,
-  faShare,
-  faTag,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrash, } from "@fortawesome/free-solid-svg-icons";
 import BASE_PATH from "../../../base";
 import Link from "next/link";
 
@@ -31,6 +21,7 @@ const BlogTable = ({ data }) => {
 
   const formattedData = data?.map((row, idx)=> {
     return {
+      commentId: row?.id,
       thumbnail: row?.user?.image,
       category: capitalise(row?.post?.catSlug),
       comment: row?.desc,
@@ -38,50 +29,14 @@ const BlogTable = ({ data }) => {
       post: [row?.post?.title, row?.postSlug]
     }
   });
-  const { theme, toggleSidePane } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [records, setRecords] = useState(formattedData);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
   
   useEffect(() => {
     setRecords(formattedData);
   }, [data]);
   
   
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const handleRowClick = (row) => {
-    if (screenWidth <= 1024 || (screenWidth >= 1024 && !toggleSidePane)) {
-      setSelectedRow(row);
-      setModalOpen(true);
-      console.log("Modal Opened: ", row);
-    }
-  };
-
-  
-  useEffect(() => {
-    const sampleRow = {
-      title: "This is Some Sample Title",
-      date: "2024-10-26",
-      category: "Tech",
-      views: 100,
-      thumbnail: "/p1.jpeg",
-      comments: 3,
-      shares: 8,
-    };
-    handleRowClick(selectedRow);
-  }, [screenWidth, selectedRow]);
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setSelectedRow(null);
-  };
-
   const getColumns = () => {
       return [
         {
@@ -123,7 +78,8 @@ const BlogTable = ({ data }) => {
           name: "Post",
           cell: (row) => (  
             <Link
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}${row?.post[1]}`}
+              href={`${process.env.NEXT_PUBLIC_BASE_URL}${row?.post[1]}#${row?.commentId}`}
+              style={{textDecoration:'underline'}}
             >
               {row?.post[0]}
             </Link>
@@ -132,17 +88,11 @@ const BlogTable = ({ data }) => {
           width: "200px",
         },
         {
-          name: "Actions",
+          name: "Delete",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
+              <button className={`${styles.button} ${styles.delete}`} onClick={() => deleteComment(row?.commentId)}>
                 <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
-                <FontAwesomeIcon icon={faEye} />
               </button>
             </div>
           ),
@@ -150,6 +100,32 @@ const BlogTable = ({ data }) => {
         },
       ];
   };
+
+  const deleteComment = async (id) => {
+    if (!id) return;
+  
+    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await fetch(`/api/comments?id=${id}`, {
+        method: "DELETE",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to delete comment");
+      }
+  
+      // Remove the comment from the state after successful deletion
+      setRecords((prevRecords) => prevRecords.filter((comment) => comment.commentId !== id));
+  
+      alert("Comment deleted successfully");
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      alert("Failed to delete comment");
+    }
+  };
+  
 
   const handleSelectedRowsChange = ({ selectedRows }) => {
     console.log("Selected Rows:", selectedRows);
@@ -178,7 +154,6 @@ const BlogTable = ({ data }) => {
     rows: {
       style: {
         backgroundColor: "rgba(217, 217, 217, 0.43)",
-        cursor: screenWidth >= 1024 && !toggleSidePane ? "pointer" : "default",
         "&:hover": {
           backgroundColor: "rgba(217, 217, 217, 0.43)",
         },
@@ -256,69 +231,10 @@ const BlogTable = ({ data }) => {
         customStyles={customStyles}
         selectableRows
         onSelectedRowsChange={handleSelectedRowsChange}
-        onRowClicked={handleRowClick} // Add this line
         theme={theme === "light" ? "solarized" : "dark"}
       />
 
-      {isModalOpen && selectedRow && (
-        <div className={styles.modal}>
-          <div
-            className={styles.modalContent}
-            style={{ "--img": `url(${BASE_PATH}${selectedRow.thumbnail})` }}
-          >
-            <button className={styles.closeButton} onClick={closeModal}>
-              <FontAwesomeIcon icon={faClose} />
-            </button>
-            <h2>{selectedRow.title}</h2>
-            <div className={styles.extraInfoContainer}>
-              <div className={styles.extraInfo}>
-                <FontAwesomeIcon className={styles.icon} icon={faCalendar} />
-                <p>{selectedRow.date}</p>
-              </div>
 
-              <div className={styles.extraInfo}>
-                <FontAwesomeIcon className={styles.icon} icon={faTag} />
-                <p>{selectedRow.category}</p>
-              </div>
-
-              <div className={styles.extraInfo}>
-                <FontAwesomeIcon className={styles.icon} icon={faEye} />
-                <p>{selectedRow.views}</p>
-              </div>
-
-              <div className={styles.extraInfo}>
-                <FontAwesomeIcon className={styles.icon} icon={faShare} />
-                <p>{selectedRow.shares}</p>
-              </div>
-
-              <div className={styles.extraInfo}>
-                <FontAwesomeIcon className={styles.icon} icon={faComment} />
-                <p>{selectedRow.comments}</p>
-              </div>
-            </div>
-            <div className={styles.actionButtonsContainer}>
-              <button
-                className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}
-              >
-                <FontAwesomeIcon icon={faEdit} />
-                <p>Edit</p>
-              </button>
-              <button
-                className={`${styles.button} ${styles.buttonInModal} ${styles.delete}`}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-                <p>Delete</p>
-              </button>
-              <button
-                className={`${styles.button} ${styles.buttonInModal} ${styles.view}`}
-              >
-                <FontAwesomeIcon icon={faEye} />
-                <p>View</p>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -16,14 +16,14 @@ export const GET = async () => {
 
     const searchConsole = google.searchconsole({ version: "v1", auth });
 
-    const siteUrl = "https://blog-da9s.vercel.app/" || process.env.NEXT_PUBLIC_BASE_URL; // Replace with your actual site URL
+    const siteUrl = "https://blog-da9s.vercel.app" || process.env.NEXT_PUBLIC_BASE_URL; // Replace with your actual site URL
     const response = await searchConsole.searchanalytics.query({
       siteUrl,
       requestBody: {
         startDate: "2025-01-18", // Adjust as needed
         endDate: new Date().toISOString().split('T')[0], // Adjust as needed
-        dimensions: ["query", "page"],
-        rowLimit: 10,
+        dimensions: ["query"],
+        rowLimit: 100,
       },
     });
 

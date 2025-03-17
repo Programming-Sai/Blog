@@ -51,7 +51,7 @@ const PopularPosts = async ({
                 fill
                 className={styles.img}
                 alt={title}
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
               />
             </div>
             <div className={styles.post}>

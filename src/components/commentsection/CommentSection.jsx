@@ -20,6 +20,7 @@ const CommentSection = ({ width, isLoading, error, comments }) => {
                 index === comments.length - 1 ? styles.lastItem : ""
               }`}
               key={comment.id}
+              id={comment.id}
             >
               <div className={styles.imgContainer}>
                 {comment?.user?.image && (
