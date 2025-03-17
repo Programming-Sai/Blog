@@ -33,6 +33,8 @@ const BlogTable = ({ data, page }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
+
+
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -445,6 +447,10 @@ const BlogTable = ({ data, page }) => {
       })
     );
   };
+
+  useEffect(()=>{
+    setRecords(data);
+  }, [data]);
 
   return (
     <div className={styles.container}>
