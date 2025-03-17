@@ -16,7 +16,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import BASE_PATH from "../../../base";
 
+
+
+
 const BlogTable = ({ data, page }) => {
+
+
+
+  // { id: 1, title: 'A Deep Dive into the World of Music', date: '01 Oct 2024', thumbnail: '/culture.png', category: 'Music', views: 150, comments: 5, shares: 10 },
+
+  console.log(data, page)
+
   const { theme, toggleSidePane } = useContext(ThemeContext);
   const [records, setRecords] = useState(data);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -33,7 +43,7 @@ const BlogTable = ({ data, page }) => {
     if (screenWidth <= 1024 || (screenWidth >= 1024 && !toggleSidePane)) {
       setSelectedRow(row);
       setModalOpen(true);
-      console.log("Modal Opened: ", row);
+      // console.log("Modal Opened: ", row);
     }
   };
 
@@ -147,7 +157,7 @@ const BlogTable = ({ data, page }) => {
           width: "110px",
         },
         {
-          name: "Tag",
+          name: "Category",
           selector: (row) => row.category,
           sortable: true,
           width: "80px",
@@ -197,7 +207,7 @@ const BlogTable = ({ data, page }) => {
           width: "110px",
         },
         {
-          name: "Tag",
+          name: "Category",
           selector: (row) => row.category,
           sortable: true,
           width: "80px",
@@ -264,7 +274,13 @@ const BlogTable = ({ data, page }) => {
           width: "100px",
         },
         {
-          name: "Msgs",
+          name: "Comments",
+          selector: (row) => row.comments,
+          sortable: true,
+          width: "90px",
+        },
+        {
+          name: "Likes",
           selector: (row) => row.comments,
           sortable: true,
           width: "90px",
@@ -358,7 +374,7 @@ const BlogTable = ({ data, page }) => {
   };
 
   const handleSelectedRowsChange = ({ selectedRows }) => {
-    console.log("Selected Rows:", selectedRows);
+    // console.log("Selected Rows:", selectedRows);
   };
 
   const customStyles = {

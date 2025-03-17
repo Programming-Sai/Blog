@@ -43,7 +43,7 @@ const BlogTable = ({ data }) => {
           name: "User Profile Pic",
           cell: (row) => (  
             <img
-              src={`${BASE_PATH}${row?.thumbnail}` || '/coding.png'}
+              src={`${BASE_PATH}${row?.thumbnail  || '/LinkedInAvatar.png'}`}
               alt={row?.userName[0]}
               className={styles.img}
             />

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import WriteComment from "./writecomment/WriteComment";
 import CommentSection from "./commentsection/CommentSection";
 import useSWR from "swr";
@@ -26,8 +26,17 @@ const CommentWrapper = ({ postSlug }) => {
     fetcher
   );
 
-  console.log("Fetched comments:", comments);
-  console.log("Error:", error);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+  }, [comments]); // Runs when comments are fetched
 
   return (
     <>

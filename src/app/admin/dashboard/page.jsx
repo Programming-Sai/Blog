@@ -206,7 +206,7 @@ const DashBoard = () => {
         {/* <Card className={`${styles.card} ${styles.card6}`}>
           <GrowthRateChart />
         </Card> */}
-
+        
         {/* <Card className={`${styles.card} ${styles.card7}`}>
           <ServerStatus />
         </Card> */}
