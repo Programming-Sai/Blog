@@ -90,14 +90,22 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
+              </Link>
+              
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Link>
+              <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
+                try {
+                  await deletePost(row?.id, row?.title);
+                  // Optionally refresh or update UI after deletion
+                } catch (err) {
+                  console.error(err.message);
+                }
+              }}>
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           ),
@@ -127,14 +135,22 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
+              </Link>
+              
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Link>
+              <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
+                try {
+                  await deletePost(row?.id, row?.title);
+                  // Optionally refresh or update UI after deletion
+                } catch (err) {
+                  console.error(err.message);
+                }
+              }}>
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           ),
@@ -177,14 +193,21 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
+              </Link>
+              
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Link>
+              <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
+                try {
+                  await deletePost(row?.id, row?.title);
+                } catch (err) {
+                  console.error(err.message);
+                }
+              }}>
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           ),
@@ -227,14 +250,22 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
+              </Link>
+              
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Link>
+              <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
+                try {
+                  await deletePost(row?.id, row?.title);
+                  // Optionally refresh or update UI after deletion
+                } catch (err) {
+                  console.error(err.message);
+                }
+              }}>
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           ),
@@ -343,7 +374,7 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
@@ -353,7 +384,6 @@ const BlogTable = ({ data, page }) => {
               <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
                 try {
                   await deletePost(row?.id, row?.title);
-                  // Optionally refresh or update UI after deletion
                 } catch (err) {
                   console.error(err.message);
                 }
@@ -592,31 +622,33 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon className={styles.icon} icon={faShare} />
                 <p>{selectedRow.shares}</p>
               </div>
-
               <div className={styles.extraInfo}>
                 <FontAwesomeIcon className={styles.icon} icon={faComment} />
                 <p>{selectedRow.comments}</p>
               </div>
             </div>
             <div className={styles.actionButtonsContainer}>
-              <button
-                className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}
-              >
-                <FontAwesomeIcon icon={faEdit} />
-                <p>Edit</p>
-              </button>
-              <button
+                <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}>
+                  <FontAwesomeIcon icon={faEdit} />
+                  <p>Edit</p>
+                </Link>
+                <button
                 className={`${styles.button} ${styles.buttonInModal} ${styles.delete}`}
+                onClick={async () => {
+                  try {
+                    await deletePost(selectedRow?.id, selectedRow?.title);
+                  } catch (err) {
+                    console.error(err.message);
+                  }
+                }}
               >
                 <FontAwesomeIcon icon={faTrash} />
                 <p>Delete</p>
               </button>
-              <button
-                className={`${styles.button} ${styles.buttonInModal} ${styles.view}`}
-              >
+              <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
                 <p>{page === "published" ? "View" : "Preview"}</p>
-              </button>
+              </Link>
               <br/>
             </div>
             <div style={{display:'flex', justifyContent:'space-around', width:'100%'}} >
