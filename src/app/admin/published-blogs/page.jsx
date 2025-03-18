@@ -48,9 +48,9 @@ const PublishedBlogs = () => {
         }
         const data = await result.json();
 
-        // setPublishedPosts(data.filter(post => !post.isDraft));
+        setPublishedPosts(data.filter(post => !post.isDraft));
 
-        setPublishedPosts(data)
+        // setPublishedPosts(data)
       }catch(error){
         console.log("An error occured when trying to fetch all posts: ", error)
       }
