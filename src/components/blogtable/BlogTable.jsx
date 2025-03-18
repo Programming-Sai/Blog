@@ -67,6 +67,15 @@ const BlogTable = ({ data, page }) => {
     setSelectedRow(null);
   };
 
+
+
+  const capitalise = (str) =>{
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  };
+
+
+
+
   const getColumns = () => {
     if (screenWidth <= 480) {
       return [
@@ -97,22 +106,21 @@ const BlogTable = ({ data, page }) => {
     } else if (screenWidth <= 640) {
       return [
         {
-          name: "ID",
-          selector: (row) => row.id,
-          sortable: true,
-          width: "55px",
-        },
-        {
+          name: "Image",
+          cell: (row) => (
+            <img
+              src={`${BASE_PATH}${row.thumbnail}`}
+              alt="Thumbnail"
+              className={styles.img}
+              style={{width:'30px', height:'30px'}}
+            />
+          ),
+          width: "60px",
+        },{
           name: "Title",
           selector: (row) => row.title,
           sortable: true,
-          width: "140px",
-        },
-        {
-          name: "Date",
-          selector: (row) => row.date,
-          sortable: true,
-          width: "110px",
+          width: "230px",
         },
         {
           name: "Actions",
@@ -134,7 +142,6 @@ const BlogTable = ({ data, page }) => {
       ];
     } else if (screenWidth <= 868) {
       return [
-        { name: "#", selector: (row) => row.id, sortable: true, width: "45px" },
         {
           name: "Image",
           cell: (row) => (
@@ -142,6 +149,7 @@ const BlogTable = ({ data, page }) => {
               src={`${BASE_PATH}${row.thumbnail}`}
               alt="Thumbnail"
               className={styles.img}
+              style={{width:'30px', height:'30px'}}
             />
           ),
           width: "75px",
@@ -160,9 +168,9 @@ const BlogTable = ({ data, page }) => {
         },
         {
           name: "Category",
-          selector: (row) => row.category,
+          selector: (row) => capitalise(row.category),
           sortable: true,
-          width: "80px",
+          width: "100px",
         },
         {
           name: "Actions",
@@ -184,7 +192,6 @@ const BlogTable = ({ data, page }) => {
       ];
     } else if (screenWidth <= 1024) {
       return [
-        { name: "#", selector: (row) => row.id, sortable: true, width: "45px" },
         {
           name: "Image",
           cell: (row) => (
@@ -192,6 +199,7 @@ const BlogTable = ({ data, page }) => {
               src={`${BASE_PATH}${row.thumbnail}`}
               alt="Thumbnail"
               className={styles.img}
+              style={{width:'30px', height:'30px'}}
             />
           ),
           width: "75px",
@@ -210,9 +218,9 @@ const BlogTable = ({ data, page }) => {
         },
         {
           name: "Category",
-          selector: (row) => row.category,
+          selector: (row) => capitalise(row.category),
           sortable: true,
-          width: "80px",
+          width: "100px",
         },
         {
           name: "Actions",
@@ -232,14 +240,8 @@ const BlogTable = ({ data, page }) => {
           width: "80px",
         },
       ];
-    } else if (screenWidth >= 1024 && toggleSidePane) {
+    } else if (screenWidth >= 1024) {
       return [
-        {
-          name: "ID",
-          selector: (row) => row.id,
-          sortable: true,
-          width: "60px",
-        },
         {
           name: "Thumbnail",
           cell: (row) => (
@@ -247,6 +249,7 @@ const BlogTable = ({ data, page }) => {
               src={`${BASE_PATH}${row.thumbnail}`}
               alt="Thumbnail"
               className={styles.img}
+              style={{width:'30px', height:'30px'}}
             />
           ),
           width: "90px",
@@ -255,7 +258,7 @@ const BlogTable = ({ data, page }) => {
           name: "Title",
           selector: (row) => row.title,
           sortable: true,
-          width: "450px",
+          width: "250px",
         },
         {
           name: "Date",
@@ -265,7 +268,7 @@ const BlogTable = ({ data, page }) => {
         },
         {
           name: "Category",
-          selector: (row) => row.category,
+          selector: (row) => capitalise(row.category),
           sortable: true,
           width: "100px",
         },
@@ -279,7 +282,7 @@ const BlogTable = ({ data, page }) => {
           name: "Comments",
           selector: (row) => row.comments,
           sortable: true,
-          width: "90px",
+          width: "120px",
         },
         {
           name: "Likes",
@@ -288,71 +291,36 @@ const BlogTable = ({ data, page }) => {
           width: "90px",
         },
         {
-          name: "Sends",
+          name: "Shares",
           selector: (row) => row.shares,
           sortable: true,
           width: "90px",
         },
         {
-          name: "Actions",
+          name: "Featured",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
-                <FontAwesomeIcon icon={faEye} />
-              </button>
+              <input
+                type="checkbox"
+                checked={row?.isFeatured}
+                onChange={() => toggleFeature(row.id, "isFeatured", row?.isFeatured)}
+              />    
             </div>
-          ),
-          width: "200px",
-        },
-      ];
-    } else if (screenWidth >= 1024) {
-      return [
-        {
-          name: "ID",
-          selector: (row) => row.id,
-          sortable: true,
-          width: "60px",
-        },
-        {
-          name: "Thumbnail",
-          cell: (row) => (
-            <img
-              src={`${BASE_PATH}${row.thumbnail}`}
-              alt="Thumbnail"
-              className={styles.img}
-            />
           ),
           width: "90px",
         },
         {
-          name: "Title",
-          selector: (row) => row.title,
-          sortable: true,
-          width: "450px",
-        },
-        {
-          name: "Date",
-          selector: (row) => row.date,
-          sortable: true,
-          width: "120px",
-        },
-        {
-          name: "Category",
-          selector: (row) => row.category,
-          sortable: true,
-          width: "100px",
-        },
-        {
-          name: "Views",
-          selector: (row) => row.views,
-          sortable: true,
-          width: "100px",
+          name: "Editor's Pick",
+          cell: (row) => (
+            <div className={styles.actionContainer}>
+              <input
+                type="checkbox"
+                checked={row?.isEditorPick}
+                onChange={() => toggleFeature(row.id, "isEditorPick", row?.isEditorPick)}
+              />
+            </div>
+          ),
+          width: "110px",
         },
         {
           name: "Actions",
@@ -372,8 +340,42 @@ const BlogTable = ({ data, page }) => {
           width: "200px",
         },
       ];
+    } 
+  };
+
+
+  const toggleFeature = async (id, field, currentValue) => {
+    try {
+      const res = await fetch("/api/allPosts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, [field]: !currentValue }),
+      });
+  
+      const text = await res.text(); // Read raw response before parsing JSON
+  
+      try {
+        const data = JSON.parse(text);
+        if (!res.ok) throw new Error(data.message || "Failed to update post");
+        
+        setRecords((prevPosts) =>
+          prevPosts.map((post) => ({
+            ...post,
+            [field]: field === "isFeatured" ? post.id === id : post[field],
+          }))
+        );
+        // alert(`${field === "isFeatured" ? "Featured" : "Editor's Pick"} updated successfully!`);
+      } catch (error) {
+        console.error("Error toggling feature:", text); // Log raw response
+        alert(`Unexpected server response. ${text}.`);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      alert("Network error. Check console.");
     }
   };
+  
+  
 
   const handleSelectedRowsChange = ({ selectedRows }) => {
     // console.log("Selected Rows:", selectedRows);

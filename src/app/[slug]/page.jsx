@@ -84,11 +84,12 @@ const SingleBlogPage = async ({ params }) => {
           </div>
           <div className={styles.content}>
             <div className={styles.post}>
+              {console.log("BLOG: ", post?.content)}
               <div
                 className={styles.blogPost}
                 dangerouslySetInnerHTML={{
                   // __html: DOMPurify.sanitize(post?.desc),
-                  __html: post?.desc,
+                  __html: post?.content,
                 }}
               />
               <Glow

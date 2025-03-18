@@ -84,13 +84,15 @@ model Post {
   slug          String      @unique
   title         String  
   catSlug       String  
-  desc          String  
+  desc          String?  
+  content       String? 
   image         String?
   views         Int         @default(0) 
   likes         Int         @default(0)
   shares        Int         @default(0)
   readingTime   Float       @default(0)
   isFeatured    Boolean?    @default(false)  
+  isDraft       Boolean?    @default(true)  
   isEditorPick  Boolean?    @default(false)
   cat           Category    @relation(fields: [catSlug], references: [slug])
   comment       Comment[]

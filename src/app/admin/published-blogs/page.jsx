@@ -47,6 +47,9 @@ const PublishedBlogs = () => {
           throw new Error("Failed to retrieve all Posts");
         }
         const data = await result.json();
+
+        // setPublishedPosts(data.filter(post => !post.isDraft));
+
         setPublishedPosts(data)
       }catch(error){
         console.log("An error occured when trying to fetch all posts: ", error)
