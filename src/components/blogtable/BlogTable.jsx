@@ -15,6 +15,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import BASE_PATH from "../../../base";
+import Link from "next/link";
 
 
 
@@ -30,7 +31,7 @@ const BlogTable = ({ data, page }) => {
   const { theme, toggleSidePane } = useContext(ThemeContext);
   const [records, setRecords] = useState(data);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
 
@@ -44,7 +45,7 @@ const BlogTable = ({ data, page }) => {
   const handleRowClick = (row) => {
     if (screenWidth <= 1024 || (screenWidth >= 1024 && !toggleSidePane)) {
       setSelectedRow(row);
-      setModalOpen(true);
+      setIsModalOpen(true);
       // console.log("Modal Opened: ", row);
     }
   };
@@ -63,7 +64,7 @@ const BlogTable = ({ data, page }) => {
   }, [screenWidth, selectedRow]);
 
   const closeModal = () => {
-    setModalOpen(false);
+    setIsModalOpen(false);
     setSelectedRow(null);
   };
 
@@ -303,7 +304,15 @@ const BlogTable = ({ data, page }) => {
               <input
                 type="checkbox"
                 checked={row?.isFeatured}
-                onChange={() => toggleFeature(row.id, "isFeatured", row?.isFeatured)}
+                onChange={async () => {
+                  try {
+                    await toggleFeature(row.id, "isFeatured", row?.isFeatured);
+                    // Optional: Refresh UI if needed
+                  } catch (err) {
+                    console.error(err.message);
+                  }
+                }}
+                style={{cursor:'pointer'}}
               />    
             </div>
           ),
@@ -316,7 +325,15 @@ const BlogTable = ({ data, page }) => {
               <input
                 type="checkbox"
                 checked={row?.isEditorPick}
-                onChange={() => toggleFeature(row.id, "isEditorPick", row?.isEditorPick)}
+                onChange={async () => {
+                  try {
+                    await toggleFeature(row.id, "isEditorPick", row?.isEditorPick);
+                    // Optional: Refresh UI if needed
+                  } catch (err) {
+                    console.error(err.message);
+                  }
+                }}
+                style={{cursor:'pointer'}}
               />
             </div>
           ),
@@ -326,14 +343,22 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <button className={`${styles.button} ${styles.edit}`}>
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className={`${styles.button} ${styles.delete}`}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-              <button className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
+              </Link>
+              
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Link>
+              <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
+                try {
+                  await deletePost(row?.id, row?.title);
+                  // Optionally refresh or update UI after deletion
+                } catch (err) {
+                  console.error(err.message);
+                }
+              }}>
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           ),
@@ -361,9 +386,14 @@ const BlogTable = ({ data, page }) => {
         setRecords((prevPosts) =>
           prevPosts.map((post) => ({
             ...post,
-            [field]: field === "isFeatured" ? post.id === id : post[field],
+            [field]: field === "isFeatured" ? post.id === id : post.id === id ? !currentValue : post[field],
           }))
         );
+
+        setSelectedRow((prevRow) =>
+          prevRow && prevRow.id === id ? { ...prevRow, [field]: !currentValue } : prevRow
+        );
+        
         // alert(`${field === "isFeatured" ? "Featured" : "Editor's Pick"} updated successfully!`);
       } catch (error) {
         console.error("Error toggling feature:", text); // Log raw response
@@ -374,6 +404,61 @@ const BlogTable = ({ data, page }) => {
       alert("Network error. Check console.");
     }
   };
+
+
+  const deletePost = async (id, title) => {
+    const isDraft = page == 'draft' ? true : false;
+    // Ask for confirmation first
+    const confirmDelete = window.confirm(
+      isDraft
+        ? "Are you sure you want to delete this draft?"
+        : "This action is irreversible! You must enter the post title to confirm deletion."
+    );
+
+    if (!confirmDelete) return;
+
+    // If post is published, require title confirmation
+    if (!isDraft) {
+      const userInput = prompt(`Type the post title to confirm deletion: "${title}"`);
+      if (userInput !== title) {
+        alert("Title does not match. Deletion canceled.");
+        return;
+      }
+    }
+    try {
+      const response = await fetch(`/api/allPosts`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+  
+      const data = await response.json();
+      console.log("Response:", response);
+      console.log("Response Data:", data);
+    
+  
+      if (!response.ok) {
+        alert(`Some thing Went Wrong: ${data?.message}`)
+        throw new Error(data.message || "Failed to delete post");
+      }
+      alert(`${title} has been deleted Successfully.`)
+      // Update records after deletion
+    setRecords((prev) => prev.filter((post) => post.id !== id));
+
+    // Close modal
+    setIsModalOpen(false);
+      
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to delete post");
+      }
+  
+      return data;
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+      throw error;
+    }
+  };
+  
   
   
 
@@ -495,7 +580,7 @@ const BlogTable = ({ data, page }) => {
 
               <div className={styles.extraInfo}>
                 <FontAwesomeIcon className={styles.icon} icon={faTag} />
-                <p>{selectedRow.category}</p>
+                <p>{capitalise(selectedRow.category)}</p>
               </div>
 
               <div className={styles.extraInfo}>
@@ -532,7 +617,30 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faEye} />
                 <p>{page === "published" ? "View" : "Preview"}</p>
               </button>
+              <br/>
             </div>
+            <div style={{display:'flex', justifyContent:'space-around', width:'100%'}} >
+              <div style={{background:'rgba(255, 255, 255, 0.1)', width:'fit-content', padding:'1rem', display:'flex', gap:'5px', border:'0.5px solid rgba(255,255,255,0.3)', borderRadius:'10px'}}>
+                <label>Featured</label>
+                <input
+                  type="checkbox"
+                  checked={selectedRow?.isFeatured}
+                  onChange={() => toggleFeature(selectedRow.id, "isFeatured", selectedRow?.isFeatured)}
+                  style={{cursor:'pointer'}}
+                />
+              </div>
+              <div style={{background:'rgba(255, 255, 255, 0.1)', width:'fit-content', padding:'1rem', display:'flex', gap:'5px', border:'0.5px solid rgba(255,255,255,0.3)', borderRadius:'10px'}}>
+                <label>Editor's Pick</label>
+                <input
+                  type="checkbox"
+                  checked={selectedRow?.isEditorPick}
+                  onChange={() => toggleFeature(selectedRow.id, "isEditorPick", selectedRow?.isEditorPick)}
+                  style={{cursor:'pointer'}}
+                />
+              </div>
+                
+                
+              </div>
           </div>
         </div>
       )}

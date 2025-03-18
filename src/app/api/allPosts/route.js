@@ -3,6 +3,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth"; // Assuming NextAuth is used
 import { NextResponse } from "next/server";
 
+
+
+
+
+
+
 export const GET = async () => {
   try {
     const allPosts = await prisma.post.findMany({
@@ -58,6 +64,21 @@ export const POST = async (req) => {
       return NextResponse.json({ message: "No data to update" }, { status: 400 });
     }
 
+    // Fetch post to check if it's a draft
+    const post = await prisma.post.findUnique({ where: { id } });
+    if (!post) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
+
+    // Prevent drafts from being featured or editor picks
+    if (post.isDraft && (updates.isFeatured || updates.isEditorPick)) {
+      return NextResponse.json(
+        { message: "Draft posts cannot be Featured or Editor's Pick" },
+        { status: 400 }
+      );
+    }
+
+
     // // Ensure only one post is featured
     if (updates.hasOwnProperty("isFeatured") && updates.isFeatured === true) {
       await prisma.post.updateMany({
@@ -93,5 +114,41 @@ export const POST = async (req) => {
       { message: `Something went wrong: ${e.message}`, error: e.message },
       { status: 500 }
     );
+  }
+};
+
+
+
+export const DELETE = async (req) => {
+  try {
+    console.log("Incoming DELETE request...");
+
+    // Verify admin session
+    const session = await getServerSession(authOptions);
+    if (!session || session.user.role !== "ADMIN") {
+      console.log("Unauthorized attempt");
+      return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+    }
+
+    // Retrieve post ID from request body
+    const body = await req.json();
+    console.log("Request Body:", body); // Log the request body
+
+    const { id } = body;
+    if (!id) {
+      console.log("No ID provided");
+      return NextResponse.json({ message: "Post ID is required" }, { status: 400 });
+    }
+
+    // Proceed with deletion
+    console.log(`Deleting post with ID: ${id}`);
+    const deletedPost = await prisma.post.delete({ where: { id } });
+
+    console.log("Deleted Post:", deletedPost);
+    return NextResponse.json({ message: "Post deleted successfully" }, { status: 200 });
+
+  } catch (e) {
+    console.error("Error deleting post:", e);
+    return NextResponse.json({ message: "Something went wrong", error: e.message }, { status: 500 });
   }
 };
