@@ -79,6 +79,7 @@ const DropDown = ({ className, category, setCategory }) => {
                 <Image fill src={option.image || '/coding.png'} className={styles.img} />
               </div>
               <p>{option.label}</p>
+              <input   checked={category === option.label}  type="checkbox" style={{ marginLeft: 'auto' }}/>
             </div>
           ))}
         </div>

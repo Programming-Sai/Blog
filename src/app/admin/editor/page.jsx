@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
 import BASE_PATH from "../../../../base"; 
+import { TagInput } from "@/components/taginput/TagInput";
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
@@ -353,14 +354,11 @@ useEffect(() => {
           quillTheme={quillTheme}
         />
         {/* <EditorTwo blogContent={blogContent} setBlogContent={setBlogContent}/> */}
+       
+       
         <div className={styles.keywordsContainer}>
-          <input
-            type="text"
-            value={keywords}
-            onChange={(e) => setKeywords(e.target.value)}
-            placeholder="Enter keywords separated by commas..."
-          />
-        </div>
+          <TagInput setKeywords={setKeywords} />
+        </div>               
       </div>
       <div className={styles.buttons}>
         <div className={styles.endButton}>

@@ -33,6 +33,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.10",
     "react-quill": "^2.0.0",
+    "react-select": "^5.10.1",
     "recharts": "^2.13.0",
     "swr": "^2.2.5"
   },
