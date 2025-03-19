@@ -24,6 +24,7 @@ export const GET = async () => {
       title: post?.title,
       slug: post?.slug,
       date: new Date(post?.createdAt).toLocaleDateString("en-GB", {day: "2-digit",month: "short",year: "numeric",}),
+      lastModifiedDate: new Date(post?.lastModified).toLocaleDateString("en-GB", {day: "2-digit",month: "short",year: "numeric",}),
       thumbnail: post?.image,
       category: post?.catSlug,
       views: post?.views,

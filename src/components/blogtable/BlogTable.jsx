@@ -10,12 +10,15 @@ import {
   faComment,
   faEdit,
   faEye,
+  faHourglassHalf,
   faShare,
+  faSyncAlt,
   faTag,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import BASE_PATH from "../../../base";
 import Link from "next/link";
+import { faHourglassEmpty } from "@fortawesome/free-regular-svg-icons";
 
 
 
@@ -247,6 +250,12 @@ const BlogTable = ({ data, page }) => {
           width: "100px",
         },
         {
+          name: "Reading Time",
+          selector: (row) => (`${row.readingTime} mins`),
+          sortable: true,
+          width: "100px",
+        },
+        {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
@@ -299,77 +308,86 @@ const BlogTable = ({ data, page }) => {
           width: "120px",
         },
         {
+          name: "Last Modifed",
+          selector: (row) => row.lastModifiedDate,
+          sortable: true,
+          width: "120px",
+        },
+        {
           name: "Category",
           selector: (row) => capitalise(row.category),
           sortable: true,
           width: "100px",
         },
         {
-          name: "Views",
-          selector: (row) => row.views,
+          name: "Reading Time",
+          selector: (row) => `${row.readingTime} mins`,
           sortable: true,
-          width: "100px",
+          width: "130px",
         },
-        {
-          name: "Comments",
-          selector: (row) => row.comments,
-          sortable: true,
-          width: "120px",
-        },
-        {
-          name: "Likes",
-          selector: (row) => row.comments,
-          sortable: true,
-          width: "90px",
-        },
-        {
-          name: "Shares",
-          selector: (row) => row.shares,
-          sortable: true,
-          width: "90px",
-        },
-        {
-          name: "Featured",
-          cell: (row) => (
-            <div className={styles.actionContainer}>
-              <input
-                type="checkbox"
-                checked={row?.isFeatured}
-                onChange={async () => {
-                  try {
-                    await toggleFeature(row.id, "isFeatured", row?.isFeatured);
-                    // Optional: Refresh UI if needed
-                  } catch (err) {
-                    console.error(err.message);
-                  }
-                }}
-                style={{cursor:'pointer'}}
-              />    
-            </div>
-          ),
-          width: "90px",
-        },
-        {
-          name: "Editor's Pick",
-          cell: (row) => (
-            <div className={styles.actionContainer}>
-              <input
-                type="checkbox"
-                checked={row?.isEditorPick}
-                onChange={async () => {
-                  try {
-                    await toggleFeature(row.id, "isEditorPick", row?.isEditorPick);
-                    // Optional: Refresh UI if needed
-                  } catch (err) {
-                    console.error(err.message);
-                  }
-                }}
-                style={{cursor:'pointer'}}
-              />
-            </div>
-          ),
-          width: "110px",
-        },
+        ...(!(page === 'draft')
+          ? [
+              {
+                name: "Views",
+                selector: (row) => row.views,
+                sortable: true,
+                width: "100px",
+              },
+              {
+                name: "Comments",
+                selector: (row) => row.comments,
+                sortable: true,
+                width: "120px",
+              },
+              {
+                name: "Likes",
+                selector: (row) => row.comments,
+                sortable: true,
+                width: "90px",
+              },
+        
+              {
+                name: "Featured",
+                cell: (row) => (
+                  <div className={styles.actionContainer}>
+                    <input
+                      type="checkbox"
+                      checked={row?.isFeatured}
+                      onChange={async () => {
+                        try {
+                          await toggleFeature(row.id, "isFeatured", row?.isFeatured);
+                        } catch (err) {
+                          console.error(err.message);
+                        }
+                      }}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </div>
+                ),
+                width: "90px",
+              },
+              {
+                name: "Editor's Pick",
+                cell: (row) => (
+                  <div className={styles.actionContainer}>
+                    <input
+                      type="checkbox"
+                      checked={row?.isEditorPick}
+                      onChange={async () => {
+                        try {
+                          await toggleFeature(row.id, "isEditorPick", row?.isEditorPick);
+                        } catch (err) {
+                          console.error(err.message);
+                        }
+                      }}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </div>
+                ),
+                width: "110px",
+              },
+            ]
+          : []),
         {
           name: "Actions",
           cell: (row) => (
@@ -603,9 +621,13 @@ const BlogTable = ({ data, page }) => {
             </button>
             <h2>{selectedRow.title}</h2>
             <div className={styles.extraInfoContainer}>
-              <div className={styles.extraInfo}>
+            <div className={styles.extraInfo}>
                 <FontAwesomeIcon className={styles.icon} icon={faCalendar} />
                 <p>{selectedRow.date}</p>
+              </div>
+              <div className={styles.extraInfo}>
+                <FontAwesomeIcon className={styles.icon} icon={faSyncAlt} />
+                <p>{selectedRow.lastModifiedDate}</p>
               </div>
 
               <div className={styles.extraInfo}>
@@ -625,6 +647,10 @@ const BlogTable = ({ data, page }) => {
               <div className={styles.extraInfo}>
                 <FontAwesomeIcon className={styles.icon} icon={faComment} />
                 <p>{selectedRow.comments}</p>
+              </div>
+              <div className={styles.extraInfo}>
+                <FontAwesomeIcon className={styles.icon} icon={faHourglassHalf} />
+                <p>{selectedRow.readingTime} mins</p>
               </div>
             </div>
             <div className={styles.actionButtonsContainer}>
@@ -651,28 +677,33 @@ const BlogTable = ({ data, page }) => {
               </Link>
               <br/>
             </div>
-            <div style={{display:'flex', justifyContent:'space-around', width:'100%'}} >
-              <div style={{background:'rgba(255, 255, 255, 0.1)', width:'fit-content', padding:'1rem', display:'flex', gap:'5px', border:'0.5px solid rgba(255,255,255,0.3)', borderRadius:'10px'}}>
-                <label>Featured</label>
-                <input
-                  type="checkbox"
-                  checked={selectedRow?.isFeatured}
-                  onChange={() => toggleFeature(selectedRow.id, "isFeatured", selectedRow?.isFeatured)}
-                  style={{cursor:'pointer'}}
-                />
-              </div>
-              <div style={{background:'rgba(255, 255, 255, 0.1)', width:'fit-content', padding:'1rem', display:'flex', gap:'5px', border:'0.5px solid rgba(255,255,255,0.3)', borderRadius:'10px'}}>
-                <label>Editor's Pick</label>
-                <input
-                  type="checkbox"
-                  checked={selectedRow?.isEditorPick}
-                  onChange={() => toggleFeature(selectedRow.id, "isEditorPick", selectedRow?.isEditorPick)}
-                  style={{cursor:'pointer'}}
-                />
-              </div>
-                
-                
-              </div>
+            {
+              page !== 'draft' ?
+              (
+                <div style={{display:'flex', justifyContent:'space-around', width:'100%'}} >
+                  <div style={{background:'rgba(255, 255, 255, 0.1)', width:'fit-content', padding:'1rem', display:'flex', gap:'5px', border:'0.5px solid rgba(255,255,255,0.3)', borderRadius:'10px'}}>
+                    <label>Featured</label>
+                    <input
+                      type="checkbox"
+                      checked={selectedRow?.isFeatured}
+                      onChange={() => toggleFeature(selectedRow.id, "isFeatured", selectedRow?.isFeatured)}
+                      style={{cursor:'pointer'}}
+                    />
+                  </div>
+                  <div style={{background:'rgba(255, 255, 255, 0.1)', width:'fit-content', padding:'1rem', display:'flex', gap:'5px', border:'0.5px solid rgba(255,255,255,0.3)', borderRadius:'10px'}}>
+                    <label>Editor's Pick</label>
+                    <input
+                      type="checkbox"
+                      checked={selectedRow?.isEditorPick}
+                      onChange={() => toggleFeature(selectedRow.id, "isEditorPick", selectedRow?.isEditorPick)}
+                      style={{cursor:'pointer'}}
+                    />
+                  </div>
+                </div>
+              )
+              :
+              ''
+            }
           </div>
         </div>
       )}
