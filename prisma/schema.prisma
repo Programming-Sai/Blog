@@ -97,6 +97,7 @@ model Post {
   isEditorPick  Boolean?    @default(false)
   cat           Category    @relation(fields: [catSlug], references: [slug])
   comment       Comment[]
+  keywords      String[]    @default([])
 }
 
 

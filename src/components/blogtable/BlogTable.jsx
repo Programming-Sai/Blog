@@ -93,7 +93,7 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? '/preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
@@ -138,7 +138,7 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? '/preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
@@ -196,7 +196,7 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? '/preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
@@ -259,7 +259,7 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? '/preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
@@ -392,7 +392,7 @@ const BlogTable = ({ data, page }) => {
           name: "Actions",
           cell: (row) => (
             <div className={styles.actionContainer}>
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? '/preview/' : ''}${row?.slug}`} className={`${styles.button} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
@@ -671,7 +671,7 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faTrash} />
                 <p>Delete</p>
               </button>
-              <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? 'preview/' : ''}${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.view}`}>
+              <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}${page === 'draft' ? '/preview/' : ''}${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.view}`}>
                 <FontAwesomeIcon icon={faEye} />
                 <p>{page === "published" ? "View" : "Preview"}</p>
               </Link>

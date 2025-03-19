@@ -15,7 +15,7 @@ const NotAuthorized = () => {
   return (
     <div>
       <div>
-        <Navbar past="/admin" />
+        <Navbar past="/admin/dashboard" />
         <Wrapper>
           <div className={styles.container} style={{ zIndex: 1 }}>
             <h1>Access Denied: 403 - Not Authorized</h1>
@@ -38,7 +38,7 @@ const NotAuthorized = () => {
               onClick={() =>
                 signOut({
                   callbackUrl: `/login?redirect=${encodeURIComponent(
-                    "/admin"
+                    "/admin/dashboard"
                   )}`,
                 })
               }

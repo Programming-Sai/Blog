@@ -14,7 +14,7 @@ import {
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
-import BASE_PATH from "../../../../base";
+import BASE_PATH from "../../../../base"; 
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
@@ -28,6 +28,11 @@ const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
   ssr: false,
 });
 
+
+
+
+
+
 const getCurrentDate = () => {
   const currentDate = new Date();
   return currentDate.toLocaleDateString("en-GB", {
@@ -37,6 +42,9 @@ const getCurrentDate = () => {
   });
 };
 
+
+
+
 const calculateReadingTime = (blogContent) => {
   const wordsPerMinute = 200; // Average reading speed
   const text = blogContent.replace(/<[^>]*>/g, ""); // Remove any HTML tags
@@ -44,6 +52,8 @@ const calculateReadingTime = (blogContent) => {
   const readingTime = (words / wordsPerMinute).toFixed(1);
   return `${readingTime}min read`;
 };
+
+
 
 const debounce = (func, delay) => {
   let timeoutId;
@@ -79,6 +89,8 @@ const Editor = () => {
     quillTheme,
     setQuillTheme,
   } = useContext(ThemeContext);
+  
+  
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -87,11 +99,27 @@ const Editor = () => {
   const [description, setDescription] = useState("");
   const [draft, setDraft] = useState(true);
   const [saved, setSaved] = useState(false);
-  const [readingTime, setReadingTime] = useState(
-    calculateReadingTime(blogContent)
-  );
+  const [readingTime, setReadingTime] = useState(calculateReadingTime(blogContent));
   const [date, setDate] = useState(getCurrentDate());
   const [keywords, setKeywords] = useState([]);
+
+  const [isSlugUnique, setIsSlugUnique] = useState(true);
+
+  const fetchSlugUniqueness = async (slug) => {
+    if (!slug) return isSlugUnique;
+    const res = await fetch(`/api/isSlugUnique?slug=${slug}`);
+    const { exists } = await res.json();
+    setIsSlugUnique(!exists);
+    return !exists;
+  };
+  
+  const checkSlug = debounce(fetchSlugUniqueness, 500);
+  
+  
+  // Use inside useEffect when slug updates
+  useEffect(() => {
+    if (slug) checkSlug(slug);
+  }, [slug]);
 
   const handleTitleChange = (event) => {
     const inputTitle = event.target.value;
@@ -115,7 +143,15 @@ const Editor = () => {
     shares: 0,
   });
 
-  const saveBlog = () => {
+  
+  const saveBlog = async () => {
+    const isUnique = await fetchSlugUniqueness(slug); // Ensure the latest check before saving
+  
+    if (!isUnique) {
+      alert(`Title: ${title} is not unique. Choose another one.`);
+      return;
+    }
+  
     const blogData = {
       image,
       title,
@@ -127,21 +163,23 @@ const Editor = () => {
       draft,
       keywords:
         typeof keywords === "string"
-          ? keywords.split(",")?.map((keyword) => keyword.trim())
+          ? keywords.split(",").map((keyword) => keyword.trim())
           : keywords,
       description,
       comments: 0,
       views: 0,
       shares: 0,
     };
-
+  
     setPreviewData(blogData);
-
     setSaved(true);
     setTimeout(() => {
       setSaved(false);
     }, 5000);
   };
+  
+
+
 
   useEffect(() => {
     const savedData = previewData; // Automatically handled by the useLocalStorage hook
@@ -162,7 +200,7 @@ const Editor = () => {
       const handleKeyDown = (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === "y") {
           e.preventDefault();
-          window.open(`${BASE_PATH}/preview/${slug || "preview"}`, "_blank");
+          window.open(`${BASE_PATH}/preview/${slug || "0-1-2-3-4-5-6-7-8-9"}`, "_blank");
         }
       };
       window.addEventListener("keydown", handleKeyDown);
@@ -181,11 +219,13 @@ const Editor = () => {
     return () => clearTimeout(handleReadingTimeDateDescripttion);
   }, [blogContent]);
 
+
+
   useEffect(() => {
-    const handleSaveShortcut = (event) => {
+    const handleSaveShortcut = async (event) => {
       if ((event.ctrlKey || event.metaKey) && event.key === "s") {
         event.preventDefault();
-        saveBlog();
+        await saveBlog(); // Await to ensure uniqueness check completes
       }
     };
     window.addEventListener("keydown", handleSaveShortcut);
@@ -205,37 +245,41 @@ const Editor = () => {
     description,
   ]);
 
-  const [localStorageAutoSave, setLocalStorageAutoSave] = useLocalStorage(
-    "autoSave",
-    ""
-  );
-  useEffect(() => {
-    let interval;
-    setLocalStorageAutoSave(autoSave);
-    if (autoSave) {
-      interval = setInterval(() => {
-        saveBlog();
-      }, autoSaveDuration);
+  
+
+  const [localStorageAutoSave, setLocalStorageAutoSave] = useLocalStorage("autoSave", "");
+
+
+useEffect(() => {
+  let interval;
+  setLocalStorageAutoSave(autoSave);
+  if (autoSave) {
+    interval = setInterval(async () => {
+      await saveBlog(); // Await ensures uniqueness check before saving
+    }, autoSaveDuration);
+  }
+  return () => {
+    if (interval) {
+      clearInterval(interval);
     }
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  }, [
-    autoSave,
-    autoSaveDuration,
-    image,
-    title,
-    slug,
-    category,
-    blogContent,
-    readingTime,
-    date,
-    draft,
-    keywords,
-    description,
-  ]);
+  };
+}, [
+  autoSave,
+  autoSaveDuration,
+  image,
+  title,
+  slug,
+  category,
+  blogContent,
+  readingTime,
+  date,
+  draft,
+  keywords,
+  description,
+]);
+
+
+
 
   useEffect(() => {
     const generatedSlug = title
@@ -247,6 +291,8 @@ const Editor = () => {
   }, [title]);
 
   const [lsQuillTheme, setLsQuillTheme] = useLocalStorage("quillTheme", "");
+  
+  
   useEffect(() => {
     if (lsQuillTheme) {
       setQuillTheme(lsQuillTheme);
@@ -320,7 +366,7 @@ const Editor = () => {
         <div className={styles.endButton}>
           <Link
             className={styles.firstIcon}
-            href={`/preview/${slug || "preview"}`}
+            href={`/preview/${slug || "0-1-2-3-4-5-5-6-7-8-9"}`}
             target="_blank"
           >
             <FontAwesomeIcon icon={faEye} />
