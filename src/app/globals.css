@@ -157,6 +157,13 @@ button {
   left: 10% !important;
 }
 
+.ql-editor iframe {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9; /* Ensures correct aspect ratio */
+}
+
+
 .container {
   background-color: var(--bg);
   color: var(--text-color);

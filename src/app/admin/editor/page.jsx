@@ -16,6 +16,7 @@ import {
 import dynamic from "next/dynamic";
 import BASE_PATH from "../../../../base"; 
 import { TagInput } from "@/components/taginput/TagInput";
+import { EditorThree } from "@/components/editorthree/EditorThree";
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
@@ -348,13 +349,17 @@ useEffect(() => {
             {quillTheme} Editor Theme
           </button>
         </div>
-        <EditorOne
+        {/* <EditorOne
+          blogContent={blogContent}
+          setBlogContent={setBlogContent}
+          quillTheme={quillTheme}
+        /> */}
+        {/* <EditorTwo blogContent={blogContent} setBlogContent={setBlogContent}/> */}
+        <EditorThree
           blogContent={blogContent}
           setBlogContent={setBlogContent}
           quillTheme={quillTheme}
         />
-        {/* <EditorTwo blogContent={blogContent} setBlogContent={setBlogContent}/> */}
-       
        
         <div className={styles.keywordsContainer}>
           <TagInput setKeywords={setKeywords} />

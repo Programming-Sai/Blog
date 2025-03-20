@@ -13,6 +13,8 @@ import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import BASE_PATH from "../../../base";
+import DOMPurify from "dompurify";
+
 
 const PreviewContentPage = ({ blogData }) => {
   useEffect(() => {
@@ -83,7 +85,15 @@ const PreviewContentPage = ({ blogData }) => {
             <div className={styles.post}>
               <div
                 className={styles.blogPost}
-                dangerouslySetInnerHTML={{ __html: blogData.blogContent }}
+                dangerouslySetInnerHTML={
+                  { 
+                    // __html: blogData.blogContent
+                    __html: DOMPurify.sanitize(blogData.blogContent, {
+                      ADD_TAGS: ["iframe", "style"],
+                      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
+                    }) 
+                  }
+                }
               />
               <WriteComment />
               <CommentSection />
