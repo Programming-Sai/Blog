@@ -121,8 +121,8 @@ button {
 .ql-video {
   display: block !important;
   max-width: 100% !important;
-  width: 40vw !important;
-  height: 40vw !important;
+  width: 70% !important;
+  height: 70% !important;
   object-fit: cover !important;
 }
 

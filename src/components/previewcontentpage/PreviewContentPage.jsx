@@ -14,6 +14,8 @@ import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import BASE_PATH from "../../../base";
 import DOMPurify from "dompurify";
+import "react-quill/dist/quill.snow.css"; 
+import "react-quill/dist/quill.bubble.css";
 
 
 const PreviewContentPage = ({ blogData }) => {
@@ -83,21 +85,25 @@ const PreviewContentPage = ({ blogData }) => {
           </div>
           <div className={styles.content}>
             <div className={styles.post}>
-              <div
-                className={styles.blogPost}
-                dangerouslySetInnerHTML={
-                  { 
-                    // __html: blogData.blogContent
-                    __html: DOMPurify.sanitize(blogData.blogContent, {
-                      ADD_TAGS: ["iframe", "style"],
-                      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
-                    }) 
-                  }
-                }
-              />
+            <div
+              className={`${styles.blogPost} ql-editor`}
+              style={{ background: "transparent" }}
+              dangerouslySetInnerHTML={{
+                __html: (() => {
+                  let cleanContent = DOMPurify.sanitize(blogData.blogContent, {
+                    FORBID_TAGS: ["script"], // ❌ Only block <script> for security
+                    ADD_TAGS: ["iframe", "style"],
+                    ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
+                  });
+
+                  const tempDiv = document.createElement("div");
+                  tempDiv.innerHTML = cleanContent;
+
+                  return tempDiv.innerHTML; // ✅ Return the cleaned but unrestricted content
+                })(),
+              }}
+            />  
               <WriteComment />
-              <CommentSection />
-              <Pagination />
             </div>
             <PopularPosts
               className={styles.popularPosts}
@@ -115,3 +121,8 @@ const PreviewContentPage = ({ blogData }) => {
 };
 
 export default PreviewContentPage;
+
+
+
+// TODO: Make sure that iframe gets centered on the preview page
+// TODO make sure that the block quote work as they should.

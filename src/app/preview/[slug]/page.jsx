@@ -2,6 +2,7 @@ import React from "react";
 import PreviewWrapper from "@/components/previewpagewrapper/PreviewPageWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
+import { redirect } from "next/navigation";
 
 const slugs = [
   "understanding-react-hooks",

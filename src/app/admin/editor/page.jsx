@@ -5,7 +5,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import useLocalStorage from "@/components/UseLocalStorage";
-// import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 import {
   faClose,
   faEye,
@@ -25,9 +25,9 @@ const ImageUploader = dynamic(
 const DropDown = dynamic(() => import("@/components/dropdown/DropDown"), {
   ssr: false,
 });
-// const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
-//   ssr: false,
-// });
+const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
+  ssr: false,
+});
 
 const EditorThree = dynamic(() => import("@/components/editorthree/EditorThree"), {
   ssr: false,
@@ -143,41 +143,61 @@ const Editor = () => {
     draft: true,
     keywords: [], // Ensure this is initialized properly
     description: "",
-    comments: 0,
-    views: 0,
-    shares: 0,
   });
 
-  
+
   const saveBlog = async () => {
-    const isUnique = await fetchSlugUniqueness(slug); // Ensure the latest check before saving
+    const isUnique = await fetchSlugUniqueness(slug); // ✅ Ensure uniqueness before saving
   
     if (!isUnique) {
       alert(`Title: ${title} is not unique. Choose another one.`);
       return;
     }
   
+    // ✅ Process sanitization & YouTube fix only once at save time
+    let cleanContent = DOMPurify.sanitize(blogContent, {
+      FORBID_TAGS: ["script"],
+      ADD_TAGS: ["iframe", "style"],
+      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
+    });
+  
+    // ✅ Fix YouTube Shorts without clearing iframes
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = cleanContent;
+  
+    tempDiv.querySelectorAll("iframe").forEach((iframe) => {
+      let src = iframe.src;
+      if (src.includes("youtube.com/shorts/")) {
+        src = src.replace("youtube.com/shorts/", "youtube.com/embed/");
+      }
+      iframe.src = src; // ✅ Apply fixed URL
+    });
+  
+    const processedContent = tempDiv.innerHTML; // ✅ Final sanitized + fixed content
+  
+    console.log("AFTER CONTENT: ", processedContent);
+    
+    // ✅ Update state before saving so iframes don't disappear
+    setBlogContent(processedContent);
+  
     const blogData = {
       image,
       title,
       slug,
       category,
-      blogContent,
+      blogContent: processedContent, // ✅ Use sanitized content
       readingTime,
       date,
       draft,
-      keywords:
-        typeof keywords === "string"
-          ? keywords.split(",").map((keyword) => keyword.trim())
-          : keywords,
+      keywords: typeof keywords === "string"
+        ? keywords.split(",").map((keyword) => keyword.trim())
+        : keywords,
       description,
-      comments: 0,
-      views: 0,
-      shares: 0,
     };
   
     setPreviewData(blogData);
     setSaved(true);
+  
     setTimeout(() => {
       setSaved(false);
     }, 5000);
@@ -357,6 +377,10 @@ useEffect(() => {
           setBlogContent={setBlogContent}
           quillTheme={quillTheme}
         /> */}
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         {/* <EditorTwo blogContent={blogContent} setBlogContent={setBlogContent}/> */}
         <EditorThree
           blogContent={blogContent}

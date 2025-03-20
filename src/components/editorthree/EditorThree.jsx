@@ -1,16 +1,11 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css"; 
 import styles from "../editorone/editorone.module.css";
-import DOMPurify from "dompurify";
 
 const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
-  const quillRef = useRef(null);
-  const selectionRef = useRef(null);
-  const [editorState, setEditorState] = useState(blogContent); // ✅ Local state to prevent re-renders
-
   const modules = {
     toolbar: [
       [{ font: [] }],
@@ -20,61 +15,85 @@ const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
       [{ indent: "-1" }, { indent: "+1" }],
       [{ align: [] }],
       ["bold", "italic", "underline", "strike"],
-      [{ color: [] }, { background: [] }],
-      ["link", "image", "clean", "code-block", "blockquote", "video"],
+      [{ color: [] }  , { background: [] }],
+      ["link", "image",  "blockquote", "video", "clean",],
     ],
-    clipboard: { matchVisual: false },
-    history: { delay: 2000, maxStack: 500, userOnly: true },
+    clipboard: {
+      matchVisual: false,
+    },
   };
 
   const formats = [
-    "header", "font", "size", "bold", "italic", "underline", "strike",
-    "color", "background", "list", "bullet", "indent", "align",
-    "link", "image", "blockquote", "code-block", "video",
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "color",
+    "background",
+    "list",
+    "bullet",
+    "indent",
+    "align",
+    "link",
+    "image",
+    "blockquote",
+    "video",
   ];
 
-  const handleChange = (content, delta, source) => {
-    if (source === "user") {
-      const quill = quillRef.current?.getEditor();
-      if (quill) {
-        selectionRef.current = quill.getSelection(); // ✅ Store cursor position
-      }
-
-      const cleanContent = DOMPurify.sanitize(content, {
-        ADD_TAGS: ["iframe"],
-        ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title", "style"],
-      });
-
-      setEditorState(cleanContent); // ✅ Update local state
-      setBlogContent(cleanContent); // ✅ Update main state
-    }
-  };
+ 
 
   useEffect(() => {
-    if (quillRef.current) {
-      const quill = quillRef.current.getEditor();
-      if (quill && selectionRef.current) {
-        setTimeout(() => {
-          quill.setSelection(selectionRef.current); // ✅ Restore cursor
-        }, 0);
-      }
+    if (typeof document !== "undefined") {
+      const adjustBubblePosition = () => {
+        const tooltip = document.querySelector(".ql-bubble .ql-tooltip");
+        if (!tooltip) return;
+
+        const rect = tooltip.getBoundingClientRect();
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        // Adjust horizontal overflow
+        if (rect.right > screenWidth) {
+          tooltip.style.left = `${screenWidth - rect.width - 10}px`; // Adjust for overflow on the right
+        }
+        if (rect.left < 0) {
+          tooltip.style.right = `${screenWidth - rect.width - 10}px`; // Adjust for overflow on the right
+        }
+
+        // Adjust vertical overflow
+        if (rect.bottom > screenHeight) {
+          tooltip.style.top = `${screenHeight - rect.height - 10}px`; // Adjust for overflow on the bottom
+        }
+        if (rect.top < 0) {
+          tooltip.style.top = `10px`; // Adjust for overflow on the top
+        }
+      };
+
+      // Adjust when the tooltip appears
+      document.addEventListener("mousemove", adjustBubblePosition);
+
+      return () => {
+        document.removeEventListener("mousemove", adjustBubblePosition);
+      };
     }
-  }, [editorState]); // ✅ Track only editorState, not blogContent
+  }, []);
 
   return (
-    <div className={styles.blogContent}>
+    <div className={styles.blogContent} key={quillTheme}>
       <ReactQuill
-        ref={quillRef}
-        value={editorState} // ✅ Use local state to prevent flickering
-        onChange={handleChange}
+        value={blogContent}
+        onChange={setBlogContent} // Use the new handler
         modules={modules}
         formats={formats}
         theme={quillTheme}
-        placeholder="Start writing..."
+        placeholder="Testing out NEw Stuff Content..."
       />
     </div>
   );
 };
 
-
+ 
 export default EditorThree;
