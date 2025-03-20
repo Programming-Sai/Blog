@@ -6,7 +6,7 @@ import "react-quill/dist/quill.bubble.css";
 import styles from "../editorone/editorone.module.css";
 import DOMPurify from "dompurify";
 
-export const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
+const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
   const quillRef = useRef(null);
   const selectionRef = useRef(null);
   const [editorState, setEditorState] = useState(blogContent); // ✅ Local state to prevent re-renders
@@ -75,3 +75,6 @@ export const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
     </div>
   );
 };
+
+
+export default EditorThree;
