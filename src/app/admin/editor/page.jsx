@@ -16,7 +16,6 @@ import {
 import dynamic from "next/dynamic";
 import BASE_PATH from "../../../../base"; 
 import { TagInput } from "@/components/taginput/TagInput";
-import { EditorThree } from "@/components/editorthree/EditorThree";
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
