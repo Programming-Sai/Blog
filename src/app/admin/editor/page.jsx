@@ -5,7 +5,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import useLocalStorage from "@/components/UseLocalStorage";
-import parse from "html-react-parser";
+// import parse from "html-react-parser";
 import {
   faClose,
   faEye,
@@ -26,7 +26,11 @@ const ImageUploader = dynamic(
 const DropDown = dynamic(() => import("@/components/dropdown/DropDown"), {
   ssr: false,
 });
-const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
+// const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
+//   ssr: false,
+// });
+
+const EditorThree = dynamic(() => import("@/components/editorthree/EditorThree"), {
   ssr: false,
 });
 
