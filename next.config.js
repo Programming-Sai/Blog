@@ -8,6 +8,7 @@ const nextConfig = {
       "avatars.githubusercontent.com",
       "scontent.facc6-1.fna.fbcdn.net",
       "media.licdn.com",
+      "res.cloudinary.com", 
     ],
   },
   // output: "export",

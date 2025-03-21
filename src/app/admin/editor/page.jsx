@@ -165,33 +165,46 @@ const Editor = () => {
     return updatedContent;
   };
 
+
+  const dataURLtoFile = (dataUrl) => {
+    const arr = dataUrl.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], `upload-${Date.now()}`, { type: mime });
+  };
+  
+
   
   const processMediaUploads = async (content) => {
     const base64Images = extractBase64Images(content);
     const base64Map = {};
   
-    // Upload each base64 image using your new endpoint
+    // For each base64 image, convert to a File and upload it via handleImageUpload
     for (let base64 of base64Images) {
       try {
-        const res = await fetch("/api/uploadMedia", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ base64, folder: "blog_media" }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
-        const url = data.url; // URL returned from the endpoint
-        base64Map[base64] = url; // Store the mapping for replacement
-        
-        // Optionally update your local media array (if you need to track it)
-        setMedia((prev) => [...prev, url]);
+        // Convert the base64 string to a File object
+        const file = dataURLtoFile(base64);
+        // Upload the file using the refactored handleImageUpload function
+        const { url, publicId } = await handleImageUpload(file, "blog_media");
+        // Store the mapping from base64 to Cloudinary URL so you can replace it in the content
+        base64Map[base64] = url;
+  
+        // Optionally update your local media state array
+        setMedia((prev) => [...prev, { url, publicId }]);
       } catch (error) {
         console.error("Upload failed:", error);
       }
     }
   
+    // Replace each base64 string in your content with its uploaded URL
     return replaceBase64WithUrls(content, base64Map);
   };
+  
   
 
 
@@ -253,6 +266,8 @@ const Editor = () => {
       draft,
       keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
       description,
+      media, // ✅ Store media in local storage
+
     };
   
     setPreviewData(blogData);
@@ -320,66 +335,6 @@ const Editor = () => {
 
 
   
-
-  const saveBlog = async () => {
-    const isUnique = await fetchSlugUniqueness(slug); // ✅ Ensure uniqueness before saving
-  
-    if (!isUnique) {
-      alert(`Title: ${title} is not unique. Choose another one.`);
-      return;
-    }
-  
-    // ✅ Process sanitization & YouTube fix only once at save time
-    let cleanContent = DOMPurify.sanitize(blogContent, {
-      FORBID_TAGS: ["script"],
-      ADD_TAGS: ["iframe", "style"],
-      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
-    });
-  
-    // ✅ Fix YouTube Shorts without clearing iframes
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = cleanContent;
-  
-    tempDiv.querySelectorAll("iframe").forEach((iframe) => {
-      let src = iframe.src;
-      if (src.includes("youtube.com/shorts/")) {
-        src = src.replace("youtube.com/shorts/", "youtube.com/embed/");
-      }
-      iframe.src = src; // ✅ Apply fixed URL
-    });
-  
-    const processedContent = tempDiv.innerHTML; // ✅ Final sanitized + fixed content
-  
-    console.log("AFTER CONTENT: ", processedContent);
-    
-    // ✅ Update state before saving so iframes don't disappear
-    setBlogContent(processedContent);
-  
-    const blogData = {
-      image,
-      title,
-      slug,
-      category,
-      blogContent: processedContent, // ✅ Use sanitized content
-      readingTime,
-      date,
-      draft,
-      keywords: typeof keywords === "string"
-        ? keywords.split(",").map((keyword) => keyword.trim())
-        : keywords,
-      description,
-    };
-  
-    setPreviewData(blogData);
-    setSaved(true);
-  
-    setTimeout(() => {
-      setSaved(false);
-    }, 5000);
-    localStorage.removeItem("previewData");
-  };
-
-
 
 
   useEffect(() => {
@@ -456,18 +411,15 @@ const Editor = () => {
   // const [localStorageAutoSaveDuration, setLocalStorageAutoSaveDuration] = useLocalStorage("autoSaveDuration", "");
 
 
-  useEffect(() => {
-    console.log("AutoSave status:", autoSave?'active':'deactivated');
-    console.log("AutoSave Duration:", autoSaveDuration );
-  }, [autoSave]);
+  
   
   useEffect(() => {
     let interval;
     setLocalStorageAutoSave(autoSave);
     if (autoSave) {
-      console.log("Starting Auto Save...");
+      // console.log("Starting Auto Save...");
       interval = setInterval(async () => {
-        console.log("Calling Auto save");
+        // console.log("Calling Auto save");
         await autoSaveDraft();
       }, autoSaveDuration);
     }
@@ -519,7 +471,7 @@ const Editor = () => {
           />
         </div>
         <div className={styles.imgContainer}>
-          <ImageUploader image={image} setImage={setImage} />
+          <ImageUploader image={image} setImage={setImage} media={media} setMedia={setMedia} />
           {image && (
             <div
               className={styles.close}
