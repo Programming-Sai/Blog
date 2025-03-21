@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = req.nextUrl;
     const slug = searchParams.get("slug");
 
     if (!slug) {
