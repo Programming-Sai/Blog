@@ -6,15 +6,15 @@ import useLocalStorage from "@/components/UseLocalStorage";
 export const ThemeContext = createContext();
 
 export const ThemeContextProvider = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage("theme", getDefaultTheme());
   const [overlay, setOverlay] = useState(false);
   const [toggleSidePane, setToggleSidePane] = useState(false);
+
+  
   const [autoSave, setAutoSave] = useLocalStorage("autoSave", true);
-  const [autoSaveDuration, setAutoSaveDuration] = useLocalStorage(
-    "autoSaveDuration",
-    120000
-  );
+  const [theme, setTheme] = useLocalStorage("theme", getDefaultTheme());
+  const [autoSaveDuration, setAutoSaveDuration] = useLocalStorage("autoSaveDuration", 30000);
   const [quillTheme, setQuillTheme] = useLocalStorage("quillTheme", "snow");
+
 
   function getDefaultTheme() {
     if (typeof window !== "undefined") {

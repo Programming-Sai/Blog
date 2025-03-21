@@ -76,10 +76,10 @@ const DropDown = ({ className, category, setCategory }) => {
               onClick={() => handleOptionClick(option.label)}
             >
               <div className={styles.imgContainer}>
-                <Image fill src={option.image || '/coding.png'} className={styles.img} />
+                <Image fill src={option.image || '/coding.png'} className={styles.img} alt={option.label}/>
               </div>
               <p>{option.label}</p>
-              <input   checked={category === option.label}  type="checkbox" style={{ marginLeft: 'auto' }}/>
+              <input   checked={category === option.label}  type="checkbox" style={{ marginLeft: 'auto' }} readOnly/>
             </div>
           ))}
         </div>

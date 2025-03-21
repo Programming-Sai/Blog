@@ -16,6 +16,8 @@ import {
 import dynamic from "next/dynamic";
 import BASE_PATH from "../../../../base"; 
 import { TagInput } from "@/components/taginput/TagInput";
+import { handleImageDelete, handleImageUpload } from "@/utils/imageHandler";
+import { useRouter } from "next/navigation";
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
@@ -107,6 +109,8 @@ const Editor = () => {
   const [readingTime, setReadingTime] = useState(calculateReadingTime(blogContent));
   const [date, setDate] = useState(getCurrentDate());
   const [keywords, setKeywords] = useState([]);
+  const [media, setMedia] = useState([]);
+  const [excludedMedia, setExcludedMedia] = useState([]);
 
   const [isSlugUnique, setIsSlugUnique] = useState(true);
 
@@ -131,6 +135,174 @@ const Editor = () => {
     setTitle(inputTitle);
   };
 
+
+
+
+
+  const extractBase64Images = (content) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = content;
+    
+    const images = [];
+    tempDiv.querySelectorAll("img").forEach((img) => {
+      const src = img.src;
+      if (src.startsWith("data:image/")) {
+        images.push(src);
+      }
+    });
+  
+    return images;
+  };
+
+  
+  const replaceBase64WithUrls = (content, base64Map) => {
+    let updatedContent = content;
+    
+    Object.entries(base64Map).forEach(([base64, url]) => {
+      updatedContent = updatedContent.replace(base64, url);
+    });
+  
+    return updatedContent;
+  };
+
+  
+  const processMediaUploads = async (content) => {
+    const base64Images = extractBase64Images(content);
+    const base64Map = {};
+  
+    // Upload each base64 image using your new endpoint
+    for (let base64 of base64Images) {
+      try {
+        const res = await fetch("/api/uploadMedia", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ base64, folder: "blog_media" }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        const url = data.url; // URL returned from the endpoint
+        base64Map[base64] = url; // Store the mapping for replacement
+        
+        // Optionally update your local media array (if you need to track it)
+        setMedia((prev) => [...prev, url]);
+      } catch (error) {
+        console.error("Upload failed:", error);
+      }
+    }
+  
+    return replaceBase64WithUrls(content, base64Map);
+  };
+  
+
+
+  const autoSaveDraft = async () => {
+    // console.log("Saved To LocalStorage using autosave or ctrl+s", autoSaveDuration, previewData);
+    // return;
+    setPreviewData({
+      image,
+      title,
+      slug,
+      category,
+      blogContent,
+      readingTime,
+      date,
+      draft,
+      keywords,
+      description,
+      media, // ✅ Store media in local storage
+    });
+    setSaved(true);
+  
+    setTimeout(() => {
+      setSaved(false);
+    }, 5000);
+  };
+  
+  // useEffect(() => {
+  //   const interval = setInterval(autoSaveDraft, 5000);
+  //   return () => clearInterval(interval);
+  // }, [image, title, blogContent, media]);
+
+  
+  const saveBlogToDB = async () => {
+    console.log("Saved to DB after uploading Images.");
+    console.log("MEDIA: ", media)
+    // return;
+    const isUnique = await fetchSlugUniqueness(slug);
+    if (!isUnique) {
+      alert(`Title: ${title} is not unique. Choose another one.`);
+      return;
+    }
+  
+    let cleanContent = DOMPurify.sanitize(blogContent, {
+      FORBID_TAGS: ["script"],
+      ADD_TAGS: ["iframe", "style"],
+      ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
+    });
+  
+    cleanContent = await processMediaUploads(cleanContent); // ✅ Upload & replace images
+  
+    const blogData = {
+      image,
+      title,
+      slug,
+      category,
+      blogContent: cleanContent,
+      readingTime,
+      date,
+      draft,
+      keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
+      description,
+    };
+  
+    setPreviewData(blogData);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 5000);
+  };
+  
+
+
+
+  const router = useRouter();
+  const { editId } = router.query || ''; // Get the ID from the URL
+  
+  useEffect(() => {
+    if (!editId) return; // New post, no need to fetch
+  
+    const fetchPostData = async () => {
+      try {
+        const res = await fetch(`/api/getPost?id=${editId}`); // Fetch by ID
+        if (!res.ok) throw new Error("Failed to fetch post");
+  
+        const post = await res.json();
+  
+        // ✅ Ensure slug is set if available
+        if (post.slug) setSlug(post.slug);
+  
+        // ✅ Save fetched data in local storage for editing
+        setPreviewData({
+          id: post.id, // ✅ Store the ID
+          image: post.image || "",
+          title: post.title || "",
+          slug: post.slug || "",
+          category: post.category || "Select A Category",
+          blogContent: post.blogContent || "",
+          readingTime: post.readingTime || "",
+          date: post.date || "",
+          draft: post.draft ?? true,
+          keywords: post.keywords || [],
+          description: post.description || "",
+          media: post.media || [],
+        });
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+  
+    fetchPostData();
+  }, [editId]); // Watches the URL ID
+  
+
   const [previewData, setPreviewData] = useLocalStorage("previewData", {
     // Initialize with existing values from localStorage
     image: "",
@@ -143,8 +315,11 @@ const Editor = () => {
     draft: true,
     keywords: [], // Ensure this is initialized properly
     description: "",
+    media: [],
   });
 
+
+  
 
   const saveBlog = async () => {
     const isUnique = await fetchSlugUniqueness(slug); // ✅ Ensure uniqueness before saving
@@ -201,8 +376,9 @@ const Editor = () => {
     setTimeout(() => {
       setSaved(false);
     }, 5000);
+    localStorage.removeItem("previewData");
   };
-  
+
 
 
 
@@ -219,6 +395,9 @@ const Editor = () => {
     setKeywords(savedData.keywords || []);
     setDescription(savedData.description || "");
   }, [previewData]);
+
+
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -250,7 +429,8 @@ const Editor = () => {
     const handleSaveShortcut = async (event) => {
       if ((event.ctrlKey || event.metaKey) && event.key === "s") {
         event.preventDefault();
-        await saveBlog(); // Await to ensure uniqueness check completes
+        await autoSaveDraft(); 
+        // await saveBlog(); 
       }
     };
     window.addEventListener("keydown", handleSaveShortcut);
@@ -273,35 +453,31 @@ const Editor = () => {
   
 
   const [localStorageAutoSave, setLocalStorageAutoSave] = useLocalStorage("autoSave", "");
+  // const [localStorageAutoSaveDuration, setLocalStorageAutoSaveDuration] = useLocalStorage("autoSaveDuration", "");
 
 
-useEffect(() => {
-  let interval;
-  setLocalStorageAutoSave(autoSave);
-  if (autoSave) {
-    interval = setInterval(async () => {
-      await saveBlog(); // Await ensures uniqueness check before saving
-    }, autoSaveDuration);
-  }
-  return () => {
-    if (interval) {
-      clearInterval(interval);
+  useEffect(() => {
+    console.log("AutoSave status:", autoSave?'active':'deactivated');
+    console.log("AutoSave Duration:", autoSaveDuration );
+  }, [autoSave]);
+  
+  useEffect(() => {
+    let interval;
+    setLocalStorageAutoSave(autoSave);
+    if (autoSave) {
+      console.log("Starting Auto Save...");
+      interval = setInterval(async () => {
+        console.log("Calling Auto save");
+        await autoSaveDraft();
+      }, autoSaveDuration);
     }
-  };
-}, [
-  autoSave,
-  autoSaveDuration,
-  image,
-  title,
-  slug,
-  category,
-  blogContent,
-  readingTime,
-  date,
-  draft,
-  keywords,
-  description,
-]);
+  
+    return () => {
+      console.log("Clearing Auto Save Interval");
+      if (interval) clearInterval(interval);
+    };
+  }, [autoSave, autoSaveDuration, image, title, slug, category, blogContent, readingTime, date, draft, keywords, description]);
+  
 
 
 
@@ -347,8 +523,11 @@ useEffect(() => {
           {image && (
             <div
               className={styles.close}
-              onClick={() => {
-                setImage(null);
+              onClick={async () => {
+                if (image) {
+                  await handleImageDelete(image);
+                  setImage(null);
+                }
               }}
             >
               <FontAwesomeIcon icon={faClose} />
@@ -414,7 +593,7 @@ useEffect(() => {
           {autoSave ? "Disable" : "Enable"} Auto Save
         </div>
 
-        <div className={styles.endButton} onClick={saveBlog}>
+        <div className={styles.endButton} onClick={saveBlogToDB}>
           <FontAwesomeIcon icon={faFileAlt} />
           Save As Draft
         </div>

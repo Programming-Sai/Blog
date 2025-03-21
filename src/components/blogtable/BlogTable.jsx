@@ -97,7 +97,7 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${row?.id}`} className={`${styles.button} ${styles.edit}`}>
                 <FontAwesomeIcon icon={faEdit} />
               </Link>
               <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
@@ -142,7 +142,7 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${row?.id}`} className={`${styles.button} ${styles.edit}`}>
                 <FontAwesomeIcon icon={faEdit} />
               </Link>
               <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
@@ -200,7 +200,7 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${row?.id}`} className={`${styles.button} ${styles.edit}`}>
                 <FontAwesomeIcon icon={faEdit} />
               </Link>
               <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
@@ -263,7 +263,7 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${row?.id}`} className={`${styles.button} ${styles.edit}`}>
                 <FontAwesomeIcon icon={faEdit} />
               </Link>
               <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
@@ -396,7 +396,7 @@ const BlogTable = ({ data, page }) => {
                 <FontAwesomeIcon icon={faEye} />
               </Link>
               
-              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${row?.slug}`} className={`${styles.button} ${styles.edit}`}>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${row?.id}`} className={`${styles.button} ${styles.edit}`}>
                 <FontAwesomeIcon icon={faEdit} />
               </Link>
               <button className={`${styles.button} ${styles.delete}`} onClick={async () => {
@@ -654,7 +654,7 @@ const BlogTable = ({ data, page }) => {
               </div>
             </div>
             <div className={styles.actionButtonsContainer}>
-                <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?post=${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}>
+                <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}>
                   <FontAwesomeIcon icon={faEdit} />
                   <p>Edit</p>
                 </Link>

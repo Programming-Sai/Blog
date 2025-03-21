@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 const GoogleAnalyticsWrapper = () => {
   const pathname = usePathname();
-  console.log("ANALYTICS: ", pathname);
+  // console.log("ANALYTICS: ", pathname);
 
   useEffect(() => {
     // Ensure GA only runs on non-admin pages
