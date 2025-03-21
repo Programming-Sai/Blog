@@ -21,6 +21,7 @@
     "dompurify": "^3.1.7",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
+    "firebase": "^11.5.0",
     "googleapis": "^144.0.0",
     "html-react-parser": "^5.1.18",
     "iframe-resizer": "^5.3.2",

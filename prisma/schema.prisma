@@ -98,7 +98,22 @@ model Post {
   cat           Category    @relation(fields: [catSlug], references: [slug])
   comment       Comment[]
   keywords      String[]    @default([])
+  media         Media[]
 }
+
+
+
+model Media {
+  id            String   @id @default(cuid()) @map("_id")
+  createdAt     DateTime @default(now())
+  url           String
+  isThumbnail   Boolean @default(false)
+  type          String?
+  size          Int?
+  post          Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId        String?  
+}
+
 
 
 
