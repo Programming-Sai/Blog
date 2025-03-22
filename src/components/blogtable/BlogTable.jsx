@@ -25,12 +25,6 @@ import { faHourglassEmpty } from "@fortawesome/free-regular-svg-icons";
 
 const BlogTable = ({ data, page }) => {
 
-
-
-  // { id: 1, title: 'A Deep Dive into the World of Music', date: '01 Oct 2024', thumbnail: '/culture.png', category: 'Music', views: 150, comments: 5, shares: 10 },
-
-  console.log(data, page)
-
   const { theme, toggleSidePane } = useContext(ThemeContext);
   const [records, setRecords] = useState(data);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);

@@ -18,6 +18,7 @@ import BASE_PATH from "../../../../base";
 import { TagInput } from "@/components/taginput/TagInput";
 import { handleImageDelete, handleImageUpload } from "@/utils/imageHandler";
 import { useRouter } from "next/navigation";
+import useUnsavedChangesWarning from "@/components/useUnsavedChangeWarning";
 const ImageUploader = dynamic(
   () => import("@/components/imageuploader/ImageUploader"),
   {
@@ -110,7 +111,7 @@ const Editor = () => {
   const [date, setDate] = useState(getCurrentDate());
   const [keywords, setKeywords] = useState([]);
   const [media, setMedia] = useState([]);
-  const [excludedMedia, setExcludedMedia] = useState([]);
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
 
   const [isSlugUnique, setIsSlugUnique] = useState(true);
 
@@ -136,6 +137,9 @@ const Editor = () => {
   };
 
 
+  useEffect(() => {
+    setUnsavedChanges(true);
+  }, [blogContent, slug, title, category, image, keywords ,]);
 
 
 
@@ -210,7 +214,7 @@ const Editor = () => {
 
   const autoSaveDraft = async () => {
     const isUnique = await fetchSlugUniqueness(slug);
-    if (!isUnique) {
+    if (slug && !isUnique) {
       alert(`Title: ${title} is not unique. Choose another one.`);
       setPreviewData({
         image,
@@ -223,8 +227,6 @@ const Editor = () => {
         description,
         media, // ✅ Store media in local storage
       });
-      setTitle("");
-      setSlug("");
     }else{
       setPreviewData({
       image,
@@ -249,11 +251,7 @@ const Editor = () => {
     }, 5000);
   };
   
-  // useEffect(() => {
-  //   const interval = setInterval(autoSaveDraft, 5000);
-  //   return () => clearInterval(interval);
-  // }, [image, title, blogContent, media]);
-
+ 
   
   const saveBlogToDB = async () => {
     console.log("Saved to DB after uploading Images.");
@@ -302,7 +300,12 @@ const Editor = () => {
     setPreviewData(blogData);
     setSaved(true);
     setTimeout(() => setSaved(false), 5000);
+    setUnsavedChanges(false);
   };
+
+
+  useUnsavedChangesWarning(unsavedChanges, ()=>{console.log("SAving in progress..."); setUnsavedChanges(false)});
+
   
 
 
@@ -454,7 +457,7 @@ const Editor = () => {
     }
   
     return () => {
-      console.log("Clearing Auto Save Interval");
+      // console.log("Clearing Auto Save Interval");
       if (interval) clearInterval(interval);
     };
   }, [autoSave, autoSaveDuration, image, title, slug, category, blogContent, readingTime, date, draft, keywords, description]);

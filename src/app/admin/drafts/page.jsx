@@ -31,7 +31,6 @@ const Drafts = () => {
       getData()
     }, [])
   
-    useEffect(()=>{console.log("All posts: ", drafts)}, [drafts]);
     
   
   

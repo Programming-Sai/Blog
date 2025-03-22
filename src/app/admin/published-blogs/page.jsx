@@ -30,7 +30,6 @@ const PublishedBlogs = () => {
     getData()
   }, [])
 
-  useEffect(()=>{console.log("All posts: ", publishedPosts)}, [publishedPosts]);
   
 
 
