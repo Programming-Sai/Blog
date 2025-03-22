@@ -209,9 +209,24 @@ const Editor = () => {
 
 
   const autoSaveDraft = async () => {
-    // console.log("Saved To LocalStorage using autosave or ctrl+s", autoSaveDuration, previewData);
-    // return;
-    setPreviewData({
+    const isUnique = await fetchSlugUniqueness(slug);
+    if (!isUnique) {
+      alert(`Title: ${title} is not unique. Choose another one.`);
+      setPreviewData({
+        image,
+        category,
+        blogContent,
+        readingTime,
+        date,
+        draft,
+        keywords,
+        description,
+        media, // ✅ Store media in local storage
+      });
+      setTitle("");
+      setSlug("");
+    }else{
+      setPreviewData({
       image,
       title,
       slug,
@@ -224,6 +239,9 @@ const Editor = () => {
       description,
       media, // ✅ Store media in local storage
     });
+    }
+  
+    
     setSaved(true);
   
     setTimeout(() => {
@@ -240,13 +258,7 @@ const Editor = () => {
   const saveBlogToDB = async () => {
     console.log("Saved to DB after uploading Images.");
     console.log("MEDIA: ", media)
-    // return;
-    const isUnique = await fetchSlugUniqueness(slug);
-    if (!isUnique) {
-      alert(`Title: ${title} is not unique. Choose another one.`);
-      return;
-    }
-  
+
     let cleanContent = DOMPurify.sanitize(blogContent, {
       FORBID_TAGS: ["script"],
       ADD_TAGS: ["iframe", "style"],
@@ -255,20 +267,37 @@ const Editor = () => {
   
     cleanContent = await processMediaUploads(cleanContent); // ✅ Upload & replace images
   
-    const blogData = {
-      image,
-      title,
-      slug,
-      category,
-      blogContent: cleanContent,
-      readingTime,
-      date,
-      draft,
-      keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
-      description,
-      media, // ✅ Store media in local storage
+    let blogData = {} ;
 
-    };
+    const isUnique = await fetchSlugUniqueness(slug);
+    if (!isUnique) {
+       alert(`Title: ${title} is not unique. Choose another one.`);
+       blogData = {
+        image,
+        category,
+        blogContent: cleanContent,
+        readingTime,
+        date,
+        draft,
+        keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
+        description,
+        media, // ✅ Store media in local storage
+      };
+    } else{
+       blogData = {
+        image,
+        title,
+        slug,
+        category,
+        blogContent: cleanContent,
+        readingTime,
+        date,
+        draft,
+        keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
+        description,
+        media, // ✅ Store media in local storage
+      };
+    }
   
     setPreviewData(blogData);
     setSaved(true);
