@@ -52,7 +52,7 @@ const Settings = () => {
         <div className={styles.profileImgContainer}>
           <Image
             fill
-            src={`${data?.user?.image}`}
+            src={`${data?.user?.image || '/LinkedInAvatar.png'}`}
             alt="profile picture"
             className={styles.img}
           />
