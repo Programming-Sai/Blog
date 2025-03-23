@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useUnsavedChangesWarning = (unsavedChanges) => {
+const useUnsavedChangesWarning = (unsavedChanges, saveFunc) => {
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (unsavedChanges) {
@@ -11,11 +11,12 @@ const useUnsavedChangesWarning = (unsavedChanges) => {
 
     const handlePopState = (e) => {
       console.log("Moving away");
-      if (unsavedChanges && !confirm("You have unsaved changes. Do you want to leave?")) {
-        history.pushState(null, "", location.href); // Push state back to stay on page
-      } else {
-        window.removeEventListener("popstate", handlePopState); // Allow navigation
-        history.back(); // Move to the previous page
+      if (unsavedChanges) {
+        if (confirm("You have unsaved changes. Do you want to leave?")) {
+          saveFunc(); // Save before allowing navigation
+        } else {
+          history.pushState(null, "", location.href); // Stay on the page
+        }
       }
     };
 
@@ -29,7 +30,7 @@ const useUnsavedChangesWarning = (unsavedChanges) => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("popstate", handlePopState);
     };
-  }, [unsavedChanges]);
+  }, [unsavedChanges, saveFunc]);
 };
 
 export default useUnsavedChangesWarning;

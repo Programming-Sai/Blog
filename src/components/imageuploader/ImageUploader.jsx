@@ -79,9 +79,11 @@ const ImageUploader = ({ image, setImage, media, setMedia }) => {
       // ✅ Upload to Cloudinary
       const { url: newImageUrl, publicId: newPublicId } = await handleImageUpload(selectedFile, "thumbnails");
       console.log("Upload Success:", newImageUrl);
+
+      const { type, size } = selectedFile;
   
       setImage(newImageUrl);
-      setMedia((prev) => [...prev, { url: newImageUrl, publicId: newPublicId }]);
+      setMedia((prev) => [...prev, { url: newImageUrl, publicId: newPublicId, type, size, isThumbnail: true }]);
 
       // setMedia((prev) => [...prev, newImageUrl]);
     } catch (error) {

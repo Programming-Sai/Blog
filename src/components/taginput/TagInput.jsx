@@ -1,13 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import { ThemeContext } from "@/context/ThemeContext";
 
 
 
-export const TagInput = ({ setKeywords }) => {
+export const TagInput = ({ keywords, setKeywords }) => {
   const { theme } = useContext(ThemeContext);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState(keywords.map((tag) => ({ value: tag, label: tag })));
   const [inputValue, setInputValue] = useState("");
+
+    useEffect(() => {
+      setSelectedTags(keywords.map((tag) => ({ value: tag, label: tag })));
+    }, [keywords]);
+    
 
   const handleChange = (selectedOptions) => {
     setSelectedTags(selectedOptions || []);

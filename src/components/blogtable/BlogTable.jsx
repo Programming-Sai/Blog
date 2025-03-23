@@ -413,7 +413,7 @@ const BlogTable = ({ data, page }) => {
 
   const toggleFeature = async (id, field, currentValue) => {
     try {
-      const res = await fetch("/api/allPosts", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/allPosts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, [field]: !currentValue }),
@@ -648,7 +648,7 @@ const BlogTable = ({ data, page }) => {
               </div>
             </div>
             <div className={styles.actionButtonsContainer}>
-                <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${selectedRow?.slug}`} className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}>
+                <Link style={{display:'flex', flexDirection:'column', textAlign:'center', alignItems:'center', justifyContent:'center'}} href={`${process.env.NEXT_PUBLIC_BASE_URL}admin/editor?editId=${selectedRow?.id}`} className={`${styles.button} ${styles.buttonInModal} ${styles.edit}`}>
                   <FontAwesomeIcon icon={faEdit} />
                   <p>Edit</p>
                 </Link>

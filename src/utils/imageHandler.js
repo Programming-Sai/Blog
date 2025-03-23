@@ -37,7 +37,7 @@ export const handleImageUpload = async (file, folder = "blog_media") => {
 
 export const handleImageDelete = async (publicId) => {
     try {
-      const res = await fetch('/api/deleteMedia', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteMedia`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ publicId }),

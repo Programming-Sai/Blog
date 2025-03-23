@@ -95,7 +95,7 @@ model Post {
   isFeatured    Boolean?    @default(false)  
   isDraft       Boolean?    @default(true)  
   isEditorPick  Boolean?    @default(false)
-  cat           Category    @relation(fields: [catSlug], references: [slug])
+  cat           Category?    @relation(fields: [catSlug], references: [slug])
   comment       Comment[]
   keywords      String[]    @default([])
   media         Media[]
@@ -112,6 +112,7 @@ model Media {
   size          Int?
   post          Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId        String?  
+  publicId      String   @unique
 }
 
 

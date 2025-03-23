@@ -1,40 +1,26 @@
 "use client";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import styles from "./editor.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import useLocalStorage from "@/components/UseLocalStorage";
 import DOMPurify from "dompurify";
-import {
-  faClose,
-  faEye,
-  faFileAlt,
-  faSave,
-  faUpload,
-} from "@fortawesome/free-solid-svg-icons";
+import {faClapperboard, faClose, faEye, faFileAlt, faSave, faTrash, faUpload,} from "@fortawesome/free-solid-svg-icons";
 import dynamic from "next/dynamic";
 import BASE_PATH from "../../../../base"; 
 import { TagInput } from "@/components/taginput/TagInput";
 import { handleImageDelete, handleImageUpload } from "@/utils/imageHandler";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useUnsavedChangesWarning from "@/components/useUnsavedChangeWarning";
-const ImageUploader = dynamic(
-  () => import("@/components/imageuploader/ImageUploader"),
-  {
-    ssr: false,
-  }
-);
-const DropDown = dynamic(() => import("@/components/dropdown/DropDown"), {
-  ssr: false,
-});
-const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {
-  ssr: false,
-});
 
-const EditorThree = dynamic(() => import("@/components/editorthree/EditorThree"), {
-  ssr: false,
-});
+const ImageUploader = dynamic(() => import("@/components/imageuploader/ImageUploader"),{ssr: false,});
+
+const DropDown = dynamic(() => import("@/components/dropdown/DropDown"), {ssr: false,});
+
+const EditorOne = dynamic(() => import("@/components/editorone/EditorOne"), {ssr: false,});
+
+const EditorThree = dynamic(() => import("@/components/editorthree/EditorThree"), {ssr: false,});
 
 
 
@@ -52,14 +38,30 @@ const getCurrentDate = () => {
 
 
 
-
 const calculateReadingTime = (blogContent) => {
-  const wordsPerMinute = 200; // Average reading speed
-  const text = blogContent.replace(/<[^>]*>/g, ""); // Remove any HTML tags
-  const words = text.split(/\s+/).length; // Count words
-  const readingTime = (words / wordsPerMinute).toFixed(1);
-  return `${readingTime}min read`;
+  const wordsPerMinute = 200;
+  const text = blogContent.replace(/<[^>]*>/g, ""); 
+  const words = text.split(/\s+/).length;
+  return parseFloat((words / wordsPerMinute).toFixed(1));
 };
+
+
+
+const extractTextFromBlog = (content) => {
+  // Check if the code is running in a browser environment
+  if (typeof window !== "undefined") {
+    // Create a new DOMParser instance
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, "text/html");
+
+    // Extract the text content from the parsed document
+    return doc.body.textContent || "";
+  }
+
+  // Return an empty string or handle the case where it's not in a browser
+  return "";
+};
+
 
 
 
@@ -73,32 +75,78 @@ const debounce = (func, delay) => {
   };
 };
 
-const Editor = () => {
-  const extractTextFromBlog = (content) => {
-    // Check if the code is running in a browser environment
-    if (typeof window !== "undefined") {
-      // Create a new DOMParser instance
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(content, "text/html");
 
-      // Extract the text content from the parsed document
-      return doc.body.textContent || "";
+
+
+
+const extractBase64Images = (content) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = content;
+  
+  const images = [];
+  tempDiv.querySelectorAll("img").forEach((img) => {
+    const src = img.src;
+    if (src.startsWith("data:image/")) {
+      images.push(src);
     }
+  });
 
-    // Return an empty string or handle the case where it's not in a browser
-    return "";
+  return images;
+};
+
+
+const replaceBase64WithUrls = (content, base64Map) => {
+  let updatedContent = content;
+  
+  Object.entries(base64Map).forEach(([base64, url]) => {
+    updatedContent = updatedContent.replace(base64, url);
+  });
+
+  return updatedContent;
+};
+
+
+const dataURLtoFile = (dataUrl) => {
+  const arr = dataUrl.split(",");
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], `upload-${Date.now()}`, { type: mime });
+};
+
+
+
+
+
+const Editor = () => {
+
+  const [isSlugUnique, setIsSlugUnique] = useState(true);
+
+  
+
+  const fetchSlugUniqueness = async (slug, id) => {
+    if (!slug) return isSlugUnique;
+    const res = await fetch(`/api/isSlugUnique?slug=${slug}&id=${id || ""}`);
+    const { isUnique } = await res.json();
+    setIsSlugUnique(isUnique);
+    return isUnique;
   };
 
-  const {
-    toggleSidePane,
-    autoSaveDuration,
-    autoSave,
-    setAutoSave,
-    quillTheme,
-    setQuillTheme,
-  } = useContext(ThemeContext);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("editId") || "";
   
   
+  
+  const {toggleSidePane, autoSaveDuration, autoSave, setAutoSave, quillTheme, setQuillTheme,} = useContext(ThemeContext);
+  
+  
+  const [postId, setPostId] = useState(editId);
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -113,18 +161,67 @@ const Editor = () => {
   const [media, setMedia] = useState([]);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
-  const [isSlugUnique, setIsSlugUnique] = useState(true);
 
-  const fetchSlugUniqueness = async (slug) => {
-    if (!slug) return isSlugUnique;
-    const res = await fetch(`/api/isSlugUnique?slug=${slug}`);
-    const { exists } = await res.json();
-    setIsSlugUnique(!exists);
-    return !exists;
-  };
   
   const checkSlug = debounce(fetchSlugUniqueness, 500);
   
+
+
+  
+
+  useEffect(() => {
+    if (postId) {
+      console.log("Fetching from DB By Post Id:", postId);
+      const fetchPostData = async () => {
+        try {
+          const res = await fetch(`/api/getPost?id=${editId}`);
+          if (!res.ok) throw new Error("Failed to fetch post");
+          const post = await res.json();
+          // Reset the preview data to what is fetched from the DB.
+          // Also, update your postId state so it remains constant for later updates.
+          setPreviewData({
+            id: post.id, // Use the fetched id (should be equal to editId)
+            image: post.image || "",
+            title: post.title || "",
+            slug: post.slug || "",
+            category: post.catSlug || "Select A Category",
+            blogContent: post.content || "",
+            readingTime: post.readingTime || 0,
+            date: post.createdAt || "",
+            draft: post.isDraft ?? true,
+            keywords: post.keywords || [],
+            description: post.desc || "",
+            media: post.media || [],
+          });
+          setPostId(post.id);
+          // setTimeout(() => {
+          //   router.replace(`/admin/editor?editId=${postId}`, { scroll: false });
+          // }, 100);
+        } catch (error) {
+          console.error("Error fetching post:", error);
+          // Optionally, fall back to localStorage previewData or defaults here.
+        }
+      };
+      fetchPostData();
+    } 
+    // If no editId is provided, then we assume previewData is managed elsewhere.
+  }, [postId]); // Fetch only when postId is set
+
+
+
+  useEffect(()=>{
+    if (postId) {
+      console.log("Setting url....")
+      setTimeout(() => {
+        router.replace(`/admin/editor?editId=${postId}`, { scroll: false });
+      }, 100);
+      console.log("URL set.....")
+    }
+  }, [postId])
+
+
+
+
   
   // Use inside useEffect when slug updates
   useEffect(() => {
@@ -137,86 +234,25 @@ const Editor = () => {
   };
 
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // Skip first render
+      return;
+    }
     setUnsavedChanges(true);
-  }, [blogContent, slug, title, category, image, keywords ,]);
+  }, [blogContent, slug, title, category, image, keywords]);
 
 
-
-  const extractBase64Images = (content) => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = content;
-    
-    const images = [];
-    tempDiv.querySelectorAll("img").forEach((img) => {
-      const src = img.src;
-      if (src.startsWith("data:image/")) {
-        images.push(src);
-      }
-    });
-  
-    return images;
-  };
-
-  
-  const replaceBase64WithUrls = (content, base64Map) => {
-    let updatedContent = content;
-    
-    Object.entries(base64Map).forEach(([base64, url]) => {
-      updatedContent = updatedContent.replace(base64, url);
-    });
-  
-    return updatedContent;
-  };
-
-
-  const dataURLtoFile = (dataUrl) => {
-    const arr = dataUrl.split(",");
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], `upload-${Date.now()}`, { type: mime });
-  };
-  
-
-  
-  const processMediaUploads = async (content) => {
-    const base64Images = extractBase64Images(content);
-    const base64Map = {};
-  
-    // For each base64 image, convert to a File and upload it via handleImageUpload
-    for (let base64 of base64Images) {
-      try {
-        // Convert the base64 string to a File object
-        const file = dataURLtoFile(base64);
-        // Upload the file using the refactored handleImageUpload function
-        const { url, publicId } = await handleImageUpload(file, "blog_media");
-        // Store the mapping from base64 to Cloudinary URL so you can replace it in the content
-        base64Map[base64] = url;
-  
-        // Optionally update your local media state array
-        setMedia((prev) => [...prev, { url, publicId }]);
-      } catch (error) {
-        console.error("Upload failed:", error);
-      }
-    }
-  
-    // Replace each base64 string in your content with its uploaded URL
-    return replaceBase64WithUrls(content, base64Map);
-  };
-  
-  
 
 
   const autoSaveDraft = async () => {
-    const isUnique = await fetchSlugUniqueness(slug);
+    const isUnique = await fetchSlugUniqueness(slug, postId);
     if (slug && !isUnique) {
       alert(`Title: ${title} is not unique. Choose another one.`);
       setPreviewData({
+        id: postId,
         image,
         category,
         blogContent,
@@ -225,10 +261,11 @@ const Editor = () => {
         draft,
         keywords,
         description,
-        media, // ✅ Store media in local storage
+        media, 
       });
     }else{
       setPreviewData({
+        id: postId,
       image,
       title,
       slug,
@@ -239,7 +276,7 @@ const Editor = () => {
       draft,
       keywords,
       description,
-      media, // ✅ Store media in local storage
+      media, 
     });
     }
   
@@ -250,10 +287,94 @@ const Editor = () => {
       setSaved(false);
     }, 5000);
   };
+
+
+
+  const sendToDB = async (blogData) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/savePost`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(blogData),
+      });
   
- 
+      if (!res.ok) {
+        throw new Error(`Failed to save blog: ${res.text()}`);
+      }
+      const data = await res.json();
+      // Assume the response returns the saved post data
+
+      const formattedData = {
+        // ...(data.post?.id ? { id: data.post.id } : {}),
+        id: postId,
+        image: data.post?.image || "",
+        title: data.post?.title || "",
+        slug: data.post?.slug || "",
+        category: data.post?.catSlug.replace('/', '') || "", // Ensure cat is not null
+        blogContent: data.post?.content || "",
+        readingTime: data.post?.readingTime || 0,
+        date: data.post?.createdAt || "",
+        draft: data.post?.isDraft ?? true,
+        keywords: data.post?.keywords || [],
+        description: data.post?.desc || "",
+        media: data.post?.media || [],
+      };
+
+      console.log("Returned Date: ", data?.post, "\n\nFormatted Data: ", formattedData)
+
+      setPreviewData(formattedData);
+
+      setTimeout(() => {
+        router.replace(`/admin/editor?editId=${data?.post?.id}`, { scroll: false });
+      }, 100);
+
+      
+      console.log("New URL:", `/admin/editor?editId=${data?.post?.id}`);
+      console.log("Current URL:", window.location.href);
+
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 5000);
+      setUnsavedChanges(false);
+    } catch (error) {
+      console.error("Error saving blog:", error);
+    }
+  };
+
+
   
-  const saveBlogToDB = async () => {
+const processMediaUploads = async (content) => {
+  const base64Images = extractBase64Images(content);
+  const base64Map = {};
+
+  // For each base64 image, convert to a File and upload it via handleImageUpload
+  for (let base64 of base64Images) {
+    try {
+      // Convert the base64 string to a File object
+      const file = dataURLtoFile(base64);
+      // Upload the file using the refactored handleImageUpload function
+      const { url, publicId } = await handleImageUpload(file, "blog_media");
+      // Store the mapping from base64 to Cloudinary URL so you can replace it in the content
+      base64Map[base64] = url;
+
+      const { type, size } = file;
+
+      // Optionally update your local media state array
+      setMedia((prev) => [...prev, { url, publicId, type, size, isThumbnail: false }]);
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
+  }
+
+  // Replace each base64 string in your content with its uploaded URL
+  return replaceBase64WithUrls(content, base64Map);
+};
+
+
+  
+const saveBlogToDB = async (newDraft = draft) => { // ✅ Uses newDraft if provided
+    newDraft = typeof newDraft === "boolean" ? newDraft : draft;
+    
     console.log("Saved to DB after uploading Images.");
     console.log("MEDIA: ", media)
 
@@ -267,97 +388,65 @@ const Editor = () => {
   
     let blogData = {} ;
 
-    const isUnique = await fetchSlugUniqueness(slug);
-    if (!isUnique) {
+    const isUnique = await fetchSlugUniqueness(slug, postId);
+    if (slug && !isUnique) {
        alert(`Title: ${title} is not unique. Choose another one.`);
        blogData = {
+        id: postId,
         image,
         category,
-        blogContent: cleanContent,
+        blogContent: cleanContent?.toString(),
         readingTime,
         date,
-        draft,
+        draft: newDraft, // ✅ Uses the updated draft value
         keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
         description,
         media, // ✅ Store media in local storage
       };
     } else{
        blogData = {
+        id: postId,
         image,
         title,
         slug,
         category,
-        blogContent: cleanContent,
+        blogContent: cleanContent?.toString(),
         readingTime,
         date,
-        draft,
+        draft: newDraft, // ✅ Uses the updated draft value
         keywords: Array.isArray(keywords) ? keywords : keywords.split(","),
         description,
         media, // ✅ Store media in local storage
       };
     }
+
+    Object.entries(blogData).forEach(([key, value]) => {
+      console.log(`${key}:`, value, "Type:", typeof value);
+    });
+    
   
-    setPreviewData(blogData);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 5000);
-    setUnsavedChanges(false);
+    await sendToDB(blogData);
   };
 
 
-  useUnsavedChangesWarning(unsavedChanges, ()=>{console.log("SAving in progress..."); setUnsavedChanges(false)});
+  useUnsavedChangesWarning(unsavedChanges, saveBlogToDB);
 
   
 
 
 
-  const router = useRouter();
-  const { editId } = router.query || ''; // Get the ID from the URL
-  
-  useEffect(() => {
-    if (!editId) return; // New post, no need to fetch
-  
-    const fetchPostData = async () => {
-      try {
-        const res = await fetch(`/api/getPost?id=${editId}`); // Fetch by ID
-        if (!res.ok) throw new Error("Failed to fetch post");
-  
-        const post = await res.json();
-  
-        // ✅ Ensure slug is set if available
-        if (post.slug) setSlug(post.slug);
-  
-        // ✅ Save fetched data in local storage for editing
-        setPreviewData({
-          id: post.id, // ✅ Store the ID
-          image: post.image || "",
-          title: post.title || "",
-          slug: post.slug || "",
-          category: post.category || "Select A Category",
-          blogContent: post.blogContent || "",
-          readingTime: post.readingTime || "",
-          date: post.date || "",
-          draft: post.draft ?? true,
-          keywords: post.keywords || [],
-          description: post.description || "",
-          media: post.media || [],
-        });
-      } catch (error) {
-        console.error("Error fetching post:", error);
-      }
-    };
-  
-    fetchPostData();
-  }, [editId]); // Watches the URL ID
+
   
 
   const [previewData, setPreviewData] = useLocalStorage("previewData", {
     // Initialize with existing values from localStorage
+    id:postId,
     image: "",
     title: "",
     slug: "",
     category: "Select A Category",
     blogContent: "",
-    readingTime: "",
+    readingTime: 0,
     date: "",
     draft: true,
     keywords: [], // Ensure this is initialized properly
@@ -371,17 +460,80 @@ const Editor = () => {
 
   useEffect(() => {
     const savedData = previewData; // Automatically handled by the useLocalStorage hook
+    setPostId(editId || savedData.id);
     setImage(savedData.image || "");
     setTitle(savedData.title || "");
     setSlug(savedData.slug || "");
     setCategory(savedData.category || "Select A Category");
     setBlogContent(savedData.blogContent || "");
-    setReadingTime(savedData.readingTime || "");
+    setReadingTime(savedData.readingTime || 0);
     setDate(savedData.date || "");
-    setDraft(savedData.draft || true);
-    setKeywords(savedData.keywords || []);
+    setDraft(savedData.draft ?? true);
+    setKeywords(savedData?.keywords || []);
     setDescription(savedData.description || "");
   }, [previewData]);
+
+
+
+
+
+
+  const [isClearing, setIsClearing] = useState(false);
+
+  const clearAll = () => {
+    if (!confirm("Are you sure you want to clear everything? This action cannot be undone.")) {
+      return;
+    }
+    // ✅ Remove editId from URL
+    const url = new URL(window.location);
+    url.searchParams.delete("editId");
+    window.history.replaceState({}, "", url);
+    setPostId('');
+    setTitle('');
+    setSlug('');
+    setImage('');
+    setCategory('Select A Category');
+    setBlogContent('');
+    setReadingTime(0);
+    setDate(new Date().toISOString());
+    setDraft(true);
+    setKeywords([]);
+    setDescription('');
+    setMedia([]);
+    
+    console.log("Clearing Data.");
+    setIsClearing(true); 
+
+    
+    setPreviewData({
+      id: '',
+      image: "",
+      title: "",
+      slug: "",
+      category: "Select A Category",
+      blogContent: "",
+      readingTime: 0,
+      date: "",
+      draft: true,
+      keywords: [],
+      description: "",
+      media: [],
+    });
+  
+    
+  };
+  
+  // ✅ Auto-save only when `clearAll` was triggered
+  useEffect(() => {
+    if (!isClearing) return; 
+    autoSaveDraft();
+    setIsClearing(false); // Reset flag to prevent infinite loops
+  }, [previewData]);
+
+  useEffect(()=>{console.log("BLOG DATA: ", previewData)}, [previewData])
+
+
+
 
 
 
@@ -425,6 +577,7 @@ const Editor = () => {
       window.removeEventListener("keydown", handleSaveShortcut);
     };
   }, [
+    postId,
     image,
     title,
     slug,
@@ -460,7 +613,7 @@ const Editor = () => {
       // console.log("Clearing Auto Save Interval");
       if (interval) clearInterval(interval);
     };
-  }, [autoSave, autoSaveDuration, image, title, slug, category, blogContent, readingTime, date, draft, keywords, description]);
+  }, [autoSave, autoSaveDuration, postId, image, title, slug, category, blogContent, readingTime, date, draft, keywords, description]);
   
 
 
@@ -552,7 +705,7 @@ const Editor = () => {
         />
        
         <div className={styles.keywordsContainer}>
-          <TagInput setKeywords={setKeywords} />
+          <TagInput keywords={keywords} setKeywords={setKeywords} />
         </div>               
       </div>
       <div className={styles.buttons}>
@@ -584,10 +737,20 @@ const Editor = () => {
 
         <div
           className={styles.endButton}
-          onClick={() => setDraft((prev) => !prev)}
+          onClick={() => {
+            setDraft((prev) => {
+              const newDraft = !prev;
+              saveBlogToDB(newDraft); // ✅ Ensures it gets the latest value
+              return newDraft;
+            });
+          }}          
         >
           <FontAwesomeIcon icon={faUpload} />
           {draft ? "Publish" : "Unpublish"}
+        </div>
+        <div className={styles.endButton} style={{backgroundColor:'rgba(255,0,0,0.5)'}} onClick={clearAll}>
+          <FontAwesomeIcon icon={faTrash}/>
+          Clear All
         </div>
       </div>
       {saved && <div className={styles.indicator}>Saved</div>}
