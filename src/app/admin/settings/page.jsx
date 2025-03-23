@@ -8,6 +8,7 @@ import {
   faUser,
   faPhone,
   faChevronDown,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faInstagram,
@@ -18,8 +19,10 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import BASE_PATH from "../../../../base";
+import { useSession } from "next-auth/react";
 
 const Settings = () => {
+  const { data, status } = useSession();
   const {
     autoSave,
     setAutoSave,
@@ -49,7 +52,7 @@ const Settings = () => {
         <div className={styles.profileImgContainer}>
           <Image
             fill
-            src={`${BASE_PATH}/fashion.png`}
+            src={`${data?.user?.image}`}
             alt="profile picture"
             className={styles.img}
           />
@@ -57,31 +60,15 @@ const Settings = () => {
         <div className={styles.detailsContainer}>
           <div className={`${styles.detail}`}>
             <FontAwesomeIcon icon={faUser} />
-            <p>Full Name</p>
+            <p>{data?.user?.name}</p>
           </div>
-          <Link href="/" className={`${styles.detail}`}>
+          <Link href={`mailto:${data?.user?.email}`} className={`${styles.detail}`}>
             <FontAwesomeIcon icon={faAt} />
-            <p>Email</p>
-          </Link>
-          <div className={`${styles.detail}`}>
-            <FontAwesomeIcon icon={faPhone} />
-            <p>Telephone Number</p>
-          </div>
-          <Link href="/" className={`${styles.detail}`}>
-            <FontAwesomeIcon icon={faFacebook} />
-            <p>Facebook Handle</p>
+            <p>{data?.user?.email}</p>
           </Link>
           <Link href="/" className={`${styles.detail}`}>
-            <FontAwesomeIcon icon={faInstagram} />
-            <p>Instagram Handle</p>
-          </Link>
-          <Link href="/" className={`${styles.detail}`}>
-            <FontAwesomeIcon icon={faXTwitter} />
-            <p>X Handle</p>
-          </Link>
-          <Link href="/" className={`${styles.detail}`}>
-            <FontAwesomeIcon icon={faLinkedin} />
-            <p>Linkedin Handle</p>
+            <FontAwesomeIcon icon={faHome} />
+            <p>Home Page</p>
           </Link>
         </div>
       </div>
@@ -91,63 +78,71 @@ const Settings = () => {
       <div className={styles.editorSettings}>
         <div className={styles.editorQuillThemeSetting}>
           <div className={styles.editorThemeSetting}>
-            <div className={styles.editorSetting}>
-              <div className={styles.settingPreview}>
-                <Image
-                  title="Snow Theme"
-                  alt="Snow Theme"
-                  className={styles.quillImg}
-                  fill
-                  src={
-                    theme === "light"
-                      ? `${BASE_PATH}/snow-theme-light.png`
-                      : `${BASE_PATH}/snow-theme-dark.png`
-                  }
-                />
+            <label>
+              <div className={styles.editorSetting}>
+                <div className={styles.settingPreview}>
+                  <Image
+                    title="Snow Theme"
+                    alt="Snow Theme"
+                    className={styles.quillImg}
+                    fill
+                    src={
+                      theme === "light"
+                        ? `${BASE_PATH}/snow-theme-light.png`
+                        : `${BASE_PATH}/snow-theme-dark.png`
+                    }
+                  />
+                </div>
+                <div className={styles.option}>
+                  <input
+                    type="radio"
+                    name="quillTheme"
+                    value="snow"
+                    checked={quillTheme === "snow"}
+                    onChange={(e) => {
+                      setQuillTheme(e.target.value);
+                    }}
+                  />
+                  <span>Snow Theme</span>
+                </div>
               </div>
-              <div className={styles.option}>
-                <input
-                  type="radio"
-                  name="quillTheme"
-                  value="snow"
-                  checked={quillTheme === "snow"}
-                  onChange={(e) => {
-                    setQuillTheme(e.target.value);
-                  }}
-                />
-                <span>Snow Theme</span>
-              </div>
-            </div>
+            </label>
+
+            
           </div>
 
           <div className={styles.editorThemeSetting}>
-            <div className={styles.editorSetting}>
-              <div className={styles.settingPreview}>
-                <Image
-                  title="Bubble Theme"
-                  alt="Bubble Theme"
-                  className={styles.quillImg}
-                  fill
-                  src={
-                    theme === "light"
-                      ? `${BASE_PATH}/bubble-theme-light.png`
-                      : `${BASE_PATH}/bubble-theme-dark.png`
-                  }
-                />
+            <label>
+              <div className={styles.editorSetting}>
+                <div className={styles.settingPreview}>
+                  <Image
+                    title="Bubble Theme"
+                    alt="Bubble Theme"
+                    className={styles.quillImg}
+                    fill
+                    src={
+                      theme === "light"
+                        ? `${BASE_PATH}/bubble-theme-light.png`
+                        : `${BASE_PATH}/bubble-theme-dark.png`
+                    }
+                  />
+                </div>
+                <div className={styles.option}>
+                  <input
+                    type="radio"
+                    name="quillTheme"
+                    value="bubble"
+                    checked={quillTheme === "bubble"}
+                    onChange={(e) => {
+                      setQuillTheme(e.target.value);
+                    }}
+                  />
+                  <span>Bubble Theme</span>
+                </div>
               </div>
-              <div className={styles.option}>
-                <input
-                  type="radio"
-                  name="quillTheme"
-                  value="bubble"
-                  checked={quillTheme === "bubble"}
-                  onChange={(e) => {
-                    setQuillTheme(e.target.value);
-                  }}
-                />
-                <span>Bubble Theme</span>
-              </div>
-            </div>
+            </label>
+            
+
           </div>
         </div>
 
@@ -197,7 +192,7 @@ const Settings = () => {
       <h3>Data Settings</h3>
 
       <div className={styles.dashboardSettings}>
-        <div className={styles.accountSetting}>
+        <div className={styles.accountSetting} style={{opacity:'40%'}}>
           <div className={styles.desc}>
             <h4>Download Dashboard Data</h4>
             <p>
@@ -207,7 +202,7 @@ const Settings = () => {
           </div>
           <div className={styles.selectContainer}>
             <div className={`${styles.selectBody} ${styles.downloadSelect}`}>
-              <select>
+              <select disabled>
                 <option value="---"> Select Download Option </option>
                 <option value="csv">CSV (Comma-Separated Values)</option>
                 <option value="xls">XLS (Excel Spreadsheet)</option>
@@ -247,7 +242,7 @@ const Settings = () => {
 
       <h3>Notification Settings</h3>
 
-      <div className={styles.notificationSettings}>
+      <div className={styles.notificationSettings} style={{opacity:'40%'}}>
         <div className={styles.editAutoSaveSetting}>
           <div className={styles.desc}>
             <h4>Enable Email Notifications</h4>
@@ -263,6 +258,7 @@ const Settings = () => {
                 onChange={(e) =>
                   setEmailNotificationFrequency(Number(e.target.value))
                 }
+                disabled
               >
                 <option value="0">Never</option>
                 <option value="300000">Every 5 minutes</option>
@@ -292,6 +288,7 @@ const Settings = () => {
                 onChange={(e) =>
                   setPushNotificationFrequency(Number(e.target.value))
                 }
+                disabled
               >
                 <option value="0">Never</option>
                 <option value="300000">Every 5 minutes</option>
@@ -329,20 +326,20 @@ const Settings = () => {
           <button>Transfer Ownership</button>
         </div>
 
-        <div className={styles.accountSetting}>
+        <div className={styles.accountSetting} style={{opacity:'40%'}}>
           <div className={styles.desc}>
             <h4>Change Current Password</h4>
             <p>This changes your current password to a new one</p>
           </div>
-          <button>Change Password</button>
+          <button disabled style={{}}>Change Password</button>
         </div>
 
-        <div className={styles.accountSetting}>
+        <div className={styles.accountSetting} style={{opacity:'40%'}}>
           <div className={styles.desc}>
             <h4>Two Factor Verification (2FA)</h4>
             <p>This Eneables Two Factor Verification (2FA)</p>
           </div>
-          <button>Enable 2FA</button>
+          <button disabled style={{}}>Enable 2FA</button>
         </div>
       </div>
     </div>

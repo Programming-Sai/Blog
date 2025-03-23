@@ -35,7 +35,7 @@
 
 
 .basicInfoContainer{
-    align-items: flex-start;
+    align-items: center;
     flex-direction: row-reverse;
     height: 100%;
     padding-right: 3.5%;
@@ -48,7 +48,7 @@
     height: 300px;
     position: relative;
     overflow: hidden;
-    margin-top: 5%;
+    margin-block: 5%;
 }
 
 .img{
@@ -122,6 +122,12 @@
     color: white;
 }
 
+.accountSetting button:disabled, .editAutoSaveSetting button:disabled{
+    border: 1px solid red;
+    background-color: transparent;
+    cursor: not-allowed;
+}
+
 .container h3{
     margin-top: 5%;
 }
@@ -150,7 +156,16 @@
     align-items: center;
     outline: 1px solid var(--back-color);
     border-radius: 5px;
+    cursor: pointer;
     background: linear-gradient(90deg, var(--bg) 20%,rgba(34, 139, 34, 0.5) 65%, rgba(2, 62, 2, 0.5) 110%);
+}
+
+.selectBody select:disabled{
+    cursor: not-allowed;
+}
+
+.selectBody select option{
+    background-color: var(--bg);
 }
 
 
