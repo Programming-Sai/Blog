@@ -96,11 +96,9 @@ export const POST = async (req) => {
     });
 
     // Determine which media to update and delete
-    const mediaToDelete = [];
     const mediaToUpdate = [];
     oldMedia.forEach((old) => {
       if (newMediaMap.has(old.id)) {
-        // Found in new media: check if any field differs
         const newItem = newMediaMap.get(old.id);
         if (
           old.url !== newItem.url ||
@@ -109,28 +107,16 @@ export const POST = async (req) => {
           old.size !== newItem.size ||
           old.publicId !== newItem.publicId
         ) {
-          // Data has changed → mark for update
           mediaToUpdate.push({ id: old.id, data: newItem });
         }
-        // Remove processed item from map
         newMediaMap.delete(old.id);
-      } else {
-        // This old media item is not in the new list → mark for deletion
-        mediaToDelete.push(old);
       }
     });
 
     // The remaining items in newMediaMap and all items in newMediaNoId are new media
     const mediaToCreate = [...newMediaNoId, ...Array.from(newMediaMap.values())];
 
-    // Process deletions: use your handleImageDelete function to delete from Cloudinary, then remove from DB.
-    for (const m of mediaToDelete) {
-      if (!m.isThumbnail){
-        await handleImageDelete(m.publicId);
-        await prisma.media.delete({ where: { id: m.id } });
-      };
-      
-    }
+    
 
     // Process updates: update existing media records that have changed.
     for (const { id: mediaId, data } of mediaToUpdate) {

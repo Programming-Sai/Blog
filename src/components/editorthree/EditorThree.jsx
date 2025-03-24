@@ -89,7 +89,7 @@ const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
         modules={modules}
         formats={formats}
         theme={quillTheme}
-        placeholder="Testing out NEw Stuff Content..."
+        placeholder="Start Creating Your Blog..."
       />
     </div>
   );

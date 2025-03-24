@@ -79,7 +79,7 @@ export const TagInput = ({ keywords, setKeywords }) => {
           padding: "10px",
           color: theme === 'dark' ? "white" : "black",
           backgroundColor: theme === 'dark' ? "rgba(217, 217, 217, 0.05)" : "rgba(217, 217, 217, 0.2)",
-          width:'70%',
+          width:'100%',
           boxShadow: "none",
           borderWidth:'0px'
         }),
@@ -94,7 +94,7 @@ export const TagInput = ({ keywords, setKeywords }) => {
             ...base,
             color: "#bbbbbb", // ✅ Placeholder text color (light gray)
             opacity: 1, 
-            fontSize:'15px',
+            fontSize:'12px',
             padding:'5px 10px',
             position: "absolute"
         }),

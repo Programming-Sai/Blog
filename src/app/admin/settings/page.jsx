@@ -6,23 +6,90 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAt,
   faUser,
-  faPhone,
   faChevronDown,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faInstagram,
-  faXTwitter,
-  faFacebook,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
 import BASE_PATH from "../../../../base";
 import { useSession } from "next-auth/react";
 
+
+
+
+
+
+
+const users = ["john@example.com", "jane@example.com", "admin@example.com"]; // Replace with real data
+
+function OwnershipTransferModal({ onClose, onTransfer }) {
+  const [search, setSearch] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
+  const [confirmText, setConfirmText] = useState("");
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredUsers = users.filter((u) => u.includes(search));
+
+  return (
+    <div className="modal">
+      <h3>Transfer Ownership</h3>
+      <p>Select a user to transfer ownership to:</p>
+
+      <input
+        type="text"
+        value={search}
+        onChange={handleSearch}
+        placeholder="Search user..."
+      />
+      <ul>
+        {filteredUsers.map((user) => (
+          <li key={user} onClick={() => setSelectedUser(user)}>
+            {user}
+          </li>
+        ))}
+      </ul>
+
+      {selectedUser && (
+        <>
+          <p>Type "TRANSFER" to confirm:</p>
+          <input
+            type="text"
+            value={confirmText}
+            onChange={(e) => setConfirmText(e.target.value)}
+          />
+          <button
+            onClick={() => onTransfer(selectedUser)}
+            disabled={confirmText !== "TRANSFER"}
+          >
+            Confirm Transfer
+          </button>
+        </>
+      )}
+
+      <button onClick={onClose}>Cancel</button>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 const Settings = () => {
-  const { data, status } = useSession();
+  const { data } = useSession();
+  const [isTransferOpen, setIsTransferOpen] = useState(false);
+
   const {
     autoSave,
     setAutoSave,
@@ -36,6 +103,38 @@ const Settings = () => {
   const [emailNotificationFrequency, setEmailNotificationFrequency] =
     useState(0); // default to 'Never'
   const [pushNotificationFrequency, setPushNotificationFrequency] = useState(0); // default to 'Never'
+
+
+
+  const handleDeleteAllPosts = async () => {
+    const firstConfirm = window.confirm("Are you sure you want to delete all posts? This action cannot be undone.");
+    if (!firstConfirm) return;
+  
+    const secondConfirm = window.confirm("This is your final confirmation. Deleting all posts is irreversible. Proceed?");
+    if (!secondConfirm) return;
+
+    const confirmationCode = crypto.randomUUID(); // Generate a random UUID
+    const userInput = prompt(`To confirm, type the following code exactly:\n\n${confirmationCode}`);
+
+    if (!userInput) return;
+
+    if (userInput !== confirmationCode){alert("Sorry, what you typed in was incorrect. try again.");return}
+
+  
+    try {
+      const res = await fetch("/api/delete", { method: "DELETE" });
+      const data = await res.json();
+      if (res.ok) {
+        alert("All posts have been deleted successfully.");
+      } else {
+        alert("Failed to delete posts: " + data.message);
+      }
+    } catch (error) {
+      alert("An error occurred while deleting posts.");
+    }
+  };
+
+
 
   return (
     <div
@@ -227,7 +326,14 @@ const Settings = () => {
           </div>
           <div className={styles.selectContainer}>
             <div className={`${styles.selectBody} ${styles.downloadSelect}`}>
-              <select>
+            <select
+              onChange={(e) => {
+                const format = e.target.value;
+                if (format !== "---") {
+                  window.open(`/api/downloadAllPosts?format=${format}`, "_blank");
+                }
+              }}
+            >
                 <option value="---"> Select Download Option </option>
                 <option value="csv">CSV (Comma-Separated Values)</option>
                 <option value="json">JSON (JavaScript Object Notation)</option>
@@ -312,10 +418,10 @@ const Settings = () => {
             <h4>Delete All Data</h4>
             <p>This gets rid of all content ever created as the current user</p>
           </div>
-          <button>Delete Data</button>
+          <button onClick={handleDeleteAllPosts}>Delete Data</button>
         </div>
 
-        <div className={styles.accountSetting}>
+        <div className={styles.accountSetting} style={{position:'realative'}}>
           <div className={styles.desc}>
             <h4>Transfer Ownership of This Blog</h4>
             <p>
@@ -323,7 +429,12 @@ const Settings = () => {
               it to another user of your choosing
             </p>
           </div>
-          <button>Transfer Ownership</button>
+          <button onClick={() => setIsTransferOpen(true)}>Transfer Ownership</button>
+          {isTransferOpen && (
+            <div style={{backgroundColor:'red'}}>
+
+            </div>
+          )}
         </div>
 
         <div className={styles.accountSetting} style={{opacity:'40%'}}>
