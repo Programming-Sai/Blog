@@ -8,13 +8,16 @@ import Glow from "@/components/glow/Glow";
 import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 import CommentWrapper from "@/components/CommentWrapper";
 import GeneralNotFound from "../general-not-found";
+import { LikeShareView } from "@/components/aboutherosection/LikeShareView";
+
+
 
 const getData = async (slug) => {
-  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/${slug}`);
+  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/${slug}`, {next: { revalidate: 2 * 3600 },});
   if (!result.ok) {
     throw new Error("Failed to get Post");
   }
@@ -23,8 +26,28 @@ const getData = async (slug) => {
     console.log("NO DATA FOUND!!!!!");
     return { notFound: true };
   }
+  await updateViews(slug);
   return data;
 };
+
+
+const updateViews = async (slug) => {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updateViews`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ slug }),
+    cache: "no-store", // Prevent caching
+  });
+
+  if (!result.ok) {
+    throw new Error(`Failed to update views: ${result.statusText}`);
+  }
+
+  return result.json();
+};
+
+
+
 
 const SingleBlogPage = async ({ params }) => {
   const { slug } = params;
@@ -33,6 +56,8 @@ const SingleBlogPage = async ({ params }) => {
     console.log(post);
     return <GeneralNotFound />;
   }
+
+  
   return (
     <>
       <Navbar />
@@ -69,6 +94,7 @@ const SingleBlogPage = async ({ params }) => {
                 </p>
                 -<p className={styles.tag}>{post.catSlug.toUpperCase()}</p>
               </div>
+              <LikeShareView />
             </div>
             <div
               className={styles.item}
@@ -80,18 +106,23 @@ const SingleBlogPage = async ({ params }) => {
                 src={post?.image || '/coding.png'}
                 className={styles.img}
               />
-            </div>
+            </div> 
           </div>
           <div className={styles.content}>
             <div className={styles.post}>
-              {console.log("BLOG: ", post?.content)}
+              {/* {console.log("BLOG: ", post?.content)} */}
               <div
-                className={styles.blogPost}
+                className={`${styles.blogPost} ql-editor`}
+                style={{ background: "transparent" }}
                 dangerouslySetInnerHTML={{
-                  // __html: DOMPurify.sanitize(post?.desc),
-                  __html: post?.content,
+                  __html: DOMPurify.sanitize(post?.content, {
+                    FORBID_TAGS: ["script"],
+                    ADD_TAGS: ["iframe", "style"],
+                    ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "src", "width", "height", "title"],
+                  }),
                 }}
-              />
+              />;
+              
               <Glow
                 top="20%"
                 left="50%"

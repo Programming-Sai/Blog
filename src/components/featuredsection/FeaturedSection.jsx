@@ -8,8 +8,10 @@ import Link from "next/link";
 async function getData() {
   try {
     const result = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/featuredPost`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/featuredPost`,
+      { next: { revalidate: 2 * 3600 } } // Corrected bracket placement
     );
+    
     if (!result.ok) {
       throw new Error("Failed to fetch featured post");
     }
