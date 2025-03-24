@@ -64,7 +64,8 @@ import { useSession } from "next-auth/react";
     const [confirmText, setConfirmText] = useState("");
     const [openUsers, setOpenUsers] = useState(false);
     const inputRef = useRef(null);
-    const [transferText] = useState(crypto.randomUUID());
+    const [transferText] = useState("man");
+    // const [transferText] = useState(crypto.randomUUID());
     const transferShowText = transferText;
 
     const handleSearch = (e) => {
@@ -270,7 +271,7 @@ const Settings = () => {
 
   
     try {
-      const res = await fetch("/api/delete", { method: "DELETE" });
+      const res = await fetch("/api/deleteAllPosts", { method: "DELETE" });
       const data = await res.json();
       if (res.ok) {
         alert("All posts have been deleted successfully.");
@@ -583,9 +584,32 @@ const Settings = () => {
               <OwnershipTransferModal
                 users={allUsers}
                 onClose={() => setIsTransferOpen(false)}
-                onTransfer={(user) => {
-                  console.log("Transferring ownership to:", user);
-                  setIsTransferOpen(false);
+                onTransfer={async (user) => {
+                  if (!user) return;
+                  console.log("USERS: ", user)
+                  const newRole = user.role === "ADMIN" ? "USER" : "ADMIN"; // Toggle role
+                
+                  try {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/transferOwnership`, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ userId: user.id, newRole }),
+                    });
+                
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.message || "Failed to update role");
+                
+                    alert("User role updated successfully");
+
+                    // window.location.reload();  
+                    
+                  } catch (error) {
+                    alert(error.message);
+                  } finally{
+                    setIsTransferOpen(false);
+                  }
                 }}
               />
             </div>

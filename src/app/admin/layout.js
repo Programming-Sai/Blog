@@ -10,7 +10,7 @@ import "./globals.css";
 export default async function AdminLayout({ children }) {
   // const session = {user:{role:'ADMIN'}};
   const session = await getServerSession(authOptions);
-
+  console.log("USER STATUS: ", session?.user?.role, "USER NAME: ", session?.user?.name)
   // Server-side check for user session
   if (session?.user?.role !== "ADMIN") {
     return redirect(`/not-authorized`);

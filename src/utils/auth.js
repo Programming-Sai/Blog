@@ -139,7 +139,8 @@ export const authOptions = {
 
         if (updatedUser) {
           session.user.role = updatedUser.role; // Update role from DB
-        }
+          session.user.id = updatedUser.id;     // Add the user id to the session
+        }   
       }
       return session;
     },
