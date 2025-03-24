@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import styles from "./settings.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,62 +19,189 @@ import { useSession } from "next-auth/react";
 
 
 
+// const users = [
+//   {
+//     "id": "cm3kewr1t000010ao83elh8t0",
+//     "name": "Isaiah Nii-Larte Mensah Lartey",
+//     "email": "saiahniimensah@gmail.com",
+//     "role": "ADMIN",
+//     "image": null
+//   },
+//   {
+//     "id": "cm3khf5yn0000d50anlh7xkfv",
+//     "name": "Mensah",
+//     "email": "saiahprog6@gmail.com",
+//     "role": "ADMIN",
+//     "image": "https://lh3.googleusercontent.com/a/ACg8ocKKy29LEnCUIufiN1Arm7zDTuldRkNOymhRM8cGQdOnYaqA7Q=s96-c"
+//   },
+//   {
+//     "id": "cm8axu597000085en7kw92e82",
+//     "name": "Saiah Good",
+//     "email": "saiahgood113@gmail.com",
+//     "role": "USER",
+//     "image": "https://lh3.googleusercontent.com/a/ACg8ocKuzkGE3M6MFVRlkUl16GASxaDpWfPeVh_31QFlfVR2QRJsrg=s96-c"
+//   },
+//   {
+//     "id": "cm8cfgllz0000da18469s4doc",
+//     "name": "Mensah Naadu",
+//     "email": "naadumensah17@gmail.com",
+//     "role": "ADMIN",
+//     "image": "https://lh3.googleusercontent.com/a/ACg8ocKWQ7XJkN7HTTjG6ap-IxwbFBvSTqoxEEliRfM_wagI3l9shA=s96-c"
+//   },
+//   {
+//     "id": "cm8ipkmb6000011a319biy5a7",
+//     "name": "Mensah Lartey Isaiah Nii Larte",
+//     "email": "mensah.larte@a2sv.org",
+//     "role": "ADMIN",
+//     "image": "https://lh3.googleusercontent.com/a/ACg8ocJnfM3jjU1YBVpn9RuhSMM1k3nLY9Vo58aHx7K9-hmMFGvujg=s96-c"
+//   },
+  
+// ]
 
-const users = ["john@example.com", "jane@example.com", "admin@example.com"]; // Replace with real data
+  function OwnershipTransferModal({ users, onClose, onTransfer }) {
+    const [search, setSearch] = useState("");
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [confirmText, setConfirmText] = useState("");
+    const [openUsers, setOpenUsers] = useState(false);
+    const inputRef = useRef(null);
+    const [transferText] = useState(crypto.randomUUID());
+    const transferShowText = transferText;
 
-function OwnershipTransferModal({ onClose, onTransfer }) {
-  const [search, setSearch] = useState("");
-  const [selectedUser, setSelectedUser] = useState("");
-  const [confirmText, setConfirmText] = useState("");
+    const handleSearch = (e) => {
+      setSearch(e.target.value);
+      setOpenUsers(true);
+    };
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+    const handleSelectedUser = (user) => {
+      setSelectedUser(user);
+      setSearch(user.name);
+      setOpenUsers(false);
+    };
 
-  const filteredUsers = users.filter((u) => u.includes(search));
+    const filteredUsers = users?.filter((u) =>
+      u.name.toLowerCase().includes(search.toLowerCase())
+    );
 
-  return (
-    <div className="modal">
-      <h3>Transfer Ownership</h3>
-      <p>Select a user to transfer ownership to:</p>
+    // Close dropdown when clicking outside
+    const handleBlur = (e) => {
+      if (!inputRef.current.contains(e.relatedTarget)) {
+        setOpenUsers(false);
+      }
+    };
 
-      <input
-        type="text"
-        value={search}
-        onChange={handleSearch}
-        placeholder="Search user..."
-      />
-      <ul>
-        {filteredUsers.map((user) => (
-          <li key={user} onClick={() => setSelectedUser(user)}>
-            {user}
-          </li>
-        ))}
-      </ul>
+    return (
+      <div
+        className="modal"
+        style={{
+          borderRadius: "10px",
+          backgroundColor: "green",
+          width: "100%",
+          maxWidth: "400px",
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          position: "relative",
+          color:'white'
+        }}
+      >
+        <h3>Transfer Ownership</h3>
+        <p>Select a user to transfer ownership to:</p>
 
-      {selectedUser && (
-        <>
-          <p>Type "TRANSFER" to confirm:</p>
+        <div style={{ position: "relative" }} ref={inputRef}>
           <input
             type="text"
-            value={confirmText}
-            onChange={(e) => setConfirmText(e.target.value)}
+            value={search}
+            onChange={handleSearch}
+            onBlur={handleBlur}
+            onFocus={()=>setOpenUsers(true)}
+            placeholder="Search user..."
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              outline: "none",
+              border: "2px solid red",
+              padding: "10px",
+              borderRadius: "10px",
+              width: "100%"
+            }}
           />
-          <button
-            onClick={() => onTransfer(selectedUser)}
-            disabled={confirmText !== "TRANSFER"}
-          >
-            Confirm Transfer
-          </button>
-        </>
-      )}
+          {openUsers && filteredUsers?.length > 0 && (
+            <ul
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                right: 0,
+                backgroundColor: "green",
+                border: "1px solid #ccc",
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+                maxHeight: "150px",
+                overflowY: "auto",
+                borderRadius: "5px",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
+              }}
+            >
+            {filteredUsers?.map((user) => (
+                <li
+                  key={user.id}
+                  onMouseDown={() => handleSelectedUser(user)}
+                  style={{
+                    padding: "8px",
+                    cursor: "pointer",
+                    borderBottom: "1px solid #eee",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px"
+                  }}
+                >
+                  <Image src={user?.image || '/LinkedInAvatar.png'} width={30} height={30} alt={user.name} style={{ borderRadius: "50%" }} />
+                  {user.name}
+                  <input type="checkbox" readOnly checked={user?.role === 'ADMIN'} style={{marginLeft:'auto'}}/>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-      <button onClick={onClose}>Cancel</button>
-    </div>
-  );
-}
+        {selectedUser && (
+          <>
+            <p>Type <span style={{fontSize:'12px', fontWeight:'bold', userSelect: "none"}} contentEditable="false">"{transferShowText}"</span> to confirm:</p>
+            <input
+              type="text"
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              style={{
+                background: "rgba(255,255,255,0.1)",
+                outline: "none",
+                border: "2px solid blue",
+                padding: "10px",
+                borderRadius: "10px",
+                width: "100%"
+              }}
+            />
+            <button
+              onClick={() => onTransfer(selectedUser)}
+              disabled={confirmText !== transferText}
+              style={{
+                backgroundColor: confirmText === transferText ? "blue" : "gray",
+                color: "white",
+                padding: "10px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: confirmText === transferText ? "pointer" : "not-allowed"
+              }}
+            >
+              Confirm Transfer
+            </button>
+          </>
+        )}
 
-
+        <button onClick={onClose} style={{ marginTop: "10px" }}>Cancel</button>
+      </div>
+    );
+  }
 
 
 
@@ -89,6 +216,7 @@ function OwnershipTransferModal({ onClose, onTransfer }) {
 const Settings = () => {
   const { data } = useSession();
   const [isTransferOpen, setIsTransferOpen] = useState(false);
+    const [allUsers, setAllUsers] = useState([]);
 
   const {
     autoSave,
@@ -104,6 +232,26 @@ const Settings = () => {
     useState(0); // default to 'Never'
   const [pushNotificationFrequency, setPushNotificationFrequency] = useState(0); // default to 'Never'
 
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      if (isTransferOpen){
+        try{
+          const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/transferOwnership`);
+
+          if (!result.ok){
+            throw new Error(`Error - ${result.status}: ${result.statusText}`);
+          }
+
+          const data = await result.json();
+          setAllUsers(data);
+
+        }catch (e){
+          alert(`Unable to get all users ${e.message}`);
+        }
+      }
+    }
+    fetchData()
+  }, [isTransferOpen])
 
 
   const handleDeleteAllPosts = async () => {
@@ -141,8 +289,8 @@ const Settings = () => {
       className={`${styles.container} ${toggleSidePane ? styles.active : ""}`}
       style={
         toggleSidePane
-          ? { "--left": "80px", zIndex: 10 }
-          : { "--left": "250px", zIndex: 10 }
+          ? { "--left": "80px", zIndex: 10, paddingBottom:'20%' }
+          : { "--left": "250px", zIndex: 10, paddingBottom:'20%' }
       }
     >
       <h3>Basic Information</h3>
@@ -421,7 +569,7 @@ const Settings = () => {
           <button onClick={handleDeleteAllPosts}>Delete Data</button>
         </div>
 
-        <div className={styles.accountSetting} style={{position:'realative'}}>
+        <div className={styles.accountSetting}>
           <div className={styles.desc}>
             <h4>Transfer Ownership of This Blog</h4>
             <p>
@@ -429,10 +577,17 @@ const Settings = () => {
               it to another user of your choosing
             </p>
           </div>
-          <button onClick={() => setIsTransferOpen(true)}>Transfer Ownership</button>
+          <button style={{position:'realative'}} onClick={() => setIsTransferOpen(!isTransferOpen)}>Transfer Ownership</button>
           {isTransferOpen && (
-            <div style={{backgroundColor:'red'}}>
-
+            <div style={{width:'fit-content', top:'80%', right:'3.5%', position:'absolute', zIndex:'1'}}>
+              <OwnershipTransferModal
+                users={allUsers}
+                onClose={() => setIsTransferOpen(false)}
+                onTransfer={(user) => {
+                  console.log("Transferring ownership to:", user);
+                  setIsTransferOpen(false);
+                }}
+              />
             </div>
           )}
         </div>

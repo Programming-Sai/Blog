@@ -17,7 +17,7 @@ export const GET = async () => {
   try {
 
     const users = await prisma.user.findMany({
-      select: { id: true, name: true, email: true, role: true },
+      select: { id: true, name: true, email: true, role: true, image:true },
     });
 
     return new NextResponse(JSON.stringify(users), { status: 200, headers: { "Content-Type": "application/json" }, });
@@ -30,10 +30,21 @@ export const GET = async () => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
 export const POST = async (req) => {
   const session = await getServerSession(authOptions);
 
-    if (!session || session.user.role !== "admin") {
+    if (!session || session.user.role !== "ADMIN") {
       return new NextResponse(
         JSON.stringify({ message: "Unauthorized" }),
         { status: 403 }

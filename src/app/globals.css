@@ -81,6 +81,11 @@ button {
   color: var(--text-color);
 }
 
+input, input::placeholder{
+  color: var(--text-color);
+}
+
+
 .quill {
   color: var(--text-color);
   font-size: 2rem !important;
