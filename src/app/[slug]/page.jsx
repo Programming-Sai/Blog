@@ -12,7 +12,7 @@ import DOMPurify from "isomorphic-dompurify";
 import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 import CommentWrapper from "@/components/CommentWrapper";
 import GeneralNotFound from "../general-not-found";
-import { LikeShareView } from "@/components/aboutherosection/LikeShareView";
+import { LikeShareView } from "@/components/likeshareview/LikeShareView";
 
 
 

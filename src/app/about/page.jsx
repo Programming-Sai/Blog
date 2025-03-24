@@ -22,7 +22,7 @@ const About = ({ page }) => {
               marginBlock="0%"
               isOutline="2px"
             />
-          </div>
+          </div> 
         </div>
       </Wrapper>
       <Footer />
