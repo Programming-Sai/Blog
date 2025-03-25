@@ -43,7 +43,7 @@ const PopularPosts = async ({
     >
       <h2>Popular Posts</h2>
       <div className={styles.postsContainer}>
-        {topPosts?.map(({ slug, _id, image, title, readingTime, createdAt}, idx) => (
+        {topPosts?.map(({ slug, _id, image, title, readingTime, lastModified}, idx) => (
           <Link href={`/${slug}`} key={_id || idx} className={styles.item}>
             <div className={styles.imgContainer}>
               <Image
@@ -63,7 +63,7 @@ const PopularPosts = async ({
                 </div>
                 {"  |"}
                 <p>
-                  {new Date(createdAt)
+                  {new Date(lastModified)
                     .toISOString()
                     .substring(0, 10)
                     .replace(/-/g, " • ")}

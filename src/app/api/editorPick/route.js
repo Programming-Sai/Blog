@@ -6,7 +6,7 @@ export const GET = async () => {
     const editorPick = await prisma.post.findMany({
       where: { isEditorPick: true },
       orderBy: {
-        createdAt: "desc",
+        lastModified: "desc",
       },
     });
     return new NextResponse(JSON.stringify(editorPick, { status: 200 }));

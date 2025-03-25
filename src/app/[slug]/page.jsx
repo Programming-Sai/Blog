@@ -60,7 +60,7 @@ const SingleBlogPage = async ({ params }) => {
               <h1>{post.title}</h1>
               <div className={styles.postDetails}>
                 <p className={styles.date}>
-                  {new Date(post?.createdAt)
+                  {new Date(post?.lastModified)
                     .toISOString()
                     .substring(0, 10)
                     .replace(/-/g, " • ")}

@@ -47,7 +47,7 @@ export const GET = async () => {
     }));
     
     const latestPosts = await prisma.post.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { lastModified: 'desc' },
       take: 5, 
       select: {
         slug: true,

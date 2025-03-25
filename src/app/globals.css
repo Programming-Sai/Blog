@@ -85,6 +85,34 @@ input, input::placeholder{
   color: var(--text-color);
 }
 
+html::-webkit-scrollbar, html::-webkit-scrollbar-track 
+body::-webkit-scrollbar, body::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  opacity: 0.5;
+  background: var(--bg);
+}
+
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+  /* border-radius: 100px; */
+}
+
+
+/* Handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: var(--back-color);
+  border-radius: 100px;
+}
+
+
 
 .quill {
   color: var(--text-color);

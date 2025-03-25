@@ -187,7 +187,7 @@ const Editor = () => {
             category: post.catSlug || "Select A Category",
             blogContent: post.content || "",
             readingTime: post.readingTime || 0,
-            date: post.createdAt || "",
+            date: post.lastModified || "",
             draft: post.isDraft ?? true,
             keywords: post.keywords || [],
             description: post.desc || "",
@@ -313,7 +313,7 @@ const Editor = () => {
         category: data.post?.catSlug.replace('/', '') || "", // Ensure cat is not null
         blogContent: data.post?.content || "",
         readingTime: data.post?.readingTime || 0,
-        date: data.post?.createdAt || "",
+        date: data.post?.lastModified || "",
         draft: data.post?.isDraft ?? true,
         keywords: data.post?.keywords || [],
         description: data.post?.desc || "",

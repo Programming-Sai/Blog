@@ -58,7 +58,7 @@ const RecentPosts = ({
             <div className={styles.post}>
               <p className={styles.timeTag}>
                 <span className={styles.time}>
-                  {new Date(post?.createdAt)
+                  {new Date(post?.lastModified)
                     .toISOString()
                     .substring(0, 10)
                     .replace(/-/g, " • ")}

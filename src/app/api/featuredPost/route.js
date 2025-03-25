@@ -6,7 +6,7 @@ export const GET = async () => {
     const featuredPost = await prisma.post.findFirst({
       where: { isFeatured: true },
       orderBy: {
-        createdAt: "desc",
+        lastModified: "desc",
       },
     });
     return new NextResponse(JSON.stringify(featuredPost, { status: 200 }));

@@ -60,7 +60,7 @@ const EditorPick = async () => {
                 <p className={styles.desc}>{item.desc?.slice(0, 100) + "..."}</p>
                 <div className={styles.dateRead}>
                   <p className={styles.date}>
-                    {new Date(item.createdAt)
+                    {new Date(item.lastModified)
                       .toISOString()
                       .substring(0, 10)
                       .replace(/-/g, " • ")}
@@ -96,7 +96,7 @@ const EditorPick = async () => {
                 <p className={styles.desc}>{item.desc?.slice(0, 100) + "..."}</p>
                 <div className={styles.dateRead}>
                   <p className={styles.date}>
-                    {new Date(item.createdAt)
+                    {new Date(item.lastModified)
                       .toISOString()
                       .substring(0, 10)
                       .replace(/-/g, " • ")}
