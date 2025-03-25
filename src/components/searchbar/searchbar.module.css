@@ -21,6 +21,10 @@
   background-color: transparent;
 }
 
+.searchbar::placeholder, .searchbar{
+  color: black;
+}
+
 .loader {
   margin-top: 15%;
   transform: scale(0.8);

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./singleblogpage.module.css";
 import numeral from "numeral";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faEye, faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Glow from "@/components/glow/Glow";
 import Wrapper from "@/components/pagewrapper/Wrapper";
@@ -92,9 +92,19 @@ const SingleBlogPage = async ({ params }) => {
                   <FontAwesomeIcon icon={faEye} />
                   <p> {numeral(post.views).format("0.[0]a")}</p>
                 </p>
+                -
+                <p className={styles.time}>
+                  <FontAwesomeIcon icon={faShare} />
+                  <p> {numeral(post?.shares).format("0.[0]a")}</p>
+                </p>
+                -
+                <p className={styles.time}>
+                  <FontAwesomeIcon icon={faHeart} />
+                  <p> {numeral(post?.likes).format("0.[0]a")}</p>
+                </p>
                 -<p className={styles.tag}>{post.catSlug.toUpperCase()}</p>
               </div>
-              <LikeShareView />
+              <LikeShareView className={styles.likeshareview}/>
             </div>
             <div
               className={styles.item}
@@ -108,9 +118,9 @@ const SingleBlogPage = async ({ params }) => {
               />
             </div> 
           </div>
+          {/* <LikeShareView className={styles.likeshareview}/> */}
           <div className={styles.content}>
             <div className={styles.post}>
-              {/* {console.log("BLOG: ", post?.content)} */}
               <div
                 className={`${styles.blogPost} ql-editor`}
                 style={{ background: "transparent" }}

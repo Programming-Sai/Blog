@@ -6,16 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import WriteComment from "@/components/writecomment/WriteComment";
-import CommentSection from "@/components/commentsection/CommentSection";
-import Pagination from "@/components/pagination/Pagination";
 import Glow from "@/components/glow/Glow";
 import Wrapper from "@/components/pagewrapper/Wrapper";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
-import BASE_PATH from "../../../base";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css"; 
 import "react-quill/dist/quill.bubble.css";
+import { LikeShareView } from "../likeshareview/LikeShareView";
 
 
 const PreviewContentPage = ({ blogData }) => {
@@ -44,7 +42,7 @@ const PreviewContentPage = ({ blogData }) => {
     <>
       <Navbar />
       <Wrapper>
-        <div className={styles.container}>
+        <div className={styles.container} style={{position:'relative'}}>
           <div className={styles.infoContainer}>
             <div className={styles.item}>
               <Glow
@@ -70,6 +68,7 @@ const PreviewContentPage = ({ blogData }) => {
                     : blogData.category}
                 </p>
               </div>
+              <LikeShareView />
             </div>
             <div
               className={styles.item}

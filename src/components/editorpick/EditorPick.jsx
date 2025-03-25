@@ -9,7 +9,8 @@ import Link from "next/link";
 async function getData() {
   try {
     const result = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/editorPick`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/editorPick` , 
+      {next: { revalidate: 2 * 3600 },}
     );
     if (!result.ok) {
       throw new Error("Failed to fetch editor's pick");
