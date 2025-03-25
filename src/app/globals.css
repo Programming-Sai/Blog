@@ -241,8 +241,8 @@ body::-webkit-scrollbar, body::-webkit-scrollbar-track {
     min-height: 350px !important;
   }
   .ql-video {
-    width: 80vw !important;
-    height: 90vh !important;
+    width: 70% !important;
+    height: 70% !important;
   }
   .ql-editor {
     min-height: 250px !important;

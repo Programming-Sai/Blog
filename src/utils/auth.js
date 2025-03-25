@@ -29,14 +29,31 @@ export const authOptions = {
       clientSecret: process.env.LINKEDIN_SECRET,
       client: { token_endpoint_auth_method: "client_secret_post" },
       issuer: "https://www.linkedin.com",
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        };
-      },
+      profile: async (profile, tokens) => {
+        try {
+          const res = await fetch("https://api.linkedin.com/v2/userinfo", {
+            headers: { Authorization: `Bearer ${tokens.access_token}` },
+          });
+      
+          const data = await res.json();
+          // console.log("✅ LINKEDIN PROFILE DATA:", data, profile);
+      
+          return {
+            id: data.sub || profile.sub,
+            name: data.name || profile.name,
+            email: data.email || profile.email,
+            image: data.picture || profile.picture,  // Ensure image is set
+          };
+        } catch (error) {
+          console.error("❌ Failed to fetch LinkedIn user info:", error);
+          return {
+            id: profile.sub,
+            name: profile.name,
+            email: profile.email,
+            image: profile.picture,
+          };
+        }
+      },      
 
       wellKnown:
         "https://www.linkedin.com/oauth/.well-known/openid-configuration",
@@ -59,24 +76,31 @@ export const authOptions = {
   ],
 
   callbacks: {
+
+
     async signIn({ user, account }) {
+      // console.log("\n\nUSER: ", user)
       if (user.email) {
-        // Check if a user with the same email already exists
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email },
         });
-
+    
         if (existingUser) {
-          // Check if this OAuth provider is already linked to the user
-          const linkedAccount = await prisma.account.findFirst({
-            where: {
-              userId: existingUser.id,
-              provider: account.provider,
-            },
-          });
+          // ✅ Ensure the image is updated if missing
+          if (!existingUser.image || existingUser.image === "/coding.png") {
+            await prisma.user.update({
+              where: { email: user.email },
+              data: { image: user.image || existingUser.image },
+            });
+          }
 
+          // console.log("\n\nUpdating user image:", user.image, "\n\nUpdating exsisting image:", existingUser.image, "\n\n`"); 
+    
+          const linkedAccount = await prisma.account.findFirst({
+            where: { userId: existingUser.id, provider: account.provider },
+          });
+    
           if (!linkedAccount) {
-            // Link the new provider to the existing user account
             await prisma.account.create({
               data: {
                 userId: existingUser.id,
@@ -91,16 +115,14 @@ export const authOptions = {
           }
           return true;
         } else {
-          // Create a new user with default role
           const newUser = await prisma.user.create({
             data: {
               email: user.email,
               name: user.name,
-              image: user.image || '/coding.png',
+              image: user.image || null,
             },
           });
-
-          // Link the new OAuth account to this user
+    
           await prisma.account.create({
             data: {
               userId: newUser.id,
@@ -115,12 +137,15 @@ export const authOptions = {
           return true;
         }
       }
-      return false; // Prevent sign-in if email is missing or invalid
+      return false;
     },
+
 
     async jwt({ token, user }) {
       // Attach the role to the token
       if (user) {
+        token.image = user.image;
+        // console.log("\n\n✅ JWT user before update:", user, "\nToken Image: ", token.image);
         const dbUser = await prisma.user.findUnique({
           where: { email: user.email },
         });
@@ -133,6 +158,8 @@ export const authOptions = {
 
     async session({ session, token }) {
       if (token?.email) {
+        // console.log("\n\n✅ SESSION TOKEN:", token);
+        session.user.image = token.image;
         const updatedUser = await prisma.user.findUnique({
           where: { email: token.email },
         });

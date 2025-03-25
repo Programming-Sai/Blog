@@ -34,15 +34,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-
-// ToDO 1. Add a robots.txt
-//      2. Add alt text to all images
-//      3. Fix Side Panel to look nicer
-//      4. What are the techniques for good SEO
-//      5. Clicking on the category name in a blog takes you to the categories page
-//      6. Add Sitemap
-//      7. Calculate the reading time for each blog.
-//      8. What should be on the dashboard.
-//      9.
-
-// TODO Make popular posts for dashbaord fully client side
