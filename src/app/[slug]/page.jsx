@@ -26,24 +26,7 @@ const getData = async (slug) => {
     console.log("NO DATA FOUND!!!!!");
     return { notFound: true };
   }
-  await updateViews(slug);
   return data;
-};
-
-
-const updateViews = async (slug) => {
-  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/updateViews`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ slug }),
-    cache: "no-store", // Prevent caching
-  });
-
-  if (!result.ok) {
-    throw new Error(`Failed to update views: ${result.statusText}`);
-  }
-
-  return result.json();
 };
 
 
@@ -104,7 +87,7 @@ const SingleBlogPage = async ({ params }) => {
                 </p>
                 -<p className={styles.tag}>{post.catSlug.toUpperCase()}</p>
               </div>
-              <LikeShareView className={styles.likeshareview}/>
+              <LikeShareView className={styles.likeshareview} slug={post?.slug} />
             </div>
             <div
               className={styles.item}

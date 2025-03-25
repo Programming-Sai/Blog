@@ -2,10 +2,12 @@
 import { faHeart, faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './likeshareview.module.css'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { faFacebook, faWhatsapp, faLinkedin, faXTwitter, faReddit, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from 'next/link';
+import { updateLikes, updateShares, updateViews } from "@/utils/clientUpdateFuncs"; // Adjust path accordingly
+
 
 const socialMediaLinks = [
   {
@@ -46,16 +48,31 @@ const socialMediaLinks = [
 ];
 
 
-export const LikeShareView = ({ className }) => {
+export const LikeShareView = ({ className, slug }) => {
   const [isMobile, setIsMobile] = useState(false);
-  // const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
- 
+  const hasUpdatedViews = useRef(false);
+
+
+
 
   useEffect(() => {
     if (navigator.share) {
       setIsMobile(true);
     }
   }, []);
+
+  
+  useEffect(() => {
+    if (slug && !hasUpdatedViews.current) {
+      console.log("updateViews useEffect fired for slug:", slug);
+      updateViews(slug).catch((error) => {
+        console.error("Error updating views:", error);
+      });
+      hasUpdatedViews.current = true;
+    }
+  }, [slug]);
+
+
 
   const handleShare = async () => {
     try {
@@ -64,6 +81,7 @@ export const LikeShareView = ({ className }) => {
         text: "Check out this blog post!",
         url: window.location.href,
       });
+      await updateShares(slug);
     } catch (error) {
       console.error("Error sharing:", error);
     }
@@ -71,9 +89,21 @@ export const LikeShareView = ({ className }) => {
 
 
 
+  const handleLike = async () => {
+    try {
+      // Increment likes on click (server-side will enforce one-like-per-day via cookies)
+      await updateLikes(slug);
+      alert("Post liked!");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
+
   return (
     <div className={`${styles.container} ${className || ""}`}>
-      <button title={'Like'}>
+      <button title="Like" onClick={handleLike}>
         <FontAwesomeIcon icon={faHeart} className={styles.icon} />
       </button>
       <p className={styles.pipe}>{!isMobile && '|'}</p>
@@ -90,6 +120,14 @@ export const LikeShareView = ({ className }) => {
             href={`${media.url}${encodeURIComponent(window.location.href)}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={async () => {
+              // Increment shares when a desktop share link is clicked.
+              try {
+                await updateShares(slug);
+              } catch (error) {
+                console.error("Error updating share count:", error);
+              }
+            }}
           >
             <FontAwesomeIcon className={styles.icon} icon={media.icon} />
           </Link>
