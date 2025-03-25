@@ -8,6 +8,9 @@ export const GET = async () => {
       orderBy: {
         views: "desc",
       },
+      where: {
+        isDraft: false, // Exclude drafts
+      },
     });
     return new NextResponse(JSON.stringify(topPosts, { status: 200 }));
   } catch (e) {

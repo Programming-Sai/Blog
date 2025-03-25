@@ -18,11 +18,13 @@ export const GET = async (request) => {
       lastModified: "desc",
     },
     where: {
+      isDraft: false, // Only fetch published posts
       ...(cat && { catSlug: cat }),
     },
   });
   const count = await prisma.post.count({
     where: {
+      isDraft: false, // Only count published posts
       ...(cat && { catSlug: cat }),
     },
   });
