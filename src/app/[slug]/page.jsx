@@ -65,8 +65,11 @@ export const generateMetadata = async ({ params }) => {
     openGraph: {
       title: post?.title,
       description: post?.desc,
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/post/${post.slug}`,
-      images: [{ url: post?.image }]
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}${post.slug}`,
+      images: [{ url: post?.image }],
+      type: 'website',
+      locale: 'en_US',
+      siteName: 'GhanaTrendz',
   }
   }
 }
