@@ -18,54 +18,13 @@ import { useSession } from "next-auth/react";
 
 
 
-
-// const users = [
-//   {
-//     "id": "cm3kewr1t000010ao83elh8t0",
-//     "name": "Isaiah Nii-Larte Mensah Lartey",
-//     "email": "saiahniimensah@gmail.com",
-//     "role": "ADMIN",
-//     "image": null
-//   },
-//   {
-//     "id": "cm3khf5yn0000d50anlh7xkfv",
-//     "name": "Mensah",
-//     "email": "saiahprog6@gmail.com",
-//     "role": "ADMIN",
-//     "image": "https://lh3.googleusercontent.com/a/ACg8ocKKy29LEnCUIufiN1Arm7zDTuldRkNOymhRM8cGQdOnYaqA7Q=s96-c"
-//   },
-//   {
-//     "id": "cm8axu597000085en7kw92e82",
-//     "name": "Saiah Good",
-//     "email": "saiahgood113@gmail.com",
-//     "role": "USER",
-//     "image": "https://lh3.googleusercontent.com/a/ACg8ocKuzkGE3M6MFVRlkUl16GASxaDpWfPeVh_31QFlfVR2QRJsrg=s96-c"
-//   },
-//   {
-//     "id": "cm8cfgllz0000da18469s4doc",
-//     "name": "Mensah Naadu",
-//     "email": "naadumensah17@gmail.com",
-//     "role": "ADMIN",
-//     "image": "https://lh3.googleusercontent.com/a/ACg8ocKWQ7XJkN7HTTjG6ap-IxwbFBvSTqoxEEliRfM_wagI3l9shA=s96-c"
-//   },
-//   {
-//     "id": "cm8ipkmb6000011a319biy5a7",
-//     "name": "Mensah Lartey Isaiah Nii Larte",
-//     "email": "mensah.larte@a2sv.org",
-//     "role": "ADMIN",
-//     "image": "https://lh3.googleusercontent.com/a/ACg8ocJnfM3jjU1YBVpn9RuhSMM1k3nLY9Vo58aHx7K9-hmMFGvujg=s96-c"
-//   },
-  
-// ]
-
   function OwnershipTransferModal({ users, onClose, onTransfer }) {
     const [search, setSearch] = useState("");
     const [selectedUser, setSelectedUser] = useState(null);
     const [confirmText, setConfirmText] = useState("");
     const [openUsers, setOpenUsers] = useState(false);
     const inputRef = useRef(null);
-    const [transferText] = useState("man");
-    // const [transferText] = useState(crypto.randomUUID());
+    const [transferText] = useState(crypto.randomUUID());
     const transferShowText = transferText;
 
     const handleSearch = (e) => {

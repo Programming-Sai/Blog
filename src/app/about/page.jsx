@@ -7,6 +7,14 @@ import AboutHeroSection from "@/components/aboutherosection/AboutHeroSection";
 import AboutContent from "@/components/aboutcontent/AboutContent";
 import PopularPosts from "@/components/popularposts/PopularPosts";
 
+
+
+export const metadata = {
+  title: "About"
+};
+
+
+
 const About = ({ page }) => {
   return (
     <>

@@ -7,6 +7,10 @@ import styles from "./login.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import BASE_PATH from "../../../base";
+import Head from "next/head";
+
+
+
 
 const Login = () => {
   const { data, status } = useSession(); // Get session status
@@ -36,6 +40,9 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Login</title>
+      </Head>
       <div className={styles.back}>.</div>
       <div className={styles.overlay}>
         <div className={styles.loginContainer}>

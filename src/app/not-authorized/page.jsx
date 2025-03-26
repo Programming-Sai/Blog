@@ -10,11 +10,20 @@ import Glow from "@/components/glow/Glow";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import RecentPostsWrapper from "@/components/recentpostwrapper/RecentPostsWrapper";
+import Head from "next/head";
+
+
+
+
+
 
 const NotAuthorized = () => {
   return (
     <div>
       <div>
+        <Head>
+          <title>403 - Not Authorized</title>
+        </Head>
         <Navbar past="/admin/dashboard" />
         <Wrapper>
           <div className={styles.container} style={{ zIndex: 1 }}>

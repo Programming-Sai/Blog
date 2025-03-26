@@ -9,8 +9,11 @@ import GoogleAnalyticsWrapper from "@/components/GoogleAnalyticsWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Ghana Trendz",
-  description: "The best blog app!",
+  title: {
+    default: "Ghana Trendz - Stay Updated, Stay Inspired",
+    template: "%s | Ghana Trendz - Stay Updated, Stay Inspired"
+  },
+  description: "Ghana Trendz is your go-to hub for the latest in sports, news, lifestyle, music, and movies. Stay informed, entertained, and inspired with fresh content daily.",
 };
 
 export default function RootLayout({ children }) {

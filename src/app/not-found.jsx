@@ -5,6 +5,13 @@ import GeneralNotFound from './general-not-found';
 import AdminNotFound from './admin/admin-not-found';
 import NotFoundPageToggler from './not-found-page-toggler';
 
+
+
+export const metadata = {
+  title: "404 - Not Found"
+};
+
+
 const NotFoundPage = () => {
   return (
     <div>

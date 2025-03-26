@@ -7,20 +7,7 @@ import Glow from "../glow/Glow";
 import Link from "next/link";
 import Pagination from "../pagination/Pagination";
 
-async function getData() {
-  try {
-    const result = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`
-    );
-    if (!result.ok) {
-      throw new Error("Failed to fetch categories");
-    }
-    const data = await result.json();
-    return data;
-  } catch (error) {
-    console.log("Failed to fetch categories", error);
-  }
-}
+
 
 const RecentPosts = ({
   paginatedPosts,

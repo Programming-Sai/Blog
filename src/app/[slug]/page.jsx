@@ -16,6 +16,22 @@ import { LikeShareView } from "@/components/likeshareview/LikeShareView";
 
 
 
+const getPageData = async () => {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/posts?page=1`, {next: { revalidate: 2 * 3600 },});
+  if (!result.ok) {
+    throw new Error("Failed to get Posts");
+  }
+  const data = result.json();
+  if (!data) {
+    console.log("NO DATA FOUND!!!!!");
+    return { notFound: true };
+  }
+  return data;
+};
+
+
+
+
 const getData = async (slug) => {
   const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/${slug}`, {next: { revalidate: 2 * 3600 },});
   if (!result.ok) {
@@ -29,6 +45,26 @@ const getData = async (slug) => {
   return data;
 };
 
+
+export const generateStaticParams = async () => {
+  const { paginatedPosts } = await getPageData();
+  return paginatedPosts; 
+};
+
+
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params;
+  const { post } = await getData(slug);
+  if (!post) {
+    console.log(post);
+    return {};
+  }
+  return {
+    title : post?.title,
+    description: post?.desc,
+
+  }
+}
 
 
 

@@ -7,6 +7,14 @@ import PopularPosts from "@/components/popularposts/PopularPosts";
 import ContactHeroSection from "@/components/contactheorsection/ContactHeroSection";
 import ContactContentSection from "@/components/contactcontentsection/ContactContentSection";
 
+
+
+export const metadata = {
+  title: "Contact"
+};
+
+
+
 const Contact = () => {
   return (
     <>

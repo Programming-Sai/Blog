@@ -7,6 +7,14 @@ import PopularPosts from "@/components/popularposts/PopularPosts";
 import PrivacyPolicyContent from "@/components/privacypolicycontent/PrivacyPolicyContent";
 import PrivacyPolicyHeroSection from "@/components/privacypolicyherosection/PrivacyPolicyHeroSection";
 
+
+
+export const metadata = {
+  title: "Privacy Policy"
+};
+
+
+
 const PrivacyPolicy = () => {
   return (
     <>

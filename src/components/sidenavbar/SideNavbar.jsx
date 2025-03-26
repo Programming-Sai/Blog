@@ -7,6 +7,7 @@ import {
   faClose,
   faEdit,
   faGear,
+  faHome,
   faPencilAlt,
   faSignOutAlt,
   faTachometerAlt,
@@ -68,6 +69,21 @@ const SideNavbar = () => {
       </div>
 
       <ul>
+      <li className={pathname == "/" ? styles.sideActive : ""}>
+          <Link
+            onClick={() => {
+              window.innerWidth <= 868
+                ? setToggleSidePane(!toggleSidePane)
+                : "";
+            }}
+            className={styles.a}
+            href="/"
+            title="Home"
+          >
+            <FontAwesomeIcon className={styles.icon} icon={faHome} />
+            <span>Home</span>
+          </Link>
+        </li>
         <li className={pathname == "/admin/dashboard" ? styles.sideActive : ""}>
           <Link
             onClick={() => {
