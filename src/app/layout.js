@@ -14,6 +14,13 @@ export const metadata = {
     template: "%s | Ghana Trendz - Stay Updated, Stay Inspired"
   },
   description: "Ghana Trendz is your go-to hub for the latest in sports, news, lifestyle, music, and movies. Stay informed, entertained, and inspired with fresh content daily.",
+  opengraph:{
+    title: "Ghana Trendz - Stay Updated, Stay Inspired",
+    description: "Ghana Trendz is your go-to hub for the latest in sports, news, lifestyle, music, and movies. Stay informed, entertained, and inspired with fresh content daily.",
+    type: 'website',
+    locale: 'en_US',
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}`
+  }
 };
 
 export default function RootLayout({ children }) {

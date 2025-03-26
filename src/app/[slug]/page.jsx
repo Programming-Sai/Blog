@@ -62,7 +62,12 @@ export const generateMetadata = async ({ params }) => {
   return {
     title : post?.title,
     description: post?.desc,
-
+    openGraph: {
+      title: post?.title,
+      description: post?.desc,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/post/${post.slug}`,
+      images: [{ url: post?.image }]
+  }
   }
 }
 

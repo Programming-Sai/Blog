@@ -15,6 +15,23 @@ const validCategories = {
   movies: { color: "lightblue" },
 };
 
+export async function generateMetadata({ params }) {
+  const { category } = params;
+  const normalizedCategory = category.toLowerCase();
+
+  if (!(normalizedCategory in validCategories)) {
+    return notFound();
+  }
+
+  return {
+    title: `${normalizedCategory.charAt(0).toUpperCase() + normalizedCategory.slice(1)} Blogs `,
+    description: `Explore the latest ${normalizedCategory} blogs on Ghana Trendz. Stay updated with fresh and insightful content.`,
+  };
+}
+
+
+
+
 const BlogCategoryLayout = ({ children, params }) => {
   const { category } = params;
 
