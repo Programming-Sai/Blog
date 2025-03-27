@@ -6,8 +6,11 @@
     padding: 20px;
     top: 100%;
     margin-bottom: 5%;
-} 
+}
 
+.input, .input::placeholder{
+    color: white;
+}
 
 .buton {
     font-size: 2rem;

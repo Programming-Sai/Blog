@@ -9,7 +9,6 @@ import { authOptions } from "@/utils/auth";
 
 
 
-
 export const DELETE = async (req) => {
   try {
     // Get user session
@@ -18,15 +17,49 @@ export const DELETE = async (req) => {
       return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     }
 
-    // Extract category ID
-    const { id, name } = await req.json();
-    if (!id) {
-      return NextResponse.json({ message: "ID is required for deletion!" }, { status: 400 });
+    // Extract category slug
+    const { slug, title } = await req.json();
+    if (!slug) {
+      return NextResponse.json({ message: "Slug is required for deletion!" }, { status: 400 });
     }
 
-    await prisma.category.delete({ where: { id } });
+    if (slug === "general") {
+      return NextResponse.json({ message: "The General category cannot be deleted." }, { status: 400 });
+    }    
 
-    return NextResponse.json({ message: `Category: ${name} deleted successfully` }, { status: 200 });
+    // Ensure the "General" category exists
+    let generalCategory = await prisma.category.findFirst({
+      where: { slug: "general" },
+    });
+
+    if (!generalCategory) {
+      generalCategory = await prisma.category.create({
+        data: { title: "General", slug: "general", color: "#888888" },
+      });
+    }
+
+    // Count categories
+    const categoryCount = await prisma.category.count();
+    if (categoryCount <= 1) {
+      return NextResponse.json(
+        { message: "Cannot delete the last remaining category!" },
+        { status: 400 }
+      );
+    }
+
+    // Reassign posts from the deleted category to "General"
+    await prisma.post.updateMany({
+      where: { catSlug: slug },
+      data: { catSlug: generalCategory.slug },
+    });
+
+    // Delete the category
+    await prisma.category.delete({ where: { slug } });
+
+    return NextResponse.json(
+      { message: `Category: ${title} deleted successfully` },
+      { status: 200 }
+    );
   } catch (e) {
     console.error(e);
     return NextResponse.json({ message: "Something went wrong" }, { status: 500 });

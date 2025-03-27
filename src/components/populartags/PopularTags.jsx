@@ -44,12 +44,12 @@ const PopularTags = async () => {
             style={{border: `2px solid ${color}`}}
           >
             <div style={{ width: '90px', height: '50px', position: "relative" }}>
-              <Image
+             {image && <Image
                 fill
                 src={image}
                 alt={title}
                 style={{ objectFit: "cover", borderRadius: "100px", }}
-              />
+              />}
             </div>
             <p>{title}</p>
           </Link>

@@ -72,7 +72,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
         <p>Select a user to transfer ownership to:</p>
 
         <div style={{ position: "relative" }} ref={inputRef}>
-          <input
+          <input className={styles.input}
             type="text"
             value={search}
             onChange={handleSearch}
@@ -121,7 +121,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
                 >
                   <Image src={user?.image || '/LinkedInAvatar.png'} width={30} height={30} alt={user.name} style={{ borderRadius: "50%" }} />
                   {user.name}
-                  <input type="checkbox" readOnly checked={user?.role === 'ADMIN'} style={{marginLeft:'auto'}}/>
+                  <input className={styles.input} type="checkbox" readOnly checked={user?.role === 'ADMIN'} style={{marginLeft:'auto'}}/>
                 </li>
               ))}
             </ul>
@@ -131,7 +131,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
         {selectedUser && (
           <>
             <p>Type <span style={{fontSize:'12px', fontWeight:'bold', userSelect: "none"}} contentEditable="false">"{transferShowText}"</span> to confirm:</p>
-            <input
+            <input className={styles.input}
               type="text"
               value={confirmText}
               onChange={(e) => setConfirmText(e.target.value)}
@@ -171,7 +171,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
 
   
 
-  function CategoryManagement({ allCat, onClose, onChange }) {
+  function CategoryManagement({ allCat, onClose, onCategoryUpdate, onCategoryDelete }) {
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [openCategories, setOpenCategories] = useState(false);
@@ -238,10 +238,22 @@ import { handleImageUpload } from "@/utils/imageHandler";
         color: newColor, // include the new color value
       };
     
-      onChange(updatedCategory);
+      onCategoryUpdate(updatedCategory);
+    };
+
+
+
+    const handleDelete = () => {
+      if (selectedCategory?.id) {
+        onCategoryDelete(selectedCategory);
+        setSelectedCategory(null);
+        setSearch("");
+        setNewTitle(""); 
+        setNewImage(null); 
+        setNewColor("#000000");
+      }
     };
     
-
 
 
     return (
@@ -264,7 +276,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
         <p>Select a category to edit or click Add to create a new one.</p>
 
         <div style={{ position: "relative" }} ref={inputRef}>
-          <input
+          <input className={styles.input}
             type="text"
             value={search}
             onChange={handleSearch}
@@ -351,7 +363,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
               }} 
             />}
             
-            <input
+            <input className={styles.input}
               type="text"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
@@ -366,7 +378,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
               }}
             />
 
-          <input
+          <input className={styles.input}
             type="file"
             onChange={(e) => {
               const file = e.target.files[0];
@@ -388,7 +400,7 @@ import { handleImageUpload } from "@/utils/imageHandler";
 
           <div style={{ display: "flex", alignItems: "center", gap: "10px", cursor:'pointer' }}>
             <label htmlFor="colorPicker">Category Color:</label>
-            <input
+            <input className={styles.input}
               id="colorPicker"
               type="color"
               value={newColor}
@@ -411,10 +423,27 @@ import { handleImageUpload } from "@/utils/imageHandler";
           >
             Confirm Update
           </button>
+
+          {selectedCategory.id && (
+              <button
+                onClick={() => handleDelete(selectedCategory)}
+                style={{
+                  backgroundColor: "red",
+                  color: "white",
+                  padding: "10px",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  flex: 1,
+                }}
+              >
+                Delete Category
+              </button>
+            )}
           </>
         )}
 
-        <button onClick={onClose} style={{ marginTop: "10px" }}>Cancel</button>
+        <button onClick={onClose} style={{ marginTop: "10px" }}>Close</button>
       </div>
     );
   }
@@ -580,7 +609,7 @@ const Settings = () => {
                   />
                 </div>
                 <div className={styles.option}>
-                  <input
+                  <input className={styles.input}
                     type="radio"
                     name="quillTheme"
                     value="snow"
@@ -614,7 +643,7 @@ const Settings = () => {
                   />
                 </div>
                 <div className={styles.option}>
-                  <input
+                  <input className={styles.input}
                     type="radio"
                     name="quillTheme"
                     value="bubble"
@@ -755,7 +784,44 @@ const Settings = () => {
               <CategoryManagement
                 allCat={allCat}
                 onClose={() => setIsCatManagementOpen(false)}
-                onChange={async (update) => {
+                onCategoryDelete={async (category) => {
+                  if (!category || !category.slug) return;
+
+                  // Ask for confirmation with an extra prompt
+                  const confirmDelete = window.confirm(
+                    `Are you sure you want to delete the category "${category.title}"? All posts in this category will be reassigned to the "General" Category.`
+                  );
+                  if (!confirmDelete) return;
+
+                  try {
+                    const response = await fetch(
+                      `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
+                      {
+                        method: "DELETE",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          slug: category.slug,
+                          title: category.title,
+                        }),
+                      }
+                    );
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                      throw new Error(data.message || "Failed to delete category");
+                    }
+
+                    alert(data.message);
+                    // Optionally, update your UI state to remove the deleted category
+                  } catch (error) {
+                    console.error("Error deleting category:", error);
+                    alert("Error deleting category: " + error.message);
+                  }
+                }}
+                onCategoryUpdate={async (update) => {
                   try {
                     const response = await fetch("/api/categories", {
                       method: "POST",
