@@ -7,33 +7,86 @@ import Footer from "@/components/footer/Footer";
 import RecentPostsWrapper from "@/components/recentpostwrapper/RecentPostsWrapper";
 import PopularPostsWrapper from "@/components/homewrappers/PopularPostsWrapper";
 
-const validCategories = {
-  sports: { color: "green" },
-  news: { color: "red" },
-  lifestyle: { color: "yellow" },
-  music: { color: "#CC00FF" },
-  movies: { color: "lightblue" },
-};
+
+
+const getCategories = async () => {
+  try{
+    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/categories`);
+
+    if (!result.ok){
+      throw new Error(`${result.message || result.statusText || "Something went wrong."}`)
+    }
+
+    const data = await result.json();
+    return data;
+}
+catch (e){
+  console.log(e.message);
+}
+}
+
+
+
+const fetchColor = async () => {
+  try{
+      const data = await getCategories()
+      let validCategories = {}
+      data.forEach(({slug, color}) => {
+        validCategories[slug.replace('/', '')] = {color: color}
+      });
+     
+      return validCategories;
+  }
+  catch (e){
+    console.log(e.message);
+  }
+}
+
 
 export async function generateMetadata({ params }) {
   const { category } = params;
   const normalizedCategory = category.toLowerCase();
 
-  if (!(normalizedCategory in validCategories)) {
-    return notFound();
-  }
+  const categories = await getCategories();
+  if (!categories) return notFound();
+
+  const categoryData = categories.find(({ slug }) => slug.replace("/", "") === normalizedCategory);
+  if (!categoryData) return notFound();
 
   return {
-    title: `${normalizedCategory.charAt(0).toUpperCase() + normalizedCategory.slice(1)} Blogs `,
-    description: `Explore the latest ${normalizedCategory} blogs on Ghana Trendz. Stay updated with fresh and insightful content.`,
+    title: `${categoryData.title} Blogs `,
+    description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghana Trendz.`,
+    openGraph: {
+      title: `${categoryData.title} Blogs`,
+      description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghana Trendz.`,
+      type: "website",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}category/${categoryData.slug}`,
+      images: [
+        {
+          url: categoryData.image || `${process.env.NEXT_PUBLIC_BASE_URL}/default-og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: `${categoryData.title} Category Blogs`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${categoryData.title} Blogs`,
+      description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghana Trendz.`,
+      images: [
+        categoryData.image || `${process.env.NEXT_PUBLIC_BASE_URL}/default-og-image.jpg`,
+      ],
+    },
   };
 }
 
 
 
-
-const BlogCategoryLayout = ({ children, params }) => {
+const BlogCategoryLayout = async ({ children, params }) => {
   const { category } = params;
+
+  const validCategories = await fetchColor();
 
   const normalizedCategory = category.toLowerCase();
 

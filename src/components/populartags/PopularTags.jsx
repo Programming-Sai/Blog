@@ -35,20 +35,22 @@ const PopularTags = async () => {
       />
       <h1>Categories / Tags</h1>
       <div className={styles.tagContainer}>
-        {tags?.map(({ id, slug, title, image }) => (
+        {tags?.map(({ id, slug, title, image, color }) => (
           <Link
             key={id}
             scroll={true}
             href={`/category/${slug}`}
-            className={`${styles.tagItem} ${styles[slug]}`}
+            className={`${styles.tagItem}`}
+            style={{border: `2px solid ${color}`}}
           >
-            <Image
-              width={50}
-              height={50}
-              src={image}
-              className={styles.img}
-              alt={title}
-            />
+            <div style={{ width: '90px', height: '50px', position: "relative" }}>
+              <Image
+                fill
+                src={image}
+                alt={title}
+                style={{ objectFit: "cover", borderRadius: "100px", }}
+              />
+            </div>
             <p>{title}</p>
           </Link>
         ))}

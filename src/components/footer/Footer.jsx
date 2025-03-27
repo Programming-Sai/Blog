@@ -4,9 +4,30 @@ import Link from "next/link";
 import Image from "next/image";
 import BASE_PATH from "../../../base"; // Ensure BASE_PATH is imported
 
-const Footer = ({ disabled }) => {
-  if (disabled) return null;
 
+const getCategories = async () => {
+  try{
+    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/categories`);
+
+    if (!result.ok){
+      throw new Error(`${result.message || result.statusText || "Something went wrong."}`)
+    }
+
+    const data = await result.json();
+    return data;
+  }
+  catch (e){
+    console.log(e.message);
+  }
+}
+
+
+
+
+const Footer = async({ disabled }) => {
+  if (disabled) return null;
+  const categories = await getCategories();
+  
   const socialLinks = [
     { name: "Facebook", src: "/facebook.png", href: "/" },
     { name: "Instagram", src: "/instagram.png", href: "/" },
@@ -20,14 +41,12 @@ const Footer = ({ disabled }) => {
 
       <div className={styles.item}>
         <div className={styles.descContainer}>
-          <div className={styles.logo}>Logo</div>
+          <div className={styles.logo}>Ghana Trendz</div>
 
           <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum tempora
-            a aut cupiditate vitae provident totam, accusantium quod aspernatur
-            temporibus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Cum tempora a aut cupiditate vitae provident totam, accusantium quod
-            aspernatur temporibus?
+          Ghana Trendz is your go-to hub for the latest in sports, 
+          news, lifestyle, music, and movies. Stay informed, entertained, 
+          and inspired with fresh content daily.
           </p>
         </div>
 
@@ -45,26 +64,23 @@ const Footer = ({ disabled }) => {
           <Link href="/privacy-policy" className={styles.link}>
             Privacy Policy
           </Link>
+          <Link href="/sitemap.xml" className={styles.link}>
+            Sitemap
+          </Link>
         </div>
       </div>
+
+      
       <div className={styles.item}>
         <div className={styles.title}>Categories</div>
         <div className={styles.tags}>
-          <Link href="/category/news#categoryTop" className={styles.link}>
-            News
-          </Link>
-          <Link href="/category/lifestyle#categoryTop" className={styles.link}>
-            Lifestyle
-          </Link>
-          <Link href="/category/sports#categoryTop" className={styles.link}>
-            Sports
-          </Link>
-          <Link href="/category/music#categoryTop" className={styles.link}>
-            Music
-          </Link>
-          <Link href="/category/movies#categoryTop" className={styles.link}>
-            Movies
-          </Link>
+          {
+            categories && categories.map((cat, idx) => (
+              <Link key={cat.id} href={`${process.env.NEXT_PUBLIC_BASE_URL}category/${cat.slug}#categoryTop`} className={styles.link}>
+                {cat.title}
+              </Link>
+            ))
+          }
         </div>
       </div>
       <div className={styles.item}>

@@ -8,11 +8,14 @@ import {
   faUser,
   faChevronDown,
   faHome,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
 import BASE_PATH from "../../../../base";
 import { useSession } from "next-auth/react";
+import slugify from "slugify";
+import { handleImageUpload } from "@/utils/imageHandler";
 
 
 
@@ -166,6 +169,259 @@ import { useSession } from "next-auth/react";
 
 
 
+  
+
+  function CategoryManagement({ allCat, onClose, onChange }) {
+    const [search, setSearch] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [openCategories, setOpenCategories] = useState(false);
+    const inputRef = useRef(null);
+    const [newTitle, setNewTitle] = useState("");
+    const [newColor, setNewColor] = useState("#000000"); // default color
+    const [newImage, setNewImage] = useState(null);
+
+    // console.log("Categories: ", allCat)
+
+    const handleSearch = (e) => {
+      setSearch(e.target.value);
+      setOpenCategories(true);
+    };
+
+    const handleSelectedCategory = (cat) => {
+      setSelectedCategory(cat);
+      setSearch(cat.title);
+      setNewTitle(cat.title); // Prefill title input
+      setNewImage(cat.image); // Prefill title input
+      setNewColor(cat.color || "#000000");
+      setOpenCategories(false);
+    };
+    const filteredCategories = allCat?.filter((cat) =>
+      (cat.title || "").toLowerCase().includes(search.toLowerCase())
+    ) || [];
+    
+
+    // Close dropdown when clicking outside
+    const handleBlur = (e) => {
+      if (!inputRef.current.contains(e.relatedTarget)) {
+        setOpenCategories(false);
+      }
+    };
+
+
+    const handleConfirm = async () => {
+      if (!selectedCategory) return;
+    
+      let imageUrl = selectedCategory.image; // Default to existing image
+    
+      if (newImage && newImage !== selectedCategory.image) {
+        try {
+          // Convert blob URL to File
+          const response = await fetch(newImage);
+          const blob = await response.blob();
+          const file = new File([blob], "upload.jpg", { type: blob.type });
+    
+          // Upload to Cloudinary
+          const uploadedImage = await handleImageUpload(file);
+          imageUrl = uploadedImage.url;
+        } catch (error) {
+          console.error("Image upload failed:", error);
+          alert("Image upload failed.");
+          return;
+        }
+      }
+    
+      const updatedCategory = {
+        id: selectedCategory.id || "",
+        title: newTitle?.trim() || selectedCategory.title,
+        slug: slugify(newTitle || selectedCategory.title, { lower: true, strict: true }),
+        image: imageUrl || "",
+        color: newColor, // include the new color value
+      };
+    
+      onChange(updatedCategory);
+    };
+    
+
+
+
+    return (
+      <div
+        className="modal"
+        style={{
+          borderRadius: "10px",
+          backgroundColor: "green",
+          width: "100%",
+          maxWidth: "400px",
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          position: "relative",
+          color:'white'
+        }}
+      >
+        <h3>Manage Categories</h3>
+        <p>Select a category to edit or click Add to create a new one.</p>
+
+        <div style={{ position: "relative" }} ref={inputRef}>
+          <input
+            type="text"
+            value={search}
+            onChange={handleSearch}
+            onBlur={handleBlur}
+            onFocus={()=>setOpenCategories(true)}
+            placeholder="Search categories..."
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              outline: "none",
+              border: "2px solid red",
+              padding: "10px",
+              borderRadius: "10px",
+              width: "100%"
+            }}
+          />
+          {openCategories && filteredCategories?.length > 0 && (
+            <ul
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                right: 0,
+                backgroundColor: "green",
+                border: "1px solid #ccc",
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+                maxHeight: "150px",
+                overflowY: "auto",
+                borderRadius: "5px",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
+              }}
+            >
+              <li
+              onMouseDown={() =>  handleSelectedCategory({ title: "" })}
+              style={{
+                padding: "12px",
+                cursor: "pointer",
+                borderBottom: "1px solid #eee",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px"
+              }}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+                Add new category...
+              </li>
+            {filteredCategories?.map((cat) => (
+                <li
+                  key={cat.id}
+                  onMouseDown={() => handleSelectedCategory(cat)}
+                  style={{
+                    padding: "12px",
+                    cursor: "pointer",
+                    borderBottom: "1px solid #eee",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px"
+                  }}
+                >
+                  <Image src={cat?.image || '/LinkedInAvatar.png'} width={30} height={30} alt={cat.title} style={{ borderRadius: "50%" }} />
+                  {cat.title}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {selectedCategory && (
+          <>
+            
+            {newImage && <Image 
+              src={newImage} 
+              width={300} 
+              height={200}  
+              alt={newTitle} 
+              style={{
+                width: "100%", // Ensures responsiveness
+                height: "200px",
+                objectFit: "cover", // Ensures it fits properly
+                borderRadius: "20px",
+                marginInline: "auto",
+                display: "block",
+              }} 
+            />}
+            
+            <input
+              type="text"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="Enter new title"
+              style={{
+                background: "rgba(255,255,255,0.1)",
+                outline: "none",
+                border: "2px solid blue",
+                padding: "10px",
+                borderRadius: "10px",
+                width: "100%",
+              }}
+            />
+
+          <input
+            type="file"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                console.log("Converting image")
+                setNewImage(URL.createObjectURL(file)); // Convert file to preview URL
+              }
+            }}
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              outline: "none",
+              border: "2px solid blue",
+              padding: "10px",
+              borderRadius: "10px",
+              width: "100%",
+            }}
+          />
+
+
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", cursor:'pointer' }}>
+            <label htmlFor="colorPicker">Category Color:</label>
+            <input
+              id="colorPicker"
+              type="color"
+              value={newColor}
+              onChange={(e) => setNewColor(e.target.value)}
+              style={{ width: "100px", height: "30px", border: "none", padding: "0" }}
+            />
+          </div>
+
+
+          <button
+            onClick={handleConfirm}
+            style={{
+              backgroundColor: "blue",
+              color: "white",
+              padding: "10px",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Confirm Update
+          </button>
+          </>
+        )}
+
+        <button onClick={onClose} style={{ marginTop: "10px" }}>Cancel</button>
+      </div>
+    );
+  }
+
+
+
+
 
 
 
@@ -176,21 +432,14 @@ import { useSession } from "next-auth/react";
 const Settings = () => {
   const { data } = useSession();
   const [isTransferOpen, setIsTransferOpen] = useState(false);
-    const [allUsers, setAllUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
-  const {
-    autoSave,
-    setAutoSave,
-    theme,
-    toggleSidePane,
-    quillTheme,
-    setQuillTheme,
-    autoSaveDuration,
-    setAutoSaveDuration,
-  } = useContext(ThemeContext);
-  const [emailNotificationFrequency, setEmailNotificationFrequency] =
-    useState(0); // default to 'Never'
-  const [pushNotificationFrequency, setPushNotificationFrequency] = useState(0); // default to 'Never'
+  const [isCatManagementOpen, setIsCatManagementOpen] = useState(false);
+  const [allCat, setAllCat] = useState([]);
+
+  const {autoSave,setAutoSave, theme, toggleSidePane, quillTheme, setQuillTheme, autoSaveDuration, setAutoSaveDuration,} = useContext(ThemeContext);
+  const [emailNotificationFrequency, setEmailNotificationFrequency] = useState(0); 
+  const [pushNotificationFrequency, setPushNotificationFrequency] = useState(0); 
 
   useEffect(()=>{
     const fetchData = async ()=>{
@@ -212,6 +461,36 @@ const Settings = () => {
     }
     fetchData()
   }, [isTransferOpen])
+
+
+  useEffect(() => {
+    if (!isCatManagementOpen) return;
+    
+    let fetched = false; // Prevent multiple fetches
+  
+    const fetchData = async () => {
+      if (fetched) return; // Avoid duplicate calls
+      fetched = true;
+  
+      try {
+        // console.log("Fetching categories...");
+        const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`);
+        if (!result.ok) throw new Error(`Error - ${result.status}: ${result.statusText}`);
+        const data = await result.json();
+        // console.log("Fetched Categories:", data);
+        setAllCat(data);
+      } catch (e) {
+        alert(`Unable to get all categories: ${e.message}`);
+      }
+    };
+  
+    fetchData();
+  }, [isCatManagementOpen]);
+  
+  
+  // Fix prop passing in CategoryManagement
+  
+  
 
 
   const handleDeleteAllPosts = async () => {
@@ -454,6 +733,59 @@ const Settings = () => {
         </div>
       </div>
 
+      
+
+
+      <h3>Category Settings</h3>
+
+      <div className={styles.notificationSettings}>
+        
+        <div className={styles.editAutoSaveSetting}>
+          <div className={styles.desc}>
+            <h4>Manage Categories</h4>
+            <p>
+              This allows you to view, add, remove or edit a category for the posts.
+            </p>
+          </div>
+          <button style={{position:'realative'}} onClick={() => {console.log("Something");setIsCatManagementOpen(!isCatManagementOpen)}} className={styles.disabled}>
+           Manage Category
+          </button>
+          {isCatManagementOpen && (
+            <div style={{width:'fit-content', top:'56%', right:'3.5%', position:'absolute', zIndex:'1'}}>
+              <CategoryManagement
+                allCat={allCat}
+                onClose={() => setIsCatManagementOpen(false)}
+                onChange={async (update) => {
+                  try {
+                    const response = await fetch("/api/categories", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(update),
+                    });
+                
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || "Failed to upload category");
+                
+                    alert("Category updated successfully!");
+                    // onChange(data); // Send updated data back
+                  } catch (error) {
+                    console.error("Upload failed:", error);
+                    alert("Upload failed. Check console for details.");
+                  }
+                  // alert(`New Category: ${JSON.stringify(update, null, 2)}`);  
+                  // console.log("New Category: ", update);
+                  setIsCatManagementOpen(false);
+                }}
+              />
+            </div>
+          )}
+        </div>
+        
+      </div>
+
+
       <h3>Notification Settings</h3>
 
       <div className={styles.notificationSettings} style={{opacity:'40%'}}>
@@ -517,6 +849,8 @@ const Settings = () => {
           </div>
         </div>
       </div>
+
+
 
       <h3>Account Settings</h3>
 

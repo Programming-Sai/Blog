@@ -75,6 +75,7 @@ model Category {
   slug          String    @unique
   title         String  
   image         String?
+  color         String?
   Posts         Post[]
 }
 

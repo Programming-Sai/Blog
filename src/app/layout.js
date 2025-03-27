@@ -20,7 +20,7 @@ export const metadata = {
     type: 'website',
     locale: 'en_US',
     url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
-    siteName: 'GhanaTrendz'
+    siteName: 'GhanaTrendz',
   }
 };
 

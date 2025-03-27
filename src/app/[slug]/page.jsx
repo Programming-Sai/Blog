@@ -28,8 +28,7 @@ const getPageData = async () => {
   }
   return data;
 };
-
-
+ 
 
 
 const getData = async (slug) => {
@@ -62,6 +61,7 @@ export const generateMetadata = async ({ params }) => {
   return {
     title : post?.title,
     description: post?.desc,
+    keywords: post?.keywords?.join(", "),
     openGraph: {
       title: post?.title,
       description: post?.desc,
@@ -70,7 +70,13 @@ export const generateMetadata = async ({ params }) => {
       type: 'website',
       locale: 'en_US',
       siteName: 'GhanaTrendz',
-  }
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post?.title,
+      description: post?.desc,
+      image: post?.image,
+    },
   }
 }
 

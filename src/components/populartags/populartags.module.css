@@ -41,18 +41,15 @@
   width: 170px;
   margin-block: 5%;
   background-color: var(--soft-text-color);
+  justify-content: flex-start;
 }
 
 .tagItem p {
   width: 100%;
   text-align: center;
+  margin-left: auto;
 }
 
-.tagItem .img {
-  object-fit: cover;
-  border-radius: 100px;
-  width: 85px;
-}
 
 @media screen and (max-width: 580px) {
   .tagContainer {
