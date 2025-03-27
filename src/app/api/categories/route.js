@@ -101,7 +101,9 @@ export const POST = async (req) => {
   }
 
   try {
-    const { id, title, slug, image, color } = await req.json();
+    let { id, title, slug, image, color } = await req.json();
+
+    title = title.charAt(0).toUpperCase() + title.slice(1);
 
     const generatedSlug = slug || slugify(title, { lower: true, strict: true });
 
