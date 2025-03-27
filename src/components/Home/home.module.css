@@ -19,6 +19,8 @@
 @media screen and (max-width: 880px) {
   .lower {
     flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center ;
   }
   .itemOne {
     width: 100%;
@@ -26,5 +28,6 @@
 
   .itemTwo {
     margin-top: 0%;
+    width: 100% !important;
   }
 }

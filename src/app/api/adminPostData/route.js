@@ -73,6 +73,9 @@ export const GET = async () => {
         },
       },
     });
+
+    const totalDrafts = await prisma.post.count({ where: { isDraft: true }});
+
     
     return NextResponse.json(
       {
@@ -80,6 +83,7 @@ export const GET = async () => {
         categoryStats,
         latestPosts,
         latestComments,
+        totalDrafts,
       },
       { status: 200 }
     );

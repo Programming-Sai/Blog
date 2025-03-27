@@ -13,6 +13,8 @@
     align-items: center;
     gap: 2%;
     height: 350px;
+    /* border: 2px solid red; */
+
 }
 
 .imgContainer, .titleContainer{
@@ -215,6 +217,7 @@
 @media screen and (max-width:640px) {
     .topContainer{
         height: fit-content;
+        /* border: 2px solid red; */
         margin-block: 5%;
     }
     .titleContainer, .imgContainer{

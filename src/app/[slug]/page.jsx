@@ -151,7 +151,6 @@ const SingleBlogPage = async ({ params }) => {
               />
             </div> 
           </div>
-          {/* <LikeShareView className={styles.likeshareview}/> */}
           <div className={styles.content}>
             <div className={styles.post}>
               <div

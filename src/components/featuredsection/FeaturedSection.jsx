@@ -39,7 +39,7 @@ const FeaturedSection = async ({ theme }) => {
             width={500}
             height={500}
             color={theme === "light" ? "#11F027" : "#D4AF37"}
-            mtop="-40%"
+            mtop="0%"
             mleft="30%"
           />
           <h2 className={styles.subtitle}>{featuredPost.title}</h2>

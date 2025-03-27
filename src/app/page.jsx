@@ -25,6 +25,7 @@ export default async function Home({ theme }) {
             borderRad="20px"
             marginBlock="5%"
             isOutline="2px"
+            // width="100%"
           />
         </div>
       </Wrapper>

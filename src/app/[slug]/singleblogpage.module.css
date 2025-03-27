@@ -18,6 +18,7 @@
 .item{
     height: 350px;
     flex: 1;
+    width: 100%;
 }
 
 .item:first-child{
@@ -29,7 +30,8 @@
 }
 
 .item h1{
-    font-size: 3.5rem;
+    font-size: 3rem;
+    width: 100%;
 }
 
 .item:last-child{
@@ -81,9 +83,7 @@
     width: 70%;
 }
 
-.blogPost{
-    text-align: justify;
-}
+
 
 .popularPosts{
     width: 30%;
@@ -102,15 +102,28 @@
 }
 
 
+
+@media screen and (max-width:768px) {
+    .content{
+        flex-direction: column;
+    }
+    .post{
+        width: 100%;
+    }
+    .cnotent{
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+
 @media screen and (max-width:580px) {
     .infoContainer, .content{
         flex-direction: column;
     }
     .infoContainer{
         height: 45rem;
-    }
-    .post{
-        width: 100%;
     }
     .likeshareview{
         position: static;
@@ -120,5 +133,8 @@
         border-bottom-left-radius: 10px;
         width: fit-content;
         flex-wrap: wrap;
+    }
+    .item h1{
+        font-size: 2.3rem;
     }
 }

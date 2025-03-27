@@ -13,7 +13,7 @@ const Navbar = ({ past, disabled }) => {
   return (
     <header id="categoryTop" className={styles.container}>
       <div className={styles.back} />
-      <div className={styles.logo}>Logo</div>
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}`}><div className={styles.logo}>Logo</div></Link>
       <div className={styles.header}>
         <div className={styles.e}>
           <Searchbar />

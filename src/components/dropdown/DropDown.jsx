@@ -9,38 +9,64 @@ import BASE_PATH from "../../../base";
 const DropDown = ({ className, category, setCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null); // Reference to the dropdown container
-
+  const [options, setOptions] = useState([]);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option) => {
-    setCategory(option);
+
+
+  
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/categories`);
+  
+        if (!result.ok) {
+          throw new Error(`${result.statusText || "Something went wrong."}`);
+        }
+  
+        const data = await result.json();
+        setOptions(data);
+      } catch (e) {
+        console.error(e.message);
+      }
+    };
+  
+    getCategories();
+  }, []);
+  
+
+
+
+const handleOptionClick = (option) => {
+    setCategory(option); 
     setIsOpen(false);
   };
 
-  const options = [
-    {
-      label: "Sports",
-      image: `${BASE_PATH}/food.png`,
-    },
-    {
-      label: "News",
-      image: `${BASE_PATH}/fashion.png`,
-    },
-    {
-      label: "Lifestyle",
-      image: `${BASE_PATH}/travel.png`,
-    },
-    {
-      label: "Music",
-      image: `${BASE_PATH}/culture.png`,
-    },
-    {
-      label: "Movies",
-      image: `${BASE_PATH}/coding.png`,
-    },
-  ];
+  // const options = [
+  //   {
+  //     label: "Sports",
+  //     image: `${BASE_PATH}/food.png`,
+  //   },
+  //   {
+  //     label: "News",
+  //     image: `${BASE_PATH}/fashion.png`,
+  //   },
+  //   {
+  //     label: "Lifestyle",
+  //     image: `${BASE_PATH}/travel.png`,
+  //   },
+  //   {
+  //     label: "Music",
+  //     image: `${BASE_PATH}/culture.png`,
+  //   },
+  //   {
+  //     label: "Movies",
+  //     image: `${BASE_PATH}/coding.png`,
+  //   },
+  // ];
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -78,7 +104,7 @@ const DropDown = ({ className, category, setCategory }) => {
               <div className={styles.imgContainer}>
                 <Image fill src={option.image || '/coding.png'} className={styles.img} alt={option.label}/>
               </div>
-              <p>{option.label}</p>
+              <p>{option.title}</p>
               <input   checked={category === option.label}  type="checkbox" style={{ marginLeft: 'auto' }} readOnly/>
             </div>
           ))}

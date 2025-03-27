@@ -4,19 +4,8 @@ import styles from "./dashboard.module.css";
 import { ThemeContext } from "@/context/ThemeContext";
 import Card from "@/components/card/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEarth,
-  faNewspaper,
-  faStopwatch,
-  faTv,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  PostPerformanceChart,
-  GrowthRateChart,
-  ContentEngagementChart,
-  TrafficSourcesChart,
-  SEOMetrics,
-} from "@/components/charts/Charts";
+import { faEarth, faNewspaper, faStopwatch, faTv } from "@fortawesome/free-solid-svg-icons";
+import { PostPerformanceChart, GrowthRateChart, ContentEngagementChart, TrafficSourcesChart, SEOMetrics } from "@/components/charts/Charts";
 import AdminCommentsSection from "@/components/admincommentssection/AdminCommentsSection";
 import AdminRecentPosts from "@/components/adminrecentpost/AdminRecentPosts";
 import ServerStatus from "@/components/serverstatus/ServerStatus";
@@ -35,8 +24,8 @@ const DashBoard = () => {
           fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/adminPostData`).then((res) => res.json()),
         ]);
   
-        console.log("Raw Analytics Response:", analyticsRes);
-        console.log("Raw Admin Post Response:", adminPostRes);
+        // console.log("Raw Analytics Response:", analyticsRes);
+        // console.log("Raw Admin Post Response:", adminPostRes);
   
         const resultAnalytics = analyticsRes?.result;
         const resultAdminPost = adminPostRes;
@@ -120,7 +109,17 @@ const DashBoard = () => {
             <p className={styles.big}>Today's Visits</p>
             <h1>{data?.todayVisits || 0}</h1>
             {/* <h1>1,234,567</h1> */}
-            <p className={styles.small}>24% higher yesterday</p>
+            <p className={styles.small}>
+            {
+                data?.todayVisits === 0
+                ? "No visits yet today"
+                : data?.todayVisits < 10
+                ? "Slow start, let's get more visitors!"
+                : data?.todayVisits < 100
+                ? "Steady traffic today!"
+                : "Great engagement so far!"
+            }
+            </p>
           </div>
 
           <div className={styles.icon}>
@@ -133,7 +132,17 @@ const DashBoard = () => {
             <p className={styles.big}>Unique Visits</p>
             <h1>{data?.uniqueVisits || 0}</h1>
             {/* <h1>54.45%</h1> */}
-            <p className={styles.small}>23% average duration</p>
+            <p className={styles.small}>
+              {
+                data?.uniqueVisits === 0
+                ? "No visitors yet today"
+                : data?.uniqueVisits < 10
+                ? "Few visitors so far, let's boost traffic!"
+                : data?.uniqueVisits < 100
+                ? "Steady number of unique visitors!"
+                : "High engagement today!"
+              }
+            </p>
           </div>
 
           <div className={styles.icon}>
@@ -146,7 +155,13 @@ const DashBoard = () => {
             <p className={styles.big}>Total Number of Posts</p>
             <h1>{data?.adminPostData?.totalPosts || 0}</h1>
             {/* <h1>53</h1> */}
-            <p className={styles.small}>5 pending</p>
+            <p className={styles.small}>
+              {
+                data?.adminPostData?.totalDrafts
+                ? `${data.adminPostData.totalDrafts} drafts pending`
+                : "All posts published"
+              }
+            </p>
           </div>
 
           <div className={styles.icon}>
@@ -159,7 +174,13 @@ const DashBoard = () => {
             <p className={styles.big}>Bounce Rate</p>
             <h1>{getBounceRate(data?.bounceRate)}%</h1> 
             {/* <h1>19.78%</h1>  */}
-            <p className={styles.small}>65.45% on average time</p>
+            <p className={styles.small}>
+              {
+                data?.bounceRate > 50
+                ? "Consider improving user engagement"
+                : "Healthy engagement rate"
+              }
+            </p>
           </div>
 
           <div className={styles.icon}>

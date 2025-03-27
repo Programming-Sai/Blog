@@ -657,6 +657,7 @@ const saveBlogToDB = async (newDraft = draft) => { // ✅ Uses newDraft if provi
         </div>
         <div className={styles.imgContainer}>
           <ImageUploader image={image} setImage={setImage} media={media} setMedia={setMedia} />
+          <div style={{height:'350px'}}></div>
           {image && (
             <div
               className={styles.close}
