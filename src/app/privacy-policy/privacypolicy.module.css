@@ -7,12 +7,22 @@
 }
 
 .itemOne {
-  width: 70%;
+  width: 100%;
   margin-right: 5%;
 }
 
 .itemTwo {
-  width: 30%;
+  width: 80%;
+}
+
+@media screen and (max-width: 768px){
+  .flexWrapper{
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .itemTwo{
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 768px) {

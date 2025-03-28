@@ -103,14 +103,14 @@
 
 
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:1024px) {
     .content{
-        flex-direction: column;
+        flex-wrap: wrap;
     }
     .post{
         width: 100%;
     }
-    .cnotent{
+    .content{
         align-items: center;
         justify-content: center;
     }
