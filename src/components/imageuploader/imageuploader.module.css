@@ -1,4 +1,4 @@
-.imageUploader {
+.image {
     position: relative;
     width: 100%; /* Adjust as needed */
     border-radius: 5px; /* Rounded corners */
@@ -45,7 +45,7 @@
   }
   
 @media screen and (max-width:640px) {
-  .imageUploader{
+  .image{
     height: 350px;
   }
 }
