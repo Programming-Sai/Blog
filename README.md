@@ -710,7 +710,7 @@ Install the following libraries:
    - Configure upload presets and API credentials.
 4. **Resend:**
    - Set your Resend API key and verify a sender domain or use a verified admin email.
-5. **Google reCAPTCHA:**b
+5. **Google reCAPTCHA:**
    - Obtain and configure your site and secret keys.
 6. **Rate Limiting:**
    - Use `next-rate-limit` to protect API endpoints.
