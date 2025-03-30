@@ -14,9 +14,9 @@ const AdminNotFound = () => {
   const { data } = useSession();
   const router = useRouter();
 
-  if (data?.user?.role !== "ADMIN") {
-    router.push(`/not-authorized`);
-  }
+  // if (data?.user?.role !== "ADMIN") {
+  //   router.push(`/not-authorized`);
+  // }
 
   return (
     <div className="admin-container">

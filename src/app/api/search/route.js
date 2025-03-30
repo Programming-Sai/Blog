@@ -8,6 +8,7 @@ export const GET = async (request) => {
   try {
     const searchResult = await prisma.post.findMany({
       where: {
+        isDraft: false, 
         OR: [
           {
             title: {
