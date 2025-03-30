@@ -42,32 +42,11 @@ const DropDown = ({ className, category, setCategory }) => {
 
 const handleOptionClick = (option) => {
     setCategory(option); 
+    console.log(option, " Selected")
     setIsOpen(false);
   };
 
-  // const options = [
-  //   {
-  //     label: "Sports",
-  //     image: `${BASE_PATH}/food.png`,
-  //   },
-  //   {
-  //     label: "News",
-  //     image: `${BASE_PATH}/fashion.png`,
-  //   },
-  //   {
-  //     label: "Lifestyle",
-  //     image: `${BASE_PATH}/travel.png`,
-  //   },
-  //   {
-  //     label: "Music",
-  //     image: `${BASE_PATH}/culture.png`,
-  //   },
-  //   {
-  //     label: "Movies",
-  //     image: `${BASE_PATH}/coding.png`,
-  //   },
-  // ];
-
+  
   useEffect(() => {
     if (typeof document !== "undefined") {
       const handleClickOutside = (event) => {
@@ -99,13 +78,13 @@ const handleOptionClick = (option) => {
             <div
               key={index}
               className={styles.dropdownItem}
-              onClick={() => handleOptionClick(option.label)}
+              onClick={() => handleOptionClick(option.title)}
             >
               <div className={styles.imgContainer}>
-                <Image fill src={option.image || '/coding.png'} className={styles.img} alt={option.label}/>
+                <Image fill src={option.image || '/coding.png'} className={styles.img} alt={option.title}/>
               </div>
               <p>{option.title}</p>
-              <input   checked={category === option.label}  type="checkbox" style={{ marginLeft: 'auto' }} readOnly/>
+              <input   checked={category === option.title}  type="checkbox" style={{ marginLeft: 'auto' }} readOnly/>
             </div>
           ))}
         </div>

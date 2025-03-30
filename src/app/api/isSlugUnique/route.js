@@ -6,7 +6,7 @@ export const GET = async (req) => {
   try {
     const { searchParams } = req.nextUrl;
     const slug = searchParams.get("slug");
-    const id = searchParams.get("id"); // Get the post ID if provided
+    const id = searchParams.get("id"); // Optional: Post ID if editing
 
     if (!slug) {
       return new NextResponse(
@@ -15,12 +15,16 @@ export const GET = async (req) => {
       );
     }
 
+    // Find a post with the given slug
     const existingPost = await prisma.post.findUnique({
       where: { slug },
       select: { id: true },
     });
 
-    const isUnique = !existingPost || existingPost.id === id; // Unique if no post exists or if it's the same post being edited
+     // If no post exists with that slug, it's unique.
+    // If it exists and we are editing (id provided) and the IDs match, it's unique.
+    // Otherwise, it's not unique.
+    const isUnique = !existingPost || (id && existingPost.id === id);
 
     return new NextResponse(JSON.stringify({ isUnique }), { status: 200 });
   } catch (e) {

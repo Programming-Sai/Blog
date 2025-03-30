@@ -5,7 +5,11 @@ import "react-quill/dist/quill.snow.css";
 import "react-quill/dist/quill.bubble.css"; 
 import styles from "../editorone/editorone.module.css";
 
-const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
+
+
+
+
+const EditorThree = ({ blogContent, setBlogContent, quillTheme, setDescription, extractTextFromBlog, calculateReadingTime, setReadingTime }) => {
   const modules = {
     toolbar: [
       [{ font: [] }],
@@ -81,11 +85,17 @@ const EditorThree = ({ blogContent, setBlogContent, quillTheme }) => {
     }
   }, []);
 
+  const handleContentChange = (content) => {
+    setBlogContent(content);
+    setDescription(extractTextFromBlog(content));
+    setReadingTime(calculateReadingTime(content));
+  };
+
   return (
     <div className={styles.blogContent} key={quillTheme}>
       <ReactQuill
         value={blogContent}
-        onChange={setBlogContent} // Use the new handler
+        onChange={handleContentChange} // Use the new handler
         modules={modules}
         formats={formats}
         theme={quillTheme}

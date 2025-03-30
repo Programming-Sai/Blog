@@ -13,7 +13,6 @@ import Footer from "@/components/footer/Footer";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css"; 
 import "react-quill/dist/quill.bubble.css";
-import { LikeShareView } from "../likeshareview/LikeShareView";
 
 
 const PreviewContentPage = ({ blogData }) => {
@@ -56,7 +55,12 @@ const PreviewContentPage = ({ blogData }) => {
               />
               <h1>{blogData.title}</h1>
               <div className={styles.postDetails}>
-                <p className={styles.date}>{blogData.date}</p>-
+                <p className={styles.date}>
+                    {new Date(blogData?.date)
+                    .toISOString()
+                    .substring(0, 10)
+                    .replace(/-/g, " • ")}  
+                </p>-
                 <div className={styles.time}>
                   <FontAwesomeIcon icon={faClock} />
                   <span>{blogData.readingTime}</span>
@@ -68,7 +72,7 @@ const PreviewContentPage = ({ blogData }) => {
                     : blogData.category}
                 </p>
               </div>
-              <LikeShareView />
+              {/* <LikeShareView /> */}
             </div>
             <div
               className={styles.item}
