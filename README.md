@@ -198,6 +198,12 @@ CODE="your-code-variable-if-used"
    npm run dev
    ```
 
+6. **Run Prisma Studio: (Optional)**
+
+   ```bash
+   npx prisma studio
+   ```
+
 ## Environment Variables
 
 | Variable                                      | Description                                                    |
