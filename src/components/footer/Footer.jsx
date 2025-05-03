@@ -41,10 +41,12 @@ const Footer = async({ disabled }) => {
 
       <div className={styles.item}>
         <div className={styles.descContainer}>
-          <div className={styles.logo}>Ghana Trendz</div>
+          <div className={styles.logo}>
+            
+          </div>
 
           <p className={styles.desc}>
-          Ghana Trendz is your go-to hub for the latest in sports, 
+          Ghtrendz is your go-to hub for the latest in sports, 
           news, lifestyle, music, and movies. Stay informed, entertained, 
           and inspired with fresh content daily.
           </p>

@@ -40,7 +40,9 @@ const SidePanel = () => {
       >
         <div className={styles.mobileLayer}>
           <div className={styles.mobileHeader}>
-            <div className={`${styles.logo} ${styles.mobileLogo}`}>Logo</div>
+            <div className={`${styles.logo} ${styles.mobileLogo}`}>
+              
+            </div>
             <p
               className={styles.button}
               onClick={() => {

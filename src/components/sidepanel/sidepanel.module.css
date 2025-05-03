@@ -41,7 +41,7 @@
 .mobileLayer {
   width: 85%;
   /* background-color: var(--back-color); */
-  background-color: green;
+  background-color: rgb(2, 75, 2);
   height: 100vh;
   /* padding-inline: 20px; */
 }
@@ -101,7 +101,17 @@
   .button {
     display: flex;
   }
-  .logo {
-    font-size: 30px;
-  }
+  
+.logo {
+  font-weight: bolder;
+  font-size: 2rem;
+  background-image: url('../../../public/Ghtrendz.png');
+  width: 140px;
+  height: 50px;
+  /* border: 2px solid red; */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 10px 20px;
+}
 }

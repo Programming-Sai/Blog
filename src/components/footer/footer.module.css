@@ -39,7 +39,15 @@
 .logo{
     font-weight: bolder;
     font-size: 2rem;
-    margin-block: 10px;
+    /* margin-block: 10px; */
+    background-image: url('../../../public/Ghtrendz.png');
+    width: 170px;
+    height: 80px;
+    /* border: 2px solid red; */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* margin: 10px 20px; */
 }
 
 .desc{

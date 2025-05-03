@@ -55,10 +55,10 @@ export async function generateMetadata({ params }) {
 
   return {
     title: `${categoryData.title} Blogs `,
-    description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghana Trendz.`,
+    description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghtrendz.`,
     openGraph: {
       title: `${categoryData.title} Blogs`,
-      description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghana Trendz.`,
+      description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghtrendz.`,
       type: "website",
       url: `${process.env.NEXT_PUBLIC_BASE_URL}category/${categoryData.slug}`,
       images: [
@@ -73,7 +73,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: "summary_large_image",
       title: `${categoryData.title} Blogs`,
-      description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghana Trendz.`,
+      description: categoryData.description || `Explore the latest ${categoryData.title} blogs on Ghtrendz.`,
       images: [
         categoryData.image || `${process.env.NEXT_PUBLIC_BASE_URL}/default-og-image.jpg`,
       ],

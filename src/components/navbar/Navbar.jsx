@@ -6,6 +6,7 @@ import ThemeToggle from "../themetoggle/ThemeToggle";
 import Searchbar from "../searchbar/Searchbar";
 import SidePanel from "../sidepanel/SidePanel";
 import NavText from "../navtext/NavText";
+import Image from "next/image";
 
 
 
@@ -17,7 +18,16 @@ const Navbar = ({ past, disabled }) => {
   return (
     <header id="categoryTop" className={styles.container}>
       <div className={styles.back} />
-      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}`}><div className={styles.logo}>Logo</div></Link>
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}`}>
+        <div className={styles.logo} style={{marginTop:'15px'}}>
+          {/* <Image 
+            src={'/Ghtrendz.png'}
+            width={150}
+            height={40}
+            objectFit="contain"
+          /> */}
+        </div>
+      </Link>
       <div className={styles.header}>
         <div className={styles.e}>
           <Searchbar />
