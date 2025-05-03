@@ -4,14 +4,21 @@
     align-items: flex-start;
     gap: 30px;
     margin-block: 5%;
+    flex-direction: row;
+}
+
+.itemOne{
+    width: 70%;
 }
 
 .itemTwo{
-    width: 100%;
+    width: 30%;
 }
 
-@media screen and (max-width:640px) {
+@media screen and (max-width:880px) {
     .flexWrapper{
         flex-direction: column;
+        align-items: center;
     }
+
 }

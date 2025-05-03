@@ -18,8 +18,8 @@
   border-radius: 200px;
 }
 
-.itemOne {
-  width: 70%;
+.content{
+  flex-direction: row;
 }
 
 .blog {
@@ -31,8 +31,14 @@
   width: 150%;
 }
 
+
+.itemOne {
+  width: 60%;
+}
+
+
 .itemTwo {
-  width: 40%;
+  width: 4cap;
 }
 
 @media screen and (max-width: 880px) {

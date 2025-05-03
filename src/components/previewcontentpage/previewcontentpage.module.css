@@ -79,6 +79,7 @@
 .content {
   margin-block: 10%;
   align-items: flex-start;
+  flex-direction: row;
 }
 .post {
   width: 70%;
@@ -133,15 +134,23 @@
   border: 2px solid red;
 }
 
-@media screen and (max-width: 580px) {
-  .infoContainer,
+@media screen and (max-width: 880px) {
   .content {
     flex-direction: column;
+    align-items: center;
   }
-  .infoContainer {
-    height: 45rem;
-  }
+
   .post {
     width: 100%;
+  }
+  .popularPosts{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .infoContainer {
+    flex-direction: column;
+    height: 45rem;
   }
 }
