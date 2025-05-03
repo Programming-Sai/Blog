@@ -7,13 +7,17 @@ import Searchbar from "../searchbar/Searchbar";
 import SidePanel from "../sidepanel/SidePanel";
 import NavText from "../navtext/NavText";
 
+
+
+
+
 const Navbar = ({ past, disabled }) => {
   if (disabled) return null;
 
   return (
     <header id="categoryTop" className={styles.container}>
       <div className={styles.back} />
-      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}`}><div className={styles.logo}>Logo</div></Link>
+      <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}`}><div className={styles.logo}>GhTrendz</div></Link>
       <div className={styles.header}>
         <div className={styles.e}>
           <Searchbar />

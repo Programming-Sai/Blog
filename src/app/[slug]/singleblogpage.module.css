@@ -78,6 +78,7 @@
 .content{
     margin-block: 10%;
     align-items: flex-start;
+    flex-direction: row;
 }
 .post{
     width: 70%;
